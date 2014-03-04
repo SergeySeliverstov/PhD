@@ -1,0 +1,118 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+using System.Drawing.Imaging;
+using Tools;
+
+namespace DecisionMethods
+{
+    public partial class Form1 : Form
+    {
+        DecisionMethods dm;
+
+        private List<KeyValuePair<Tools.ColorChannel, int>> colors;
+
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void openButton_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                if (((Control)sender).Name == "bOpen1")
+                {
+                    var myImage = new MyImage();
+                    myImage.Bitmap = new Bitmap(ofd.FileName);
+                    dm = new DecisionMethods(myImage);
+                    dm.SaveInMask = cbUseMask.Checked;
+
+                    ShowImage(pictureBox1, dm.MyImage.Bitmap);
+                }
+            }
+        }
+
+        private void ShowImage(PictureBox pictureBox, Image bmpImage)
+        {
+            pictureBox.Image = bmpImage;
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            tbLog.Text += "Original: " + Tools.Metrics.GetUnifiedMetrics(dm.MyImage);
+
+            dm.SaveInMask = cbUseMask.Checked;
+            dm.Pollute(nudPercent.Value);
+            ShowImage(pictureBox1, dm.MyImage.Bitmap);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            tbLog.Text += "Broken: " + Tools.Metrics.GetUnifiedMetrics(dm.MyImage);
+
+            dm.SaveInMask = cbUseMask.Checked;
+            var image0 = dm.RestoreImage(0);
+            ShowImage(pictureBox2, image0.Bitmap);
+            tbLog.Text += "First: " + Tools.Metrics.GetUnifiedMetrics(image0);
+
+            var image1 = dm.RestoreImage(1);
+            ShowImage(pictureBox3, image1.Bitmap);
+            tbLog.Text += "Min " + Tools.Metrics.GetUnifiedMetrics(image1);
+
+            var image2 = dm.RestoreImage(2);
+            ShowImage(pictureBox4, image2.Bitmap);
+            tbLog.Text += "Max: " + Tools.Metrics.GetUnifiedMetrics(image2);
+
+            var image3 = dm.RestoreImage(3);
+            ShowImage(pictureBox5, image3.Bitmap);
+            tbLog.Text += "Avg: " + Tools.Metrics.GetUnifiedMetrics(image3);
+
+            var image4 = dm.RestoreImage(4);
+            ShowImage(pictureBox6, image4.Bitmap);
+            tbLog.Text += "Middle: " + Tools.Metrics.GetUnifiedMetrics(image4);
+
+            var image5 = dm.RestoreImage(5);
+            ShowImage(pictureBox7, image5.Bitmap);
+            tbLog.Text += "Sqrt: " + Tools.Metrics.GetUnifiedMetrics(image5);
+
+            var statisticsFileName = "Statistics.xml";
+            var optimizedStatisticsFileName = "OptimizedStatistics.xml";
+            var criterionsFileName = "Criterions.xml";
+            var optimizedCriterionsFileName = "OptimizedCriterions.xml";
+
+            var optimizedStatistics = XmlTools.Load<List<Matrix>>(optimizedStatisticsFileName);
+            var statistics = XmlTools.Load<List<Matrix>>(statisticsFileName);
+            var optimizedCriterions = XmlTools.Load<Matrix>(optimizedCriterionsFileName);
+            var criterions = XmlTools.Load<Matrix>(criterionsFileName);
+
+            var image6 = dm.RestoreImageByStatistics(criterions, statistics);
+            ShowImage(pictureBox8, image6.Bitmap);
+            tbLog.Text += "By Statistics: " + Tools.Metrics.GetUnifiedMetrics(image5);
+        }
+
+        private void pictureBox_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (sender is PictureBox)
+            {
+                SaveFileDialog sfd = new SaveFileDialog();
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    ((PictureBox)sender).Image.Save(sfd.FileName);
+                }
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            dm.SaveInMask = cbUseMask.Checked;
+            dm.FindPixels();
+        }
+    }
+}
