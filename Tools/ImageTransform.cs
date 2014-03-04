@@ -82,12 +82,20 @@ namespace Tools
             int imageWidth = imageBytes.GetLength(0);
             int imageHeight = imageBytes.GetLength(1);
             bool[,] polluteMask = new bool[imageWidth, imageHeight];
+            bool[,] tmpMask = new bool[imageWidth, imageHeight];
             for (int i = 0; i < (percent / 100) * imageWidth * imageHeight; i++)
             {
-                int x = rnd.Next(0, imageWidth);
-                int y = rnd.Next(0, imageHeight);
+                int x = 0;
+                int y = 0;
+                do
+                {
+                    x = rnd.Next(0, imageWidth);
+                    y = rnd.Next(0, imageHeight);
+                } while (tmpMask[x, y]);
 
                 imageBytes[x, y] = (int)rnd.Next(0, 16777215);
+                tmpMask[x, y] = true;
+
                 if (saveInMask)
                     polluteMask[x, y] = true;
             }
