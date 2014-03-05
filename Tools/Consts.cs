@@ -15,6 +15,8 @@ namespace Tools
 
         public static int CropMask = 0xF0F0F0;
         //public static int CropMask = 0x808080;
+        //public static int CropMask = 0x404040;
+        //public static int CropMask = 0xFCFCFC;
 
         public static string CSVDivider = ";";
     }

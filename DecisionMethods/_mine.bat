@@ -1,5 +1,11 @@
 @echo off
 
-call DecisionMethods.exe /m lena_std.tif 20,0
+for /F "delims=" %%f in ('dir *.tif /b /a:-d') do (
+ for /D %%p in (10,20,30) do (
+  call DecisionMethods.exe /m %%f %%p
+  echo Mine complete. File: %%f Pollution: %%p
+ )
+)
 
-echo finish
+echo Batch completed
+pause

@@ -77,12 +77,11 @@ namespace DecisionMethods
                 for (int j = 2; j < myImage.ImageHeight - 2; j++)
                     if (SaveInMask && pollutedMask[i, j] || !SaveInMask && myImage.ImageBytes[i, j] == Tools.Consts.MaskColor)
                     {
-                        decimal max;
-                        int maxRow;
-                        int maxColumn;
+                        decimal min;
+                        int minNumber;
                         var criterion = CheckForCriterion(newImageBytes, i, j);
-                        max = MatrixTools.FindMax(statistics[(int)criterion], out maxRow, out maxColumn);
-                        newImageBytes[i, j] = restorePixel(i, j, maxRow);
+                        min = MatrixTools.FindMinDiag(statistics[(int)criterion], out minNumber);
+                        newImageBytes[i, j] = restorePixel(i, j, minNumber);
                     }
 
             for (int i = 2; i < myImage.ImageWidth - 2; i++)
@@ -107,22 +106,13 @@ namespace DecisionMethods
         public MyImage RestoreImage(int method)
         {
             MyImage newImage = new MyImage(myImage.ImageBytes, myImage.OriginalImageBytes);
-            int[,] newImageBytes = new int[myImage.ImageWidth, myImage.ImageHeight];
+
             for (int x = 2; x < myImage.ImageWidth - 2; x++)
                 for (int y = 2; y < myImage.ImageHeight - 2; y++)
                     if (pollutedMask[x, y])
                     {
-                        newImageBytes[x, y] = restorePixel(x, y, method);
+                        newImage.ImageBytes[x, y] = restorePixel(x, y, method);
                     }
-
-            for (int x = 2; x < myImage.ImageWidth - 2; x++)
-                for (int y = 2; y < myImage.ImageHeight - 2; y++)
-                {
-                    if (SaveInMask && pollutedMask[x, y] || !SaveInMask && myImage.ImageBytes[x, y] == Tools.Consts.MaskColor)
-                    {
-                        newImage.ImageBytes[x, y] = newImageBytes[x, y];
-                    }
-                }
 
             return newImage;
         }
@@ -264,17 +254,17 @@ namespace DecisionMethods
             if (vLine1 && vLine2x && vLine3 && hLine1 && hLine2x && hLine3)
                 return Criterion.Fill;
 
+            // + + *    * * *    * + +    + + +
+            // + X * or + X + or * X + or + X +
+            // + + *    + + +    * + +    * * *
+            if (vLine1 && vLine2x || hLine2x && hLine3 || vLine2x && vLine3 || hLine1 && hLine2x)
+                return Criterion.Border;
+
             // * + *    * * *
             // * X * or + X +
             // * + *    * * *
             if (vLine2x || hLine2x)
                 return Criterion.Line;
-
-            // + + *    * * *    * + +    + + +
-            // + X * or + X + or * X + or + X +
-            // + + *    + + +    * + +    * * *
-            if (vLine1 && vLine2x || hLine2x && hLine3 || hLine2x && hLine3 || hLine1 && hLine2x)
-                return Criterion.Border;
 
             return Criterion.None;
         }

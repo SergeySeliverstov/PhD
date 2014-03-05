@@ -48,6 +48,7 @@
             this.nudPercent = new System.Windows.Forms.NumericUpDown();
             this.cbUseMask = new System.Windows.Forms.CheckBox();
             this.bFindPixels = new System.Windows.Forms.Button();
+            this.cbStatisticsOnly = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -304,11 +305,23 @@
             this.bFindPixels.UseVisualStyleBackColor = true;
             this.bFindPixels.Click += new System.EventHandler(this.button2_Click);
             // 
+            // cbStatisticsOnly
+            // 
+            this.cbStatisticsOnly.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbStatisticsOnly.AutoSize = true;
+            this.cbStatisticsOnly.Location = new System.Drawing.Point(649, 127);
+            this.cbStatisticsOnly.Name = "cbStatisticsOnly";
+            this.cbStatisticsOnly.Size = new System.Drawing.Size(92, 17);
+            this.cbStatisticsOnly.TabIndex = 17;
+            this.cbStatisticsOnly.Text = "Statistics Only";
+            this.cbStatisticsOnly.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(751, 477);
+            this.Controls.Add(this.cbStatisticsOnly);
             this.Controls.Add(this.bFindPixels);
             this.Controls.Add(this.cbUseMask);
             this.Controls.Add(this.nudPercent);
@@ -357,6 +370,7 @@
         private System.Windows.Forms.NumericUpDown nudPercent;
         private System.Windows.Forms.CheckBox cbUseMask;
         private System.Windows.Forms.Button bFindPixels;
+        private System.Windows.Forms.CheckBox cbStatisticsOnly;
     }
 }
 

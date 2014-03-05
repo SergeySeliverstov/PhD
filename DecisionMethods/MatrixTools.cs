@@ -46,5 +46,34 @@ namespace DecisionMethods
                     }
             return max;
         }
+
+        public static decimal FindMin(Matrix matrix, out int minRow, out int minColumn)
+        {
+            decimal min = decimal.MaxValue;
+            minRow = 0;
+            minColumn = 0;
+            for (int i = 0; i < matrix.Rows; i++)
+                for (int j = 0; j < matrix.Columns; j++)
+                    if (min > matrix[i, j])
+                    {
+                        min = matrix[i, j];
+                        minRow = i;
+                        minColumn = j;
+                    }
+            return min;
+        }
+
+        public static decimal FindMinDiag(Matrix matrix, out int minNumber)
+        {
+            decimal min = decimal.MaxValue;
+            minNumber = 0;
+            for (int i = 0; i < matrix.Rows; i++)
+                if (min > matrix[i, i])
+                {
+                    min = matrix[i, i];
+                    minNumber = i;
+                }
+            return min;
+        }
     }
 }

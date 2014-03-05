@@ -57,30 +57,33 @@ namespace DecisionMethods
         {
             tbLog.Text += "Broken: " + Tools.Metrics.GetUnifiedMetrics(dm.MyImage);
 
-            dm.SaveInMask = cbUseMask.Checked;
-            var image0 = dm.RestoreImage(0);
-            ShowImage(pictureBox2, image0.Bitmap);
-            tbLog.Text += "First: " + Tools.Metrics.GetUnifiedMetrics(image0);
+            if (!cbStatisticsOnly.Checked)
+            {
+                dm.SaveInMask = cbUseMask.Checked;
+                var image0 = dm.RestoreImage(0);
+                ShowImage(pictureBox2, image0.Bitmap);
+                tbLog.Text += "First: " + Tools.Metrics.GetUnifiedMetrics(image0);
 
-            var image1 = dm.RestoreImage(1);
-            ShowImage(pictureBox3, image1.Bitmap);
-            tbLog.Text += "Min " + Tools.Metrics.GetUnifiedMetrics(image1);
+                var image1 = dm.RestoreImage(1);
+                ShowImage(pictureBox3, image1.Bitmap);
+                tbLog.Text += "Min " + Tools.Metrics.GetUnifiedMetrics(image1);
 
-            var image2 = dm.RestoreImage(2);
-            ShowImage(pictureBox4, image2.Bitmap);
-            tbLog.Text += "Max: " + Tools.Metrics.GetUnifiedMetrics(image2);
+                var image2 = dm.RestoreImage(2);
+                ShowImage(pictureBox4, image2.Bitmap);
+                tbLog.Text += "Max: " + Tools.Metrics.GetUnifiedMetrics(image2);
 
-            var image3 = dm.RestoreImage(3);
-            ShowImage(pictureBox5, image3.Bitmap);
-            tbLog.Text += "Avg: " + Tools.Metrics.GetUnifiedMetrics(image3);
+                var image3 = dm.RestoreImage(3);
+                ShowImage(pictureBox5, image3.Bitmap);
+                tbLog.Text += "Avg: " + Tools.Metrics.GetUnifiedMetrics(image3);
 
-            var image4 = dm.RestoreImage(4);
-            ShowImage(pictureBox6, image4.Bitmap);
-            tbLog.Text += "Middle: " + Tools.Metrics.GetUnifiedMetrics(image4);
+                var image4 = dm.RestoreImage(4);
+                ShowImage(pictureBox6, image4.Bitmap);
+                tbLog.Text += "Middle: " + Tools.Metrics.GetUnifiedMetrics(image4);
 
-            var image5 = dm.RestoreImage(5);
-            ShowImage(pictureBox7, image5.Bitmap);
-            tbLog.Text += "Sqrt: " + Tools.Metrics.GetUnifiedMetrics(image5);
+                var image5 = dm.RestoreImage(5);
+                ShowImage(pictureBox7, image5.Bitmap);
+                tbLog.Text += "Sqrt: " + Tools.Metrics.GetUnifiedMetrics(image5);
+            }
 
             var statisticsFileName = "Statistics.xml";
             var optimizedStatisticsFileName = "OptimizedStatistics.xml";
@@ -94,7 +97,7 @@ namespace DecisionMethods
 
             var image6 = dm.RestoreImageByStatistics(criterions, statistics);
             ShowImage(pictureBox8, image6.Bitmap);
-            tbLog.Text += "By Statistics: " + Tools.Metrics.GetUnifiedMetrics(image5);
+            tbLog.Text += "By Statistics: " + Tools.Metrics.GetUnifiedMetrics(image6);
         }
 
         private void pictureBox_MouseClick(object sender, MouseEventArgs e)
