@@ -26,16 +26,16 @@ namespace Tools
             for (int k = 0; k < K * K; k++)
             {
                 int ik = k / K;
-                int jk = k & (K - 1);
+                int jk = k % K;
 
                 double innerResult = 0;
                 for (int i = iLength * ik / K; i < iLength * (ik + 1) / K; i++)
                     for (int j = jLength * jk / K; j < jLength * (jk + 1) / K; j++)
                     {
-                        innerResult += Math.Pow(Math.Abs(originalImage[i, j] - modifiedImage[i, j]), gamma);
+                        innerResult += Math.Pow(d(originalImage[i, j], modifiedImage[i, j]), gamma);
                     }
 
-                result += Math.Pow(innerResult / Math.Pow(iLength * jLength, 2), 1 / (double)gamma);
+                result += Math.Pow(innerResult / (iLength * jLength), 1 / (double)gamma);
             }
 
             return result / K;
@@ -53,11 +53,15 @@ namespace Tools
             int iLength = originalImage.GetLength(0);
             int jLength = originalImage.GetLength(1);
 
-            for (int i = center(w); i < iLength - center(w) + 1; i++)
-                for (int j = center(w); j < jLength - center(w) + 1; j++)
-                    result += Math.Pow(minFromWArea(cutArray(originalImage, i, j, w)), 2) + Math.Pow(minFromWArea(cutArray(modifiedImage, i, j, w)), 2);
+            for (int i = center(w); i < iLength - center(w); i += w)
+                for (int j = center(w); j < jLength - center(w); j += w)
+                {
+                    var A = minFromWArea(cutArray(originalImage, i, j, w), modifiedImage[i, j]);
+                    var B = minFromWArea(cutArray(modifiedImage, i, j, w), originalImage[i, j]);
+                    result += Math.Pow(A, 2) + Math.Pow(B, 2);
+                }
 
-            result = Math.Sqrt(result / (2 * Math.Pow(iLength * jLength - w, 2)));
+            result = Math.Sqrt(result / (double)(2 * (iLength - w) * (jLength - w)));
 
             return result;
         }
@@ -73,17 +77,16 @@ namespace Tools
             return resultArray;
         }
 
-        private static double minFromWArea(byte[,] array)
+        private static double minFromWArea(byte[,] array, byte value)
         {
             double result = double.MaxValue;
 
             int iCenter = center(array.GetLength(0));
             int jCenter = center(array.GetLength(1));
 
-            for (int i = 0; i < iCenter; i++)
-                for (int j = 0; j < jCenter; j++)
-                    //if (i != iCenter && j != jCenter)
-                    result = Math.Min(result, d(array[iCenter, jCenter], array[i, j]));
+            for (int i = 0; i <= iCenter; i++)
+                for (int j = 0; j <= jCenter; j++)
+                    result = Math.Min(result, d(value, array[i, j]));
 
             return result;
         }
@@ -95,14 +98,14 @@ namespace Tools
 
         private static int center(int w)
         {
-            return (int)Math.Floor((double)w / 2) + 1;
+            return (int)Math.Floor((double)w / 2);
         }
 
         public static string GetUnifiedMetrics(MyImage myImage, MetricsMode mode = MetricsMode.Simple)
         {
-            double r0 = Metrics.MM(myImage.OriginalImageR, myImage.ImageR, 10, 10);
-            double g0 = Metrics.MM(myImage.OriginalImageG, myImage.ImageG, 10, 10);
-            double b0 = Metrics.MM(myImage.OriginalImageB, myImage.ImageB, 10, 10);
+            double r0 = Metrics.MM(myImage.OriginalImageR, myImage.ImageR, 3, 9);
+            double g0 = Metrics.MM(myImage.OriginalImageG, myImage.ImageG, 3, 9);
+            double b0 = Metrics.MM(myImage.OriginalImageB, myImage.ImageB, 3, 9);
             double r1 = Metrics.MSE(myImage.OriginalImageR, myImage.ImageR);
             double g1 = Metrics.MSE(myImage.OriginalImageG, myImage.ImageG);
             double b1 = Metrics.MSE(myImage.OriginalImageB, myImage.ImageB);

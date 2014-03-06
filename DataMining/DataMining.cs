@@ -35,6 +35,10 @@ namespace DataMining
             set
             {
                 myImage = value;
+                if (pollutedMask == null)
+                    pollutedMask = new bool[myImage.ImageWidth, myImage.ImageHeight];
+                if (pollutedMaskOriginal == null)
+                    pollutedMaskOriginal = new bool[myImage.ImageWidth, myImage.ImageHeight];
             }
         }
 
