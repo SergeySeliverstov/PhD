@@ -254,7 +254,8 @@
             this.cbMaxDepth.Items.AddRange(new object[] {
             "5",
             "4",
-            "3"});
+            "3",
+            "2"});
             this.cbMaxDepth.Location = new System.Drawing.Point(616, 124);
             this.cbMaxDepth.Name = "cbMaxDepth";
             this.cbMaxDepth.Size = new System.Drawing.Size(194, 21);
