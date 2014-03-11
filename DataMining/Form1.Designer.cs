@@ -48,15 +48,19 @@
             this.cbTemplate = new System.Windows.Forms.ComboBox();
             this.button9 = new System.Windows.Forms.Button();
             this.cbMaxDepth = new System.Windows.Forms.ComboBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudPollutePercent)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudMaxAcc)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(616, 12);
+            this.button1.Location = new System.Drawing.Point(459, 12);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(91, 23);
             this.button1.TabIndex = 1;
@@ -67,7 +71,7 @@
             // button2
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.Location = new System.Drawing.Point(616, 41);
+            this.button2.Location = new System.Drawing.Point(459, 41);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(91, 23);
             this.button2.TabIndex = 2;
@@ -80,9 +84,9 @@
             this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox1.Location = new System.Drawing.Point(12, 12);
+            this.pictureBox1.Location = new System.Drawing.Point(3, 3);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(598, 533);
+            this.pictureBox1.Size = new System.Drawing.Size(445, 223);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 3;
             this.pictureBox1.TabStop = false;
@@ -90,7 +94,7 @@
             // button3
             // 
             this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button3.Location = new System.Drawing.Point(617, 154);
+            this.button3.Location = new System.Drawing.Point(460, 154);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(91, 23);
             this.button3.TabIndex = 4;
@@ -101,7 +105,7 @@
             // button4
             // 
             this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button4.Location = new System.Drawing.Point(617, 212);
+            this.button4.Location = new System.Drawing.Point(460, 212);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(91, 23);
             this.button4.TabIndex = 5;
@@ -113,9 +117,9 @@
             // 
             this.richTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.richTextBox1.Location = new System.Drawing.Point(616, 270);
+            this.richTextBox1.Location = new System.Drawing.Point(459, 270);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(192, 275);
+            this.richTextBox1.Size = new System.Drawing.Size(192, 200);
             this.richTextBox1.TabIndex = 6;
             this.richTextBox1.Text = "";
             // 
@@ -123,16 +127,16 @@
             // 
             this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBar1.Location = new System.Drawing.Point(12, 551);
+            this.progressBar1.Location = new System.Drawing.Point(12, 476);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(744, 23);
+            this.progressBar1.Size = new System.Drawing.Size(587, 23);
             this.progressBar1.Step = 1;
             this.progressBar1.TabIndex = 7;
             // 
             // nudPollutePercent
             // 
             this.nudPollutePercent.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.nudPollutePercent.Location = new System.Drawing.Point(718, 44);
+            this.nudPollutePercent.Location = new System.Drawing.Point(561, 44);
             this.nudPollutePercent.Name = "nudPollutePercent";
             this.nudPollutePercent.Size = new System.Drawing.Size(91, 20);
             this.nudPollutePercent.TabIndex = 8;
@@ -146,7 +150,7 @@
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(765, 556);
+            this.label1.Location = new System.Drawing.Point(608, 496);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(0, 13);
             this.label1.TabIndex = 9;
@@ -154,7 +158,7 @@
             // button7
             // 
             this.button7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button7.Location = new System.Drawing.Point(617, 183);
+            this.button7.Location = new System.Drawing.Point(460, 183);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(91, 23);
             this.button7.TabIndex = 10;
@@ -165,7 +169,7 @@
             // nudMaxAcc
             // 
             this.nudMaxAcc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.nudMaxAcc.Location = new System.Drawing.Point(719, 183);
+            this.nudMaxAcc.Location = new System.Drawing.Point(562, 183);
             this.nudMaxAcc.Name = "nudMaxAcc";
             this.nudMaxAcc.Size = new System.Drawing.Size(91, 20);
             this.nudMaxAcc.TabIndex = 8;
@@ -182,7 +186,7 @@
             this.cbCollectionMethod.Items.AddRange(new object[] {
             "Tree",
             "List"});
-            this.cbCollectionMethod.Location = new System.Drawing.Point(616, 70);
+            this.cbCollectionMethod.Location = new System.Drawing.Point(459, 70);
             this.cbCollectionMethod.Name = "cbCollectionMethod";
             this.cbCollectionMethod.Size = new System.Drawing.Size(193, 21);
             this.cbCollectionMethod.TabIndex = 11;
@@ -191,7 +195,7 @@
             // 
             this.cbUseMask.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cbUseMask.AutoSize = true;
-            this.cbUseMask.Location = new System.Drawing.Point(719, 155);
+            this.cbUseMask.Location = new System.Drawing.Point(562, 155);
             this.cbUseMask.Name = "cbUseMask";
             this.cbUseMask.Size = new System.Drawing.Size(74, 17);
             this.cbUseMask.TabIndex = 12;
@@ -204,7 +208,7 @@
             this.cbCropPixels.AutoSize = true;
             this.cbCropPixels.Checked = true;
             this.cbCropPixels.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbCropPixels.Location = new System.Drawing.Point(719, 216);
+            this.cbCropPixels.Location = new System.Drawing.Point(562, 216);
             this.cbCropPixels.Name = "cbCropPixels";
             this.cbCropPixels.Size = new System.Drawing.Size(78, 17);
             this.cbCropPixels.TabIndex = 13;
@@ -214,7 +218,7 @@
             // button8
             // 
             this.button8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button8.Location = new System.Drawing.Point(718, 12);
+            this.button8.Location = new System.Drawing.Point(561, 12);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(91, 23);
             this.button8.TabIndex = 14;
@@ -231,7 +235,7 @@
             "Rectangle",
             "Cross",
             "DiCross"});
-            this.cbTemplate.Location = new System.Drawing.Point(616, 97);
+            this.cbTemplate.Location = new System.Drawing.Point(459, 97);
             this.cbTemplate.Name = "cbTemplate";
             this.cbTemplate.Size = new System.Drawing.Size(193, 21);
             this.cbTemplate.TabIndex = 15;
@@ -239,7 +243,7 @@
             // button9
             // 
             this.button9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button9.Location = new System.Drawing.Point(617, 241);
+            this.button9.Location = new System.Drawing.Point(460, 241);
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(191, 23);
             this.button9.TabIndex = 16;
@@ -256,16 +260,46 @@
             "4",
             "3",
             "2"});
-            this.cbMaxDepth.Location = new System.Drawing.Point(616, 124);
+            this.cbMaxDepth.Location = new System.Drawing.Point(459, 124);
             this.cbMaxDepth.Name = "cbMaxDepth";
             this.cbMaxDepth.Size = new System.Drawing.Size(194, 21);
             this.cbMaxDepth.TabIndex = 17;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox2.Location = new System.Drawing.Point(3, 232);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(445, 223);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox2.TabIndex = 18;
+            this.pictureBox2.TabStop = false;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Controls.Add(this.pictureBox2, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.pictureBox1, 0, 0);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 12);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(451, 458);
+            this.tableLayoutPanel1.TabIndex = 19;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(820, 586);
+            this.ClientSize = new System.Drawing.Size(663, 526);
+            this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.cbMaxDepth);
             this.Controls.Add(this.button9);
             this.Controls.Add(this.cbTemplate);
@@ -281,7 +315,6 @@
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
-            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Name = "Form1";
@@ -289,6 +322,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudPollutePercent)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudMaxAcc)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -315,6 +350,8 @@
         private System.Windows.Forms.ComboBox cbTemplate;
         private System.Windows.Forms.Button button9;
         private System.Windows.Forms.ComboBox cbMaxDepth;
+        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
     }
 }
 

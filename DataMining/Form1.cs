@@ -44,7 +44,7 @@ namespace DataMining
             if (ofd.ShowDialog() == DialogResult.OK)
             {
                 var myImage = new MyImage();
-                myImage.Bitmap = new Bitmap(ofd.FileName);                
+                myImage.Bitmap = new Bitmap(ofd.FileName);
 
                 dataMining = new DataMining();
                 dataMining.MyImage = myImage;
@@ -64,6 +64,7 @@ namespace DataMining
                 fillParameters();
 
                 ShowImage(myImage.Bitmap);
+                ShowMask(dataMining.PollutedMask);
             }
         }
 
@@ -77,6 +78,24 @@ namespace DataMining
             fillParameters();
             dataMining.Pollute();
             ShowImage(dataMining.MyImage.Bitmap);
+            ShowMask(dataMining.PollutedMask);
+        }
+
+        private void ShowMask(bool[,] p)
+        {
+            
+            int[,] mask_ = new int[p.GetLength(0), p.GetLength(1)];
+
+            for (int i = 0; i < mask_.GetLength(0); i++)
+                for (int j = 0; j < mask_.GetLength(1); j++)
+                {
+                    if (p[i, j])
+                    {
+                        mask_[i, j] = 0x00FF00;
+                    }
+                }
+            MyImage mask_im = new MyImage(mask_);
+            pictureBox2.Image = mask_im.Bitmap;
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -96,6 +115,7 @@ namespace DataMining
         {
             fillParameters();
             dataMining.FindPixels();
+            ShowMask(dataMining.PollutedMask);
         }
 
         private void button9_Click(object sender, EventArgs e)
@@ -112,6 +132,7 @@ namespace DataMining
             {
                 pictureBox1.Image.Save(sfd.FileName, ImageFormat.Png);
             }
+
         }
     }
 }

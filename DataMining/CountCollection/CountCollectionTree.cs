@@ -51,7 +51,7 @@ namespace DataMining
             if (values.Length != depth)
                 return;
 
-            bubbleSort(ref values);
+            //bubbleSort(ref values);
             addItem(items, null, values);
         }
 
@@ -62,7 +62,7 @@ namespace DataMining
             foreach (int[] value in values)
             {
                 int[] qq = value;
-                bubbleSort(ref qq);
+                //bubbleSort(ref qq);
                 TreeItem findResult = findLastTreeItem(qq);
                 if (findResult == null)
                     continue;
