@@ -74,9 +74,18 @@ namespace DataMining
             return result.ConvertAll<CountItem>(new Converter<TreeItem, CountItem>(delegate(TreeItem item) { return (CountItem)item; }));
         }
 
-        public override int? FindColor(params int[][] values)
+        public override int? FindColor(int[][] values, int[][] values5 = null, decimal limit = 0)
         {
-            var result = FindItems(values).OrderByDescending(i => i.count).ToArray();
+            int count = 0;
+            if (values5 != null)
+            {
+                var find5 = FindItems(values5);
+                count = find5.Sum(i => i.count);
+            }
+
+            var find = FindItems(values);
+            var filter = find.Where(i => limit == 0 || i.count / count >= limit / 100);
+            var result = filter.OrderByDescending(i => i.count).ToArray();
             if (result != null && result.Length > 0)
                 return ((TreeItem)result[0]).color;
             return null;

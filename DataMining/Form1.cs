@@ -35,6 +35,7 @@ namespace DataMining
                 dataMining.MaxDepth = int.Parse(cbMaxDepth.SelectedItem.ToString());
                 dataMining.PollutePercent = (int)nudPollutePercent.Value;
                 dataMining.UseMask = cbUseMask.Checked;
+                dataMining.UseLimit = cbLimit.Checked;
             }
         }
 
@@ -83,7 +84,7 @@ namespace DataMining
 
         private void ShowMask(bool[,] p)
         {
-            
+
             int[,] mask_ = new int[p.GetLength(0), p.GetLength(1)];
 
             for (int i = 0; i < mask_.GetLength(0); i++)

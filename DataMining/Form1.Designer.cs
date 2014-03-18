@@ -50,6 +50,7 @@
             this.cbMaxDepth = new System.Windows.Forms.ComboBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.cbLimit = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudPollutePercent)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudMaxAcc)).BeginInit();
@@ -195,11 +196,11 @@
             // 
             this.cbUseMask.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cbUseMask.AutoSize = true;
-            this.cbUseMask.Location = new System.Drawing.Point(562, 155);
+            this.cbUseMask.Location = new System.Drawing.Point(562, 158);
             this.cbUseMask.Name = "cbUseMask";
-            this.cbUseMask.Size = new System.Drawing.Size(74, 17);
+            this.cbUseMask.Size = new System.Drawing.Size(52, 17);
             this.cbUseMask.TabIndex = 12;
-            this.cbUseMask.Text = "Use Mask";
+            this.cbUseMask.Text = "Mask";
             this.cbUseMask.UseVisualStyleBackColor = true;
             // 
             // cbCropPixels
@@ -294,6 +295,17 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(451, 458);
             this.tableLayoutPanel1.TabIndex = 19;
             // 
+            // cbLimit
+            // 
+            this.cbLimit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbLimit.AutoSize = true;
+            this.cbLimit.Location = new System.Drawing.Point(616, 158);
+            this.cbLimit.Name = "cbLimit";
+            this.cbLimit.Size = new System.Drawing.Size(47, 17);
+            this.cbLimit.TabIndex = 12;
+            this.cbLimit.Text = "Limit";
+            this.cbLimit.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -305,6 +317,7 @@
             this.Controls.Add(this.cbTemplate);
             this.Controls.Add(this.button8);
             this.Controls.Add(this.cbCropPixels);
+            this.Controls.Add(this.cbLimit);
             this.Controls.Add(this.cbUseMask);
             this.Controls.Add(this.cbCollectionMethod);
             this.Controls.Add(this.button7);
@@ -352,6 +365,7 @@
         private System.Windows.Forms.ComboBox cbMaxDepth;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.CheckBox cbLimit;
     }
 }
 

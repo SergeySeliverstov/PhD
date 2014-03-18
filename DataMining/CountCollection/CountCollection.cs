@@ -32,7 +32,7 @@ namespace DataMining
 
         public abstract void AddItem(params int[] values);
         public abstract List<CountItem> FindItems(params int[][] values);
-        public abstract int? FindColor(params int[][] values);
+        public abstract int? FindColor(int[][] values, int[][] values5 = null, decimal limit = 0);
 
         protected void bubbleSort(ref int[] A)
         {

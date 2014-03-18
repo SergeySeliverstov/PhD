@@ -59,7 +59,8 @@ namespace DecisionMethods
                             for (int j = 1; j < dm.MyImage.ImageHeight - 1; j++)
                                 if (dm.PollutedMask[i, j])
                                 {
-                                    var criterion = dm.CheckForCriterion(dm.MyImage.ImageBytes, i, j);
+                                    //var criterion = dm.CheckForCriterion(dm.MyImage.ImageBytes, i, j);
+                                    var criterion = 5;
                                     var color = new MyColor(restoredImage.ImageBytes[i, j]);
                                     var origColor = new MyColor(restoredImage.OriginalImageBytes[i, j]);
                                     statistics[(int)criterion][method, method] += Math.Abs((decimal)(origColor.R + origColor.G + origColor.B) / (decimal)3 - (decimal)(color.R + color.G + color.B) / (decimal)3);

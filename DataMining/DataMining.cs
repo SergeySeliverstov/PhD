@@ -18,6 +18,7 @@ namespace DataMining
         private int template;
         private bool cropPixels;
         private int maxAccuracy;
+        private bool useLimit;
 
         private int[,] pollutedImage;
         private bool[,] pollutedMask;
@@ -162,6 +163,21 @@ namespace DataMining
             }
         }
 
+        public bool UseLimit
+        {
+            get
+            {
+                return useLimit;
+            }
+            set
+            {
+                if (useLimit != value)
+                {
+                    useLimit = value;
+                }
+            }
+        }
+
         private void updateProgress(int value)
         {
             if (UpdateProgress != null)
@@ -259,22 +275,27 @@ namespace DataMining
                         if (pollutedMask[i, j])
                         {
                             int[][] find = null;
+                            int[][] find5 = null;
                             switch (template)
                             {
                                 case 0:
                                     find = Templates.GetPixelsByTempate(myImage.ImageBytes, i, j, depth, true, cropPixels);
+                                    find5 = Templates.GetPixelsByTempate(myImage.ImageBytes, i, j, depth, false, cropPixels);
                                     break;
                                 case 1:
                                     find = Templates.GetPixelsByTempateRectangle(myImage.ImageBytes, i, j, true, cropPixels);
+                                    find5 = Templates.GetPixelsByTempate(myImage.ImageBytes, i, j, depth, false, cropPixels);
                                     break;
                                 case 2:
                                     find = Templates.GetPixelsByTempateCross(myImage.ImageBytes, i, j, true, cropPixels);
+                                    find5 = Templates.GetPixelsByTempate(myImage.ImageBytes, i, j, depth, false, cropPixels);
                                     break;
                                 case 3:
                                     find = Templates.GetPixelsByTempateDiCross(myImage.ImageBytes, i, j, true, cropPixels);
+                                    find5 = Templates.GetPixelsByTempate(myImage.ImageBytes, i, j, depth, false, cropPixels);
                                     break;
                             }
-                            int? color = pairs.FindColor(find);
+                            int? color = pairs.FindColor(find, find5, useLimit ? maxAccuracy : 0);
                             if (color != null)
                             {
                                 myImage.ImageBytes[i, j] = color.Value;
