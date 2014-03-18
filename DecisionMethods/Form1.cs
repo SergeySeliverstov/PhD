@@ -116,6 +116,12 @@ namespace DecisionMethods
         {
             dm.SaveInMask = cbUseMask.Checked;
             dm.FindPixels();
+            int[,] mask = new int[dm.PollutedMask.GetLength(0), dm.PollutedMask.GetLength(1)];
+            for (int i = 0; i < dm.PollutedMask.GetLength(0); i++)
+                for (int j = 0; j < dm.PollutedMask.GetLength(1); j++)
+                    mask[i, j] = dm.PollutedMask[i, j] ? 0x00FF00 : 0;
+            MyImage maskImage = new MyImage(mask);
+            pictureBox9.Image = maskImage.Bitmap;
         }
     }
 }

@@ -9,6 +9,7 @@ namespace DecisionMethods
     public class DecisionMethods
     {
         private List<KeyValuePair<Tools.ColorChannel, int>> colors;
+        private FoundPixels fp;
 
         private MyImage myImage;
         public MyImage MyImage
@@ -33,6 +34,7 @@ namespace DecisionMethods
         public DecisionMethods(int[,] imageBytes)
         {
             this.myImage = new MyImage(imageBytes);
+            this.fp = new FoundPixels(16, 2, 1, true);
             pollutedMask = new bool[myImage.ImageWidth, myImage.ImageHeight];
         }
 
@@ -59,13 +61,18 @@ namespace DecisionMethods
             pollutedMask = Tools.ImageTransform.Pollute(myImage.ImageBytes, percent, SaveInMask);
         }
 
+        //public void FindPixels()
+        //{
+        //    for (int i = 2; i < myImage.ImageWidth - 2; i++)
+        //        for (int j = 2; j < myImage.ImageHeight - 2; j++)
+        //        {
+        //            pollutedMask[i, j] = CheckForCriterion(myImage.ImageBytes, i, j) != Criterion.Good;
+        //        }
+        //}
+
         public void FindPixels()
         {
-            for (int i = 2; i < myImage.ImageWidth - 2; i++)
-                for (int j = 2; j < myImage.ImageHeight - 2; j++)
-                {
-                    pollutedMask[i, j] = CheckForCriterion(myImage.ImageBytes, i, j) != Criterion.Good;
-                }
+            pollutedMask = fp.FindPixels(myImage.ImageBytes);
         }
 
         public MyImage RestoreImageByStatistics(Matrix criterions, List<Matrix> statistics)
@@ -79,7 +86,9 @@ namespace DecisionMethods
                     {
                         decimal min;
                         int minNumber;
-                        var criterion = CheckForCriterion(newImageBytes, i, j);
+                        //var criterion = CheckForCriterion(newImageBytes, i, j);
+                        //fp.
+                        var criterion = 5;
                         min = MatrixTools.FindMinDiag(statistics[(int)criterion], out minNumber);
                         newImageBytes[i, j] = restorePixel(i, j, minNumber);
                     }
@@ -116,6 +125,7 @@ namespace DecisionMethods
 
             return newImage;
         }
+
 
         private int restorePixel(int x, int y, int method)
         {
@@ -207,66 +217,66 @@ namespace DecisionMethods
             return Tools.Metrics.GetUnifiedMetrics(myImage, mode);
         }
 
-        private bool equal(int color1, int color2)
-        {
-            return (color1 & Tools.Consts.CropMask) == (color2 & Tools.Consts.CropMask);
-        }
+        //private bool equal(int color1, int color2)
+        //{
+        //    return (color1 & Tools.Consts.CropMask) == (color2 & Tools.Consts.CropMask);
+        //}
 
-        private bool equal(int color1, int color2, int color3)
-        {
-            return equal(color1, color2) && equal(color2, color3);
-        }
+        //private bool equal(int color1, int color2, int color3)
+        //{
+        //    return equal(color1, color2) && equal(color2, color3);
+        //}
 
-        public Criterion CheckForCriterion(int[,] a, int i, int j)
-        {
-            var vLine1 = equal(a[i - 1, j - 1], a[i - 1, j], a[i - 1, j + 1]);
-            var vLine2 = equal(a[i, j - 1], a[i, j], a[i, j + 1]);
-            var vLine3 = equal(a[i + 1, j - 1], a[i + 1, j], a[i + 1, j + 1]);
+        //public Criterion CheckForCriterion(int[,] a, int i, int j)
+        //{
+        //    var vLine1 = equal(a[i - 1, j - 1], a[i - 1, j], a[i - 1, j + 1]);
+        //    var vLine2 = equal(a[i, j - 1], a[i, j], a[i, j + 1]);
+        //    var vLine3 = equal(a[i + 1, j - 1], a[i + 1, j], a[i + 1, j + 1]);
 
-            var hLine1 = equal(a[i - 1, j - 1], a[i, j - 1], a[i + 1, j - 1]);
-            var hLine2 = equal(a[i - 1, j], a[i, j], a[i + 1, j]);
-            var hLine3 = equal(a[i - 1, j + 1], a[i, j + 1], a[i + 1, j + 1]);
+        //    var hLine1 = equal(a[i - 1, j - 1], a[i, j - 1], a[i + 1, j - 1]);
+        //    var hLine2 = equal(a[i - 1, j], a[i, j], a[i + 1, j]);
+        //    var hLine3 = equal(a[i - 1, j + 1], a[i, j + 1], a[i + 1, j + 1]);
 
-            var vLine2x = equal(a[i, j - 1], a[i, j + 1]);
-            var hLine2x = equal(a[i - 1, j], a[i + 1, j]);
+        //    var vLine2x = equal(a[i, j - 1], a[i, j + 1]);
+        //    var hLine2x = equal(a[i - 1, j], a[i + 1, j]);
 
-            // + + +
-            // + + +
-            // + + +
-            if (vLine1 && vLine2 && vLine3 && hLine1 && hLine2 && hLine3)
-                return Criterion.Good;
+        //    // + + +
+        //    // + + +
+        //    // + + +
+        //    if (vLine1 && vLine2 && vLine3 && hLine1 && hLine2 && hLine3)
+        //        return Criterion.Good;
 
-            // + + *    * * *    * + +    + + +
-            // + + * or + + + or * + + or + + +
-            // + + *    + + +    * + +    * * *
-            if (vLine1 && vLine2 || hLine2 && hLine3 || hLine2 && hLine3 || hLine1 && hLine2)
-                return Criterion.Good;
+        //    // + + *    * * *    * + +    + + +
+        //    // + + * or + + + or * + + or + + +
+        //    // + + *    + + +    * + +    * * *
+        //    if (vLine1 && vLine2 || hLine2 && hLine3 || hLine2 && hLine3 || hLine1 && hLine2)
+        //        return Criterion.Good;
 
-            // * + *    * * *
-            // * + * or + + +
-            // * + *    * * *
-            if (vLine2 || hLine2)
-                return Criterion.Good;
+        //    // * + *    * * *
+        //    // * + * or + + +
+        //    // * + *    * * *
+        //    if (vLine2 || hLine2)
+        //        return Criterion.Good;
 
-            // + + +
-            // + X +
-            // + + +
-            if (vLine1 && vLine2x && vLine3 && hLine1 && hLine2x && hLine3)
-                return Criterion.Fill;
+        //    // + + +
+        //    // + X +
+        //    // + + +
+        //    if (vLine1 && vLine2x && vLine3 && hLine1 && hLine2x && hLine3)
+        //        return Criterion.Fill;
 
-            // + + *    * * *    * + +    + + +
-            // + X * or + X + or * X + or + X +
-            // + + *    + + +    * + +    * * *
-            if (vLine1 && vLine2x || hLine2x && hLine3 || vLine2x && vLine3 || hLine1 && hLine2x)
-                return Criterion.Border;
+        //    // + + *    * * *    * + +    + + +
+        //    // + X * or + X + or * X + or + X +
+        //    // + + *    + + +    * + +    * * *
+        //    if (vLine1 && vLine2x || hLine2x && hLine3 || vLine2x && vLine3 || hLine1 && hLine2x)
+        //        return Criterion.Border;
 
-            // * + *    * * *
-            // * X * or + X +
-            // * + *    * * *
-            if (vLine2x || hLine2x)
-                return Criterion.Line;
+        //    // * + *    * * *
+        //    // * X * or + X +
+        //    // * + *    * * *
+        //    if (vLine2x || hLine2x)
+        //        return Criterion.Line;
 
-            return Criterion.None;
-        }
+        //    return Criterion.None;
+        //}
     }
 }

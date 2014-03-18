@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataMining", "DataMining\DataMining.csproj", "{E39130EF-8B53-4914-B06A-742E08A5A235}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DecisionMethods", "DecisionMethods\DecisionMethods.csproj", "{F1072980-DFB6-49A9-A0D0-EA700F7CC147}"
@@ -8,6 +8,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FourierTransform", "FourierTransform\FourierTransform.csproj", "{65460080-C3F8-43EA-9B99-8BA36EEA021A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tools", "Tools\Tools.csproj", "{A9039125-99C4-4258-92CA-7D18A4F4C63D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DecisionMethods.Test", "DecisionMethods.Test\DecisionMethods.Test.csproj", "{C5DF3685-1AB3-43A9-AF46-ECA3AECE6E92}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,6 +73,18 @@ Global
 		{A9039125-99C4-4258-92CA-7D18A4F4C63D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{A9039125-99C4-4258-92CA-7D18A4F4C63D}.Release|x64.ActiveCfg = Release|Any CPU
 		{A9039125-99C4-4258-92CA-7D18A4F4C63D}.Release|x86.ActiveCfg = Release|Any CPU
+		{C5DF3685-1AB3-43A9-AF46-ECA3AECE6E92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5DF3685-1AB3-43A9-AF46-ECA3AECE6E92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5DF3685-1AB3-43A9-AF46-ECA3AECE6E92}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{C5DF3685-1AB3-43A9-AF46-ECA3AECE6E92}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{C5DF3685-1AB3-43A9-AF46-ECA3AECE6E92}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C5DF3685-1AB3-43A9-AF46-ECA3AECE6E92}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C5DF3685-1AB3-43A9-AF46-ECA3AECE6E92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5DF3685-1AB3-43A9-AF46-ECA3AECE6E92}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5DF3685-1AB3-43A9-AF46-ECA3AECE6E92}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{C5DF3685-1AB3-43A9-AF46-ECA3AECE6E92}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{C5DF3685-1AB3-43A9-AF46-ECA3AECE6E92}.Release|x64.ActiveCfg = Release|Any CPU
+		{C5DF3685-1AB3-43A9-AF46-ECA3AECE6E92}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
