@@ -7,21 +7,10 @@ namespace DecisionMethods
 {
     public class FoundPixels
     {
-        double m;   // количество оттенков
-        bool color; // цветное или нет
-        double n;   // cross важнее dicross'a       
-        double k;   // dicross важнее отклонения цвета
-
-        public FoundPixels(int m, int n, int k, bool color)
-        {
-            this.m = m;
-            this.n = n;
-            this.k = k;
-        }
-
-        public bool[,] FindPixels(int[,] bytes)
+        public static bool[,] FindPixels(int[,] bytes, int m, double n, double k, bool color)
         {
             byte[,] channelBytes = new byte[bytes.GetLength(0), bytes.GetLength(1)];
+            int[,] tmpResult = new int[bytes.GetLength(0), bytes.GetLength(1)];
             bool[,] mask = new bool[bytes.GetLength(0), bytes.GetLength(1)];
 
             for (byte ch = 0; ch < (color ? 3 : 1); ch++)
@@ -33,13 +22,17 @@ namespace DecisionMethods
                 for (int i = 0; i < channelBytes.GetLength(0); i++)
                     for (int j = 0; j < channelBytes.GetLength(1); j++)
                         if (i > 1 && j > 1 && i < channelBytes.GetLength(0) - 1 && j < channelBytes.GetLength(1) - 1)
-                            mask[i, j] = PixelIsBroken(channelBytes, i, j);
+                            tmpResult[i, j] += PixelIsBroken(channelBytes, i, j, m, n, k, color) ? 1 : 0;
             }
+
+            for (int i = 0; i < channelBytes.GetLength(0); i++)
+                for (int j = 0; j < channelBytes.GetLength(1); j++)
+                    mask[i, j] = tmpResult[i, j] >= (color ? 2 : 1);
 
             return mask;
         }
 
-        public bool PixelIsBroken(byte[,] channelBytes, int i, int j)
+        public static bool PixelIsBroken(byte[,] channelBytes, int i, int j, int m, double n, double k, bool color)
         {
             double byteMask = 0xFF / m;
             //byte byteMask = 1;

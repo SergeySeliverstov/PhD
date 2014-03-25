@@ -141,5 +141,36 @@ namespace Tools
 
             return text;
         }
+
+        public static string MatrixDifference(bool[,] array1, bool[,] array2, MetricsMode mode)
+        {
+            if (array1.GetLength(0) != array2.GetLength(0) || array1.GetLength(1) != array2.GetLength(1))
+                return "Wrong dimmensions";
+
+            int broken = 0;
+            int found = 0;
+            int match = 0;
+            int notFound = 0;
+            int wrongFound = 0;
+            for (int i = 0; i < array1.GetLength(0); i++)
+                for (int j = 0; j < array1.GetLength(1); j++)
+                {
+                    if (array1[i, j])
+                        broken++;
+                    if (array2[i, j])
+                        found++;
+                    if (array1[i, j] && array2[i, j])
+                        match++;
+                    if (array1[i, j] && !array2[i, j])
+                        notFound++;
+                    if (!array1[i, j] && array2[i, j])
+                        wrongFound++;
+                }
+
+            if (mode == MetricsMode.CSVDetail || mode == MetricsMode.CSVSimple)
+                return string.Join(Consts.CSVDivider, broken, found, match, notFound, wrongFound);
+            else
+                return string.Format("Broken: {0}\r\nFound {7}\r\n\r\nMatch: {1} ({4:N02}%)\r\nNot found: {2} ({5:N02}%)\r\nWrong found: {3} ({6:N02}%)\r\n", broken, match, notFound, wrongFound, 100 * (double)match / broken, 100 * (double)notFound / broken, 100 * (double)wrongFound / found, found);
+        }
     }
 }

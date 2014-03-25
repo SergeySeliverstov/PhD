@@ -14,6 +14,8 @@ namespace DecisionMethods
     public partial class Form1 : Form
     {
         DecisionMethods dm;
+        bool[,] savedMask;
+        bool[,] savedMask2;
 
         private List<KeyValuePair<Tools.ColorChannel, int>> colors;
 
@@ -50,6 +52,7 @@ namespace DecisionMethods
 
             dm.SaveInMask = cbUseMask.Checked;
             dm.Pollute(nudPercent.Value);
+            savedMask = Tools.Tools.CopyArray<bool>(dm.PollutedMask);
             ShowImage(pictureBox1, dm.MyImage.Bitmap);
         }
 
@@ -57,47 +60,27 @@ namespace DecisionMethods
         {
             tbLog.Text += "Broken: " + Tools.Metrics.GetUnifiedMetrics(dm.MyImage);
 
-            if (!cbStatisticsOnly.Checked)
-            {
-                dm.SaveInMask = cbUseMask.Checked;
-                var image0 = dm.RestoreImage(0);
-                ShowImage(pictureBox2, image0.Bitmap);
-                tbLog.Text += "First: " + Tools.Metrics.GetUnifiedMetrics(image0);
+            var image4 = dm.RestoreImage(4);
+            ShowImage(pictureBox3, image4.Bitmap);
+            tbLog.Text += "Middle: " + Tools.Metrics.GetUnifiedMetrics(image4);
 
-                var image1 = dm.RestoreImage(1);
-                ShowImage(pictureBox3, image1.Bitmap);
-                tbLog.Text += "Min " + Tools.Metrics.GetUnifiedMetrics(image1);
+            var image5 = dm.RestoreImage(5);
+            ShowImage(pictureBox4, image5.Bitmap);
+            tbLog.Text += "Sqrt: " + Tools.Metrics.GetUnifiedMetrics(image5);
 
-                var image2 = dm.RestoreImage(2);
-                ShowImage(pictureBox4, image2.Bitmap);
-                tbLog.Text += "Max: " + Tools.Metrics.GetUnifiedMetrics(image2);
+            //var statisticsFileName = "Statistics.xml";
+            //var optimizedStatisticsFileName = "OptimizedStatistics.xml";
+            //var criterionsFileName = "Criterions.xml";
+            //var optimizedCriterionsFileName = "OptimizedCriterions.xml";
 
-                var image3 = dm.RestoreImage(3);
-                ShowImage(pictureBox5, image3.Bitmap);
-                tbLog.Text += "Avg: " + Tools.Metrics.GetUnifiedMetrics(image3);
+            //var optimizedStatistics = XmlTools.Load<List<Matrix>>(optimizedStatisticsFileName);
+            //var statistics = XmlTools.Load<List<Matrix>>(statisticsFileName);
+            //var optimizedCriterions = XmlTools.Load<Matrix>(optimizedCriterionsFileName);
+            //var criterions = XmlTools.Load<Matrix>(criterionsFileName);
 
-                var image4 = dm.RestoreImage(4);
-                ShowImage(pictureBox6, image4.Bitmap);
-                tbLog.Text += "Middle: " + Tools.Metrics.GetUnifiedMetrics(image4);
-
-                var image5 = dm.RestoreImage(5);
-                ShowImage(pictureBox7, image5.Bitmap);
-                tbLog.Text += "Sqrt: " + Tools.Metrics.GetUnifiedMetrics(image5);
-            }
-
-            var statisticsFileName = "Statistics.xml";
-            var optimizedStatisticsFileName = "OptimizedStatistics.xml";
-            var criterionsFileName = "Criterions.xml";
-            var optimizedCriterionsFileName = "OptimizedCriterions.xml";
-
-            var optimizedStatistics = XmlTools.Load<List<Matrix>>(optimizedStatisticsFileName);
-            var statistics = XmlTools.Load<List<Matrix>>(statisticsFileName);
-            var optimizedCriterions = XmlTools.Load<Matrix>(optimizedCriterionsFileName);
-            var criterions = XmlTools.Load<Matrix>(criterionsFileName);
-
-            var image6 = dm.RestoreImageByStatistics(criterions, statistics);
-            ShowImage(pictureBox8, image6.Bitmap);
-            tbLog.Text += "By Statistics: " + Tools.Metrics.GetUnifiedMetrics(image6);
+            //var image6 = dm.RestoreImageByStatistics(criterions, statistics);
+            //ShowImage(pictureBox8, image6.Bitmap);
+            //tbLog.Text += "By Statistics: " + Tools.Metrics.GetUnifiedMetrics(image6);
         }
 
         private void pictureBox_MouseClick(object sender, MouseEventArgs e)
@@ -115,13 +98,17 @@ namespace DecisionMethods
         private void button2_Click(object sender, EventArgs e)
         {
             dm.SaveInMask = cbUseMask.Checked;
-            dm.FindPixels();
+            dm.FindPixels((int)m.Value, (double)n.Value, (double)k.Value, color.Checked);
             int[,] mask = new int[dm.PollutedMask.GetLength(0), dm.PollutedMask.GetLength(1)];
             for (int i = 0; i < dm.PollutedMask.GetLength(0); i++)
                 for (int j = 0; j < dm.PollutedMask.GetLength(1); j++)
-                    mask[i, j] = dm.PollutedMask[i, j] ? 0x00FF00 : 0;
+                    mask[i, j] = dm.PollutedMask[i, j] ? 0 : 0xFFFFFF;
             MyImage maskImage = new MyImage(mask);
-            pictureBox9.Image = maskImage.Bitmap;
+            pictureBox2.Image = maskImage.Bitmap;
+
+            savedMask2 = Tools.Tools.CopyArray<bool>(dm.PollutedMask);
+
+            tbLog.Text += Tools.Metrics.MatrixDifference(savedMask, savedMask2, MetricsMode.Simple);
         }
     }
 }

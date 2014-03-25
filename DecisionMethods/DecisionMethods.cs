@@ -9,7 +9,6 @@ namespace DecisionMethods
     public class DecisionMethods
     {
         private List<KeyValuePair<Tools.ColorChannel, int>> colors;
-        private FoundPixels fp;
 
         private MyImage myImage;
         public MyImage MyImage
@@ -34,7 +33,6 @@ namespace DecisionMethods
         public DecisionMethods(int[,] imageBytes)
         {
             this.myImage = new MyImage(imageBytes);
-            this.fp = new FoundPixels(16, 2, 1, true);
             pollutedMask = new bool[myImage.ImageWidth, myImage.ImageHeight];
         }
 
@@ -70,9 +68,9 @@ namespace DecisionMethods
         //        }
         //}
 
-        public void FindPixels()
+        public void FindPixels(int m, double n, double k, bool color)
         {
-            pollutedMask = fp.FindPixels(myImage.ImageBytes);
+            pollutedMask = FoundPixels.FindPixels(myImage.ImageBytes, m, n, k, color);
         }
 
         public MyImage RestoreImageByStatistics(Matrix criterions, List<Matrix> statistics)
@@ -88,7 +86,7 @@ namespace DecisionMethods
                         int minNumber;
                         //var criterion = CheckForCriterion(newImageBytes, i, j);
                         //fp.
-                        var criterion = 5;
+                        var criterion = 4;
                         min = MatrixTools.FindMinDiag(statistics[(int)criterion], out minNumber);
                         newImageBytes[i, j] = restorePixel(i, j, minNumber);
                     }
@@ -125,7 +123,6 @@ namespace DecisionMethods
 
             return newImage;
         }
-
 
         private int restorePixel(int x, int y, int method)
         {

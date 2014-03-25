@@ -98,7 +98,7 @@ namespace DecisionMethods
                     if (int.Parse(args[3]) == 0)
                     {
                         dm.SaveInMask = true;
-                        dm.FindPixels();
+                        dm.FindPixels(8, 2, 1, true);
                     }
 
                     //var restoredImage = dm.RestoreImage(criterions, optimizedStatistics);
@@ -115,6 +115,30 @@ namespace DecisionMethods
                         log = string.Join(Tools.Consts.CSVDivider, "File", "Pollution percent", "Use mask", "MM Orig", "MSE Orig", "DON Orig", "MM Pollute", "MSE Pollute", "DON Pollute", "MM Restored", "MSE Restored", "DON Restored") + "\n";
                     log += string.Join(Tools.Consts.CSVDivider, args[1], args[2], args[3]) + Tools.Consts.CSVDivider;
                     log += string.Join(Tools.Consts.CSVDivider, metricsOrig, metricsPolluted, metricsRestored);
+                    fs.WriteLine(log);
+                    fs.Close();
+                }
+                else if (args[0] == "/s")
+                {
+                    var myImage = new MyImage();
+                    myImage.Bitmap = new Bitmap(args[1]);
+                    var dm = new DecisionMethods(myImage);
+
+                    dm.SaveInMask = true;
+                    dm.Pollute(decimal.Parse(args[2]));
+                    var savedMask = Tools.Tools.CopyArray<bool>(dm.PollutedMask);
+
+                    dm.FindPixels(int.Parse(args[3]), double.Parse(args[4].Replace(".", ",")), double.Parse(args[5].Replace(".", ",")), int.Parse(args[6]) == 1);
+                    var savedMask2 = Tools.Tools.CopyArray<bool>(dm.PollutedMask);
+
+                    bool addHeader = !File.Exists("Statistics_Mask.csv");
+
+                    string log = string.Empty;
+                    StreamWriter fs = new StreamWriter("Statistics_Mask.csv", true);
+                    if (addHeader)
+                        log = string.Join(Tools.Consts.CSVDivider, "File", "Pollution percent", "M", "N", "K", "Use color", "Broken", "Found", "Match", "Not found", "Wrong found") + "\n";
+                    log += string.Join(Tools.Consts.CSVDivider, args[1], args[2], args[3], args[4], args[5], args[6]) + Tools.Consts.CSVDivider;
+                    log += string.Join(Tools.Consts.CSVDivider, Tools.Metrics.MatrixDifference(savedMask, savedMask2, MetricsMode.CSVSimple));
                     fs.WriteLine(log);
                     fs.Close();
                 }
