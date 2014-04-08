@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
 using System.IO;
+using Tools;
 
 namespace DataMining
 {
@@ -74,7 +75,7 @@ namespace DataMining
             return result.ConvertAll<CountItem>(new Converter<TreeItem, CountItem>(delegate(TreeItem item) { return (CountItem)item; }));
         }
 
-        public override int? FindColor(int[][] values, int[][] values5 = null, decimal limit = 0)
+        public override int? FindColor(int[][] values, int[][] values5 = null, decimal limit = 0, bool wsm = false)
         {
             int count = 0;
             if (values5 != null)
@@ -84,10 +85,32 @@ namespace DataMining
             }
 
             var find = FindItems(values);
-            var filter = find.Where(i => limit == 0 || i.count / count >= limit / 100);
+            var filter = find.Where(i => limit == 0 || count / i.count >= limit / 100);
             var result = filter.OrderByDescending(i => i.count).ToArray();
             if (result != null && result.Length > 0)
-                return ((TreeItem)result[0]).color;
+            {
+                if (wsm)
+                {
+                    double r = 0;
+                    double g = 0;
+                    double b = 0;
+                    double c = 0;
+                    foreach (var ress in result)
+                        c += ((TreeItem)ress).count;
+                    foreach (var ress in result)
+                    {
+                        var color = new MyColor(((TreeItem)ress).color);
+                        r += color.R * ((TreeItem)ress).count / c;
+                        g += color.G * ((TreeItem)ress).count / c;
+                        b += color.B * ((TreeItem)ress).count / c;
+                    }
+                    return new MyColor((byte)r, (byte)g, (byte)b).Color;
+                }
+                else
+                {
+                    return ((TreeItem)result[0]).color;
+                }
+            }
             return null;
         }
 

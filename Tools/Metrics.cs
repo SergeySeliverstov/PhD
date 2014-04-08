@@ -16,6 +16,11 @@ namespace Tools
 
     public class Metrics
     {
+        public static double PSNR(byte[,] originalImage, byte[,] modifiedImage)
+        {
+            return 10 * Math.Log10(255 * 255 / MSE(originalImage, modifiedImage));
+        }
+
         public static double MM(byte[,] originalImage, byte[,] modifiedImage, int K, int gamma)
         {
             double result = 0;
@@ -112,6 +117,9 @@ namespace Tools
             double r2 = Metrics.DON(myImage.OriginalImageR, myImage.ImageR, 5);
             double g2 = Metrics.DON(myImage.OriginalImageG, myImage.ImageG, 5);
             double b2 = Metrics.DON(myImage.OriginalImageB, myImage.ImageB, 5);
+            double r3 = Metrics.PSNR(myImage.OriginalImageR, myImage.ImageR);
+            double g3 = Metrics.PSNR(myImage.OriginalImageG, myImage.ImageG);
+            double b3 = Metrics.PSNR(myImage.OriginalImageB, myImage.ImageB);
 
             string text = string.Empty;
             switch (mode)
@@ -120,12 +128,14 @@ namespace Tools
                     text += string.Format("MM = {0}\r\n", (r0 + g0 + b0) / 3);
                     text += string.Format("MSE = {0}\r\n", (r1 + g1 + b1) / 3);
                     text += string.Format("DON = {0}\r\n", (r2 + g2 + b2) / 3);
+                    text += string.Format("PSNR = {0} dB\r\n", (r3 + g3 + b3) / 3);
                     text += "\r\n";
                     break;
                 case MetricsMode.Detail:
                     text += string.Format("MM:\r\nR = {0}\r\nG = {1}\r\nB = {2}\r\n", r0, g0, b0);
                     text += string.Format("MSE:\r\nR = {0}\r\nG = {1}\r\nB = {2}\r\n", r1, g1, b1);
                     text += string.Format("DON:\r\nR = {0}\r\nG = {1}\r\nB = {2}\r\n", r2, g2, b2);
+                    text += string.Format("PSNR:\r\nR = {0} dB\r\nG = {1} dB\r\nB = {2} dB\r\n", r3, g3, b3);
                     text += "\r\n";
                     break;
                 case MetricsMode.CSVSimple:

@@ -51,6 +51,7 @@
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.cbLimit = new System.Windows.Forms.CheckBox();
+            this.cbWSM = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudPollutePercent)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudMaxAcc)).BeginInit();
@@ -87,7 +88,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox1.Location = new System.Drawing.Point(3, 3);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(445, 223);
+            this.pictureBox1.Size = new System.Drawing.Size(445, 233);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 3;
             this.pictureBox1.TabStop = false;
@@ -118,9 +119,10 @@
             // 
             this.richTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.richTextBox1.Location = new System.Drawing.Point(459, 270);
+            this.richTextBox1.Location = new System.Drawing.Point(459, 268);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(192, 200);
+            this.richTextBox1.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
+            this.richTextBox1.Size = new System.Drawing.Size(192, 222);
             this.richTextBox1.TabIndex = 6;
             this.richTextBox1.Text = "";
             // 
@@ -128,9 +130,9 @@
             // 
             this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBar1.Location = new System.Drawing.Point(12, 476);
+            this.progressBar1.Location = new System.Drawing.Point(3, 496);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(587, 23);
+            this.progressBar1.Size = new System.Drawing.Size(648, 23);
             this.progressBar1.Step = 1;
             this.progressBar1.TabIndex = 7;
             // 
@@ -244,9 +246,9 @@
             // button9
             // 
             this.button9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button9.Location = new System.Drawing.Point(460, 241);
+            this.button9.Location = new System.Drawing.Point(460, 239);
             this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(191, 23);
+            this.button9.Size = new System.Drawing.Size(122, 23);
             this.button9.TabIndex = 16;
             this.button9.Text = "Give me some metrics!";
             this.button9.UseVisualStyleBackColor = true;
@@ -271,9 +273,9 @@
             this.pictureBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox2.Location = new System.Drawing.Point(3, 232);
+            this.pictureBox2.Location = new System.Drawing.Point(3, 242);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(445, 223);
+            this.pictureBox2.Size = new System.Drawing.Size(445, 233);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox2.TabIndex = 18;
             this.pictureBox2.TabStop = false;
@@ -292,7 +294,7 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(451, 458);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(451, 478);
             this.tableLayoutPanel1.TabIndex = 19;
             // 
             // cbLimit
@@ -306,11 +308,25 @@
             this.cbLimit.Text = "Limit";
             this.cbLimit.UseVisualStyleBackColor = true;
             // 
+            // cbWSM
+            // 
+            this.cbWSM.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbWSM.AutoSize = true;
+            this.cbWSM.Checked = true;
+            this.cbWSM.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbWSM.Location = new System.Drawing.Point(588, 243);
+            this.cbWSM.Name = "cbWSM";
+            this.cbWSM.Size = new System.Drawing.Size(53, 17);
+            this.cbWSM.TabIndex = 20;
+            this.cbWSM.Text = "WSM";
+            this.cbWSM.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(663, 526);
+            this.Controls.Add(this.cbWSM);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.cbMaxDepth);
             this.Controls.Add(this.button9);
@@ -366,6 +382,7 @@
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.CheckBox cbLimit;
+        private System.Windows.Forms.CheckBox cbWSM;
     }
 }
 

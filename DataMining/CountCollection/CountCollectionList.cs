@@ -67,7 +67,7 @@ namespace DataMining
             return result.ConvertAll<CountItem>(new Converter<ColorItem, CountItem>(delegate(ColorItem item) { return (CountItem)item; }));
         }
 
-        public override int? FindColor(int[][] values, int[][] values5 = null, decimal limit = 0)
+        public override int? FindColor(int[][] values, int[][] values5 = null, decimal limit = 0, bool wsm = false)
         {
             int count = 0;
             if (values5 != null)
@@ -76,7 +76,7 @@ namespace DataMining
                 count = find5.Sum(i => i.count);
             }
 
-            var result = FindItems(values).Where(i => limit == 0 || i.count / count < limit).OrderByDescending(i => i.count).FirstOrDefault();
+            var result = FindItems(values).Where(i => limit == 0 || count / i.count < limit).OrderByDescending(i => i.count).FirstOrDefault();
             if (result == null)
                 return null;
 

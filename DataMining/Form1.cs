@@ -21,7 +21,7 @@ namespace DataMining
             InitializeComponent();
             cbCollectionMethod.SelectedIndex = 0;
             cbTemplate.SelectedIndex = 0;
-            cbMaxDepth.SelectedIndex = 0;
+            cbMaxDepth.SelectedIndex = 2;
         }
 
         private void fillParameters()
@@ -36,6 +36,7 @@ namespace DataMining
                 dataMining.PollutePercent = (int)nudPollutePercent.Value;
                 dataMining.UseMask = cbUseMask.Checked;
                 dataMining.UseLimit = cbLimit.Checked;
+                dataMining.WSM = cbWSM.Checked;
             }
         }
 
@@ -121,6 +122,7 @@ namespace DataMining
 
         private void button9_Click(object sender, EventArgs e)
         {
+            richTextBox1.Text += string.Format("Flags: M={0}, C={1}, W={2}\n", dataMining.UseMask ? 1 : 0, dataMining.CropPixels ? 1 : 0, dataMining.WSM ? 1 : 0);
             dataMining.GetMetrics();
         }
 

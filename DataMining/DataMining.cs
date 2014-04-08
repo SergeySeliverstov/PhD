@@ -19,6 +19,7 @@ namespace DataMining
         private bool cropPixels;
         private int maxAccuracy;
         private bool useLimit;
+        private bool wsm;
 
         private int[,] pollutedImage;
         private bool[,] pollutedMask;
@@ -178,6 +179,21 @@ namespace DataMining
             }
         }
 
+        public bool WSM
+        {
+            get
+            {
+                return wsm;
+            }
+            set
+            {
+                if (wsm != value)
+                {
+                    wsm = value;
+                }
+            }
+        }
+
         private void updateProgress(int value)
         {
             if (UpdateProgress != null)
@@ -295,7 +311,7 @@ namespace DataMining
                                     find5 = Templates.GetPixelsByTempate(myImage.ImageBytes, i, j, depth, false, cropPixels);
                                     break;
                             }
-                            int? color = pairs.FindColor(find, find5, useLimit ? maxAccuracy : 0);
+                            int? color = pairs.FindColor(find, find5, useLimit ? maxAccuracy : 0, wsm);
                             if (color != null)
                             {
                                 myImage.ImageBytes[i, j] = color.Value;
@@ -305,7 +321,7 @@ namespace DataMining
                         updateProgress((int)(100 * (myImage.ImageHeight * i + j) / (myImage.ImageWidth * myImage.ImageHeight)));
                     }
                 updateProgress(100);
-                updateLog(string.Format("RestoreImage Done Depth = {0}!\n", depth));
+                updateLog(string.Format("Restore Image Done Depth = {0}!\n", depth));
             }
 
             if (pollutedImage != null)
