@@ -103,6 +103,33 @@ namespace Tools
             return polluteMask;
         }
 
+        public static bool[,] SaltAndPepper(int[,] imageBytes, decimal percent, bool saveInMask)
+        {
+            Random rnd = new Random();
+            int imageWidth = imageBytes.GetLength(0);
+            int imageHeight = imageBytes.GetLength(1);
+            bool[,] polluteMask = new bool[imageWidth, imageHeight];
+            bool[,] tmpMask = new bool[imageWidth, imageHeight];
+            for (int i = 0; i < (percent / 100) * imageWidth * imageHeight; i++)
+            {
+                int x = 0;
+                int y = 0;
+                do
+                {
+                    x = rnd.Next(0, imageWidth);
+                    y = rnd.Next(0, imageHeight);
+                } while (tmpMask[x, y]);
+
+                imageBytes[x, y] = (int)(Math.Round((decimal)rnd.Next(0, 100)/100)) * 0xFFFFFF;
+                tmpMask[x, y] = true;
+
+                if (saveInMask)
+                    polluteMask[x, y] = true;
+            }
+
+            return polluteMask;
+        }
+
         public static void Invert(int[,] imageBytes)
         {
             for (int x = 0; x < imageBytes.GetLength(0); ++x)

@@ -52,6 +52,7 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.cbLimit = new System.Windows.Forms.CheckBox();
             this.cbWSM = new System.Windows.Forms.CheckBox();
+            this.cbSaltPepper = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudPollutePercent)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudMaxAcc)).BeginInit();
@@ -141,7 +142,7 @@
             this.nudPollutePercent.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.nudPollutePercent.Location = new System.Drawing.Point(561, 44);
             this.nudPollutePercent.Name = "nudPollutePercent";
-            this.nudPollutePercent.Size = new System.Drawing.Size(91, 20);
+            this.nudPollutePercent.Size = new System.Drawing.Size(49, 20);
             this.nudPollutePercent.TabIndex = 8;
             this.nudPollutePercent.Value = new decimal(new int[] {
             10,
@@ -321,6 +322,17 @@
             this.cbWSM.Text = "WSM";
             this.cbWSM.UseVisualStyleBackColor = true;
             // 
+            // cbSaltPepper
+            // 
+            this.cbSaltPepper.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbSaltPepper.AutoSize = true;
+            this.cbSaltPepper.Location = new System.Drawing.Point(616, 45);
+            this.cbSaltPepper.Name = "cbSaltPepper";
+            this.cbSaltPepper.Size = new System.Drawing.Size(40, 17);
+            this.cbSaltPepper.TabIndex = 12;
+            this.cbSaltPepper.Text = "SP";
+            this.cbSaltPepper.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -333,6 +345,7 @@
             this.Controls.Add(this.cbTemplate);
             this.Controls.Add(this.button8);
             this.Controls.Add(this.cbCropPixels);
+            this.Controls.Add(this.cbSaltPepper);
             this.Controls.Add(this.cbLimit);
             this.Controls.Add(this.cbUseMask);
             this.Controls.Add(this.cbCollectionMethod);
@@ -383,6 +396,7 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.CheckBox cbLimit;
         private System.Windows.Forms.CheckBox cbWSM;
+        private System.Windows.Forms.CheckBox cbSaltPepper;
     }
 }
 

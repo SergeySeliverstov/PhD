@@ -78,7 +78,7 @@ namespace DataMining
         private void button2_Click(object sender, EventArgs e)
         {
             fillParameters();
-            dataMining.Pollute();
+            dataMining.Pollute(cbSaltPepper.Checked);
             ShowImage(dataMining.MyImage.Bitmap);
             ShowMask(dataMining.PollutedMask);
         }
@@ -116,7 +116,7 @@ namespace DataMining
         private void button7_Click(object sender, EventArgs e)
         {
             fillParameters();
-            dataMining.FindPixels();
+            dataMining.FindPixels(cbSaltPepper.Checked);
             ShowMask(dataMining.PollutedMask);
         }
 

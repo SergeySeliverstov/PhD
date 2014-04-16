@@ -27,5 +27,16 @@ namespace Tools
 
             return output;
         }
+
+        public static int[,] SumArrays(int[,] p1, int[,] p2)
+        {
+            int[,] output = new int[p1.GetLength(0), p1.GetLength(1)];
+
+            for (int i = 0; i < p1.GetLength(0); i++)
+                for (int j = 0; j < p1.GetLength(1); j++)
+                    output[i, j] = p1[i, j] ^ p2[i, j];
+
+            return output;
+        }
     }
 }

@@ -50,6 +50,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.color = new System.Windows.Forms.CheckBox();
+            this.cbSaltAndPepper = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -329,6 +330,17 @@
             this.color.Text = "Color";
             this.color.UseVisualStyleBackColor = true;
             // 
+            // cbSaltAndPepper
+            // 
+            this.cbSaltAndPepper.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbSaltAndPepper.AutoSize = true;
+            this.cbSaltAndPepper.Location = new System.Drawing.Point(649, 16);
+            this.cbSaltAndPepper.Name = "cbSaltAndPepper";
+            this.cbSaltAndPepper.Size = new System.Drawing.Size(90, 17);
+            this.cbSaltAndPepper.TabIndex = 15;
+            this.cbSaltAndPepper.Text = "Salt && Pepper";
+            this.cbSaltAndPepper.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -339,6 +351,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.bFindPixels);
             this.Controls.Add(this.color);
+            this.Controls.Add(this.cbSaltAndPepper);
             this.Controls.Add(this.cbUseMask);
             this.Controls.Add(this.k);
             this.Controls.Add(this.n);
@@ -389,6 +402,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.CheckBox color;
+        private System.Windows.Forms.CheckBox cbSaltAndPepper;
     }
 }
 

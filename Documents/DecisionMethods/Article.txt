@@ -1,0 +1,37 @@
+Использование метода анализа иерархий для выявления импульсного шумана изображениях.
+
+Belim S., Seliverstov S.
+
+Омский государственный университет им. Ф.М. Достоевского, г. Омск, Россия
+
+В статье предложен алгоритм выявления поврежденных пикселей, возникающих в графических файлах в результате передачи по зашумленному каналу.
+Выявление поврежденных пикселей осуществляется последовательным проходом по изображению.
+Для каждого пикселя приминяется метод анализа иерархий для принятия решения о его повреждении на основе анализа его окружения.
+Принятие решения осуществляется на основе трех критериев. Исследуется случай импульсного шума, проявляющегося как отдельные случайно размещенные пиксели случайного цвета.
+С помощью компьютерного эксперимента исследована эффективность алгоритма в зависимости от интенсивности шума.
+Показано, что с помощью выбора параметров эффективность обнаружения поврежденных пикселей может достигать 96%.
+Проведен компьютерный эксперимент, позволивший получить зависимость эффективности предложенного метода от различных параметров.
+Также исследована зависимость процента ложных срабатываний от выбранных параметров.
+Показано, что достижимы значения эффективности до 90% при ложных срабатываниях в 8% случаев.
+
+Ключевые слова: метод анализа иерархий, импульсный шум, фильтрация изображений
+
+
+ --- Мое творение :) ---
+
+Using hierarchy analysis method for detecting impulse noise on images.
+
+Omsk state university, Omsk, Russia
+
+In current article adjusted algoritm to searching broken pixels, arising in graphic files as result of transfer through noising channel.
+Searching of broken pixels carried by consistent pass on image.
+For each pixel applying method hierachical analysis for decide what method about broken pixel based on neighbours color.
+Decision based on 3 kinds of criterions.
+Investigated case of pulse noise - random pixels in random places with random color.
+Within computer experiment investigated algorith efficiency in case of noise intensity.
+Based on parameters shown efficiency of searching broken pixels grows up to 96%
+Computer experiment obtained the dependence of the efficiency of the proposed method on various parameters.
+Also investigated dependency of false positives percentage to selected parameters.
+Shown that effiency in 90% can be obtain in 8% of cases.
+
+Key words: hierarchy analysis method, pulse noise, image filtering.

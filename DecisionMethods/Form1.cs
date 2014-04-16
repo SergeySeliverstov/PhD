@@ -51,7 +51,10 @@ namespace DecisionMethods
             tbLog.Text += "Original: " + Tools.Metrics.GetUnifiedMetrics(dm.MyImage);
 
             dm.SaveInMask = cbUseMask.Checked;
-            dm.Pollute(nudPercent.Value);
+            if (cbSaltAndPepper.Checked)
+                dm.SaltAndPepper(nudPercent.Value);
+            else
+                dm.Pollute(nudPercent.Value);
             savedMask = Tools.Tools.CopyArray<bool>(dm.PollutedMask);
             ShowImage(pictureBox1, dm.MyImage.Bitmap);
         }
@@ -60,13 +63,17 @@ namespace DecisionMethods
         {
             tbLog.Text += "Broken: " + Tools.Metrics.GetUnifiedMetrics(dm.MyImage);
 
-            var image4 = dm.RestoreImage(4);
+            var image4 = dm.RestorePixels((int)m.Value, (double)n.Value);
             ShowImage(pictureBox3, image4.Bitmap);
             tbLog.Text += "Middle: " + Tools.Metrics.GetUnifiedMetrics(image4);
 
-            var image5 = dm.RestoreImage(5);
-            ShowImage(pictureBox4, image5.Bitmap);
-            tbLog.Text += "Sqrt: " + Tools.Metrics.GetUnifiedMetrics(image5);
+            //var image4 = dm.RestoreImage(4);
+            //ShowImage(pictureBox3, image4.Bitmap);
+            //tbLog.Text += "Middle: " + Tools.Metrics.GetUnifiedMetrics(image4);
+
+            //var image5 = dm.RestoreImage(5);
+            //ShowImage(pictureBox4, image5.Bitmap);
+            //tbLog.Text += "Sqrt: " + Tools.Metrics.GetUnifiedMetrics(image5);
 
             //var statisticsFileName = "Statistics.xml";
             //var optimizedStatisticsFileName = "OptimizedStatistics.xml";

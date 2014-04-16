@@ -54,18 +54,18 @@ namespace DecisionMethods
                     dm.Pollute(decimal.Parse(args[2]));
                     for (int method = 0; method < methodsCount; method++)
                     {
-                        var restoredImage = dm.RestoreImage(method);
-                        for (int i = 1; i < dm.MyImage.ImageWidth - 1; i++)
-                            for (int j = 1; j < dm.MyImage.ImageHeight - 1; j++)
-                                if (dm.PollutedMask[i, j])
-                                {
-                                    //var criterion = dm.CheckForCriterion(dm.MyImage.ImageBytes, i, j);
-                                    var criterion = 5;
-                                    var color = new MyColor(restoredImage.ImageBytes[i, j]);
-                                    var origColor = new MyColor(restoredImage.OriginalImageBytes[i, j]);
-                                    statistics[(int)criterion][method, method] += Math.Abs((decimal)(origColor.R + origColor.G + origColor.B) / (decimal)3 - (decimal)(color.R + color.G + color.B) / (decimal)3);
-                                    criterions[(int)criterion, (int)criterion] += 1;
-                                }
+                        //var restoredImage = dm.RestoreImage(method);
+                        //for (int i = 1; i < dm.MyImage.ImageWidth - 1; i++)
+                        //    for (int j = 1; j < dm.MyImage.ImageHeight - 1; j++)
+                        //        if (dm.PollutedMask[i, j])
+                        //        {
+                        //            //var criterion = dm.CheckForCriterion(dm.MyImage.ImageBytes, i, j);
+                        //            var criterion = 5;
+                        //            var color = new MyColor(restoredImage.ImageBytes[i, j]);
+                        //            var origColor = new MyColor(restoredImage.OriginalImageBytes[i, j]);
+                        //            statistics[(int)criterion][method, method] += Math.Abs((decimal)(origColor.R + origColor.G + origColor.B) / (decimal)3 - (decimal)(color.R + color.G + color.B) / (decimal)3);
+                        //            criterions[(int)criterion, (int)criterion] += 1;
+                        //        }
                     }
 
                     XmlTools.Save<List<Matrix>>(statisticsFileName, statistics);
@@ -102,21 +102,21 @@ namespace DecisionMethods
                     }
 
                     //var restoredImage = dm.RestoreImage(criterions, optimizedStatistics);
-                    var restoredImage = dm.RestoreImageByStatistics(criterions, statistics);
-                    restoredImage.Bitmap.Save(args[1] + "_restored.png", ImageFormat.Png);
+                    //var restoredImage = dm.RestoreImageByStatistics(criterions, statistics);
+                    //restoredImage.Bitmap.Save(args[1] + "_restored.png", ImageFormat.Png);
 
-                    var metricsRestored = Tools.Metrics.GetUnifiedMetrics(restoredImage, MetricsMode.CSVSimple);
+                    //var metricsRestored = Tools.Metrics.GetUnifiedMetrics(restoredImage, MetricsMode.CSVSimple);
 
-                    bool addHeader = !File.Exists("Statistics.csv");
+                    //bool addHeader = !File.Exists("Statistics.csv");
 
-                    string log = string.Empty;
-                    StreamWriter fs = new StreamWriter("Statistics.csv", true);
-                    if (addHeader)
-                        log = string.Join(Tools.Consts.CSVDivider, "File", "Pollution percent", "Use mask", "MM Orig", "MSE Orig", "DON Orig", "MM Pollute", "MSE Pollute", "DON Pollute", "MM Restored", "MSE Restored", "DON Restored") + "\n";
-                    log += string.Join(Tools.Consts.CSVDivider, args[1], args[2], args[3]) + Tools.Consts.CSVDivider;
-                    log += string.Join(Tools.Consts.CSVDivider, metricsOrig, metricsPolluted, metricsRestored);
-                    fs.WriteLine(log);
-                    fs.Close();
+                    //string log = string.Empty;
+                    //StreamWriter fs = new StreamWriter("Statistics.csv", true);
+                    //if (addHeader)
+                    //    log = string.Join(Tools.Consts.CSVDivider, "File", "Pollution percent", "Use mask", "MM Orig", "MSE Orig", "DON Orig", "MM Pollute", "MSE Pollute", "DON Pollute", "MM Restored", "MSE Restored", "DON Restored") + "\n";
+                    //log += string.Join(Tools.Consts.CSVDivider, args[1], args[2], args[3]) + Tools.Consts.CSVDivider;
+                    //log += string.Join(Tools.Consts.CSVDivider, metricsOrig, metricsPolluted, metricsRestored);
+                    //fs.WriteLine(log);
+                    //fs.Close();
                 }
                 else if (args[0] == "/s")
                 {

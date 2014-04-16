@@ -64,7 +64,7 @@ namespace DecisionMethods.Test
             //Console.WriteLine(result);
 
             array = new byte[,] { { 0xFF, 0x0F, 0xFF }, { 0x0F, 0, 0 }, { 0xFF, 0x0F, 0xFF } };
-            result = FoundPixels.PixelIsBroken(array, 1, 1, 2, 2, 1, true);
+            result = PixelsSearching.PixelIsBroken(array, 1, 1, 2, 2, 1);
             ShowArray<byte>(array);
             Console.WriteLine(result);
 

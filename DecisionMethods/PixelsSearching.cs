@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DecisionMethods
 {
-    public class FoundPixels
+    public class PixelsSearching
     {
         public static bool[,] FindPixels(int[,] bytes, int m, double n, double k, bool color)
         {
@@ -22,7 +22,7 @@ namespace DecisionMethods
                 for (int i = 0; i < channelBytes.GetLength(0); i++)
                     for (int j = 0; j < channelBytes.GetLength(1); j++)
                         if (i > 1 && j > 1 && i < channelBytes.GetLength(0) - 1 && j < channelBytes.GetLength(1) - 1)
-                            tmpResult[i, j] += PixelIsBroken(channelBytes, i, j, m, n, k, color) ? 1 : 0;
+                            tmpResult[i, j] += PixelIsBroken(channelBytes, i, j, m, n, k) ? 1 : 0;
             }
 
             for (int i = 0; i < channelBytes.GetLength(0); i++)
@@ -32,7 +32,7 @@ namespace DecisionMethods
             return mask;
         }
 
-        public static bool PixelIsBroken(byte[,] channelBytes, int i, int j, int m, double n, double k, bool color)
+        public static bool PixelIsBroken(byte[,] channelBytes, int i, int j, int m, double n, double k)
         {
             double byteMask = 0xFF / m;
             //byte byteMask = 1;
