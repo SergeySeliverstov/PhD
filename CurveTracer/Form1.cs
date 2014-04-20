@@ -13,71 +13,161 @@ namespace CurveTracer
 {
     public partial class Form1 : Form
     {
+        public double[] Ugs;
+        public double[] k0;
+        int multiplier;
+        double shift;
+
         public Form1()
         {
             InitializeComponent();
+        }
 
-            double[] Ugs = new double[] { -3.5, -2.8, -2.1, -1.4, -0.7, 0, 0.7, 1.4, 2.1, 2.8, 3.5 };
-            //double[] Ugs = new double[] { -12, -11.3, -10.6, -9.9, -9.2, -8.5, -7.8, -7.1, -6.4, -5.7, -5 };
-            double[] k0 = new double[] { 0, 4.12, 16.1, 19, 19.8, 19.78, 19.52, 19.08, 18.5, 17.9, 17.32 };
-            double shift = (Ugs[6] - Ugs[5]) / 100;
+        private int[,] funcSum(double[] x, double[] y, double[] x3, double[] y3)
+        {
+            var size = x.Length;
 
-            int size = (int)Math.Round((Math.Abs(Ugs[10] - Ugs[0])) / shift) + 1;
-            double[] x = new double[size];
-            double[] y = new double[size];
-            double[] y2 = new double[size];
-            double[] y3 = new double[size];
+            var xMax = Math.Max(x.Max(), x3.Max());
+            var xMin = Math.Min(x.Min(), x3.Min());
 
-            for (double u = Ugs[0]; u < Ugs[10]; u += shift)
+            var yMax = Math.Max(y.Max(), y3.Max());
+            var yMin = Math.Min(y.Min(), y3.Min());
+
+            var xScale = (xMax - xMin) / size;
+            var yScale = (yMax - yMin) / size;
+
+            var pic = new int[size + 1, size + 1];
+
+            for (var i = 0; i < pic.GetLength(0); i++)
+                for (var j = 0; j < pic.GetLength(1); j++)
+                    pic[i, j] = 0xFFFFFF;
+
+            for (var i = 0; i < pic.GetLength(0); i += size / 20)
+                for (var j = 0; j < pic.GetLength(1); j++)
+                    pic[i, j] = 0x888888;
+
+            for (var i = 0; i < pic.GetLength(0); i++)
+                for (var j = 0; j < pic.GetLength(1); j += size / 20)
+                    pic[i, j] = 0x888888;
+
+            for (var i = 0; i < x.Length; i++)
             {
-                int i = (int)Math.Round(Math.Abs(Ugs[0] - u) / shift);
+                pic[(int)Math.Floor((x[i] - xMin) / xScale), (int)Math.Floor((yMax - y[i]) / yScale)] = 0;
+                pic[(int)Math.Floor((x[i] - xMin) / xScale), (int)Math.Floor((yMax - y3[i]) / yScale)] = 0;
+            }
+
+            return pic;
+        }
+
+        private int[,] func(double[] x, double[] y)
+        {
+            var size = x.Length;
+
+            var xScale = (x.Max() - x.Min()) / size;
+            var yScale = (y.Max() - y.Min()) / size;
+
+            var pic = new int[size + 1, size + 1];
+
+            for (var i = 0; i < pic.GetLength(0); i++)
+                for (var j = 0; j < pic.GetLength(1); j++)
+                    pic[i, j] = 0xFFFFFF;
+
+            for (var i = 0; i < pic.GetLength(0); i += size / 20)
+                for (var j = 0; j < pic.GetLength(1); j++)
+                    pic[i, j] = 0x888888;
+
+            for (var i = 0; i < pic.GetLength(0); i++)
+                for (var j = 0; j < pic.GetLength(1); j += size / 20)
+                    pic[i, j] = 0x888888;
+
+            var xMin = x.Min();
+            var yMax = y.Max();
+
+            for (var i = 0; i < x.Length; i++)
+                pic[(int)Math.Floor((x[i] - xMin) / xScale), (int)Math.Floor((yMax - y[i]) / yScale)] = 0;
+
+            return pic;
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            multiplier = 100;
+            shift = (Ugs[6] - Ugs[5]) / multiplier;
+
+            var size = (int)Math.Round((Math.Abs(Ugs[10] - Ugs[0])) / shift) + 1;
+            var x = new double[size];
+            var y = new double[size];
+            var y2 = new double[size];
+            var y3 = new double[size];
+
+            for (var u = Ugs[0]; u < Ugs[10]; u += shift)
+            {
+                var i = (int)Math.Round(Math.Abs(Ugs[0] - u) / shift);
                 x[i] = u;
                 y[i] = CurveTracer.B(Ugs, k0, u);
                 y2[i] = CurveTracer.B2(Ugs, k0, u);
                 y3[i] = y2[i] / (2 * y[i]);
             }
 
-            pictureBox1.Image = (new MyImage(func(x, y))).Bitmap;
-            pictureBox2.Image = (new MyImage(func(x, y3))).Bitmap;
+            var newY = new List<double>();
+            var newX = new List<double>();
+            for (var i = 0; i < x.Length; i++)
+            {
+                if (y[i] > 0 && x[i] >= x[1 * multiplier] && x[i] <= x[x.Length - 1 * multiplier - 1])
+                {
+                    newY.Add(y[i]);
+                    newX.Add(x[i]);
+                }
+            }
+
+            var newY2 = new List<double>();
+            var newX2 = new List<double>();
+            for (var i = 0; i < x.Length; i++)
+            {
+                if (x[i] >= x[1 * multiplier] && x[i] <= x[x.Length - 1 * multiplier - 1])
+                {
+                    newY2.Add(y2[i]);
+                    newX2.Add(x[i]);
+                }
+            }
+
+            var newY3 = new List<double>();
+            var newX3 = new List<double>();
+            for (var i = 0; i < x.Length; i++)
+            {
+                if (x[i] >= x[1 * multiplier] && x[i] <= x[x.Length - 1 * multiplier - 1])
+                {
+                    newY3.Add(y3[i]);
+                    newX3.Add(x[i]);
+                }
+            }
+
+            pictureBox1.Image = (new MyImage(func(newX.ToArray(), newY.ToArray()))).Bitmap;
+            pictureBox2.Image = (new MyImage(func(newX2.ToArray(), newY2.ToArray()))).Bitmap;
+            pictureBox3.Image = (new MyImage(func(newX3.ToArray(), newY3.ToArray()))).Bitmap;
+            pictureBox4.Image = (new MyImage(funcSum(newX.ToArray(), newY.ToArray(), newX3.ToArray(), newY3.ToArray()))).Bitmap;
 
             //pictureBox2.Image = (new MyImage(Tools.Tools.SumArrays(func(x, y), func(x, y2)))).Bitmap;
 
-            xMin1.Text = Ugs[0].ToString("F");
-            xMin2.Text = Ugs[0].ToString("F");
-            xMax1.Text = Ugs[Ugs.Length - 1].ToString("F");
-            xMax2.Text = Ugs[Ugs.Length - 1].ToString("F");
+            xMin1.Text = newX.Min().ToString("F");
+            xMax1.Text = newX.Max().ToString("F");
+            yMin1.Text = newY.Min().ToString("F");
+            yMax1.Text = newY.Max().ToString("F");
 
-            yMin1.Text = y.Min().ToString("F");
-            yMin2.Text = y3.Min().ToString("F");
-            yMax1.Text = y.Max().ToString("F");
-            yMax2.Text = y3.Max().ToString("F");
-        }
+            xMin2.Text = newX2.Min().ToString("F");
+            xMax2.Text = newX2.Max().ToString("F");
+            yMin2.Text = newY2.Min().ToString("F");
+            yMax2.Text = newY2.Max().ToString("F");
 
-        private int[,] func(double[] x, double[] y)
-        {
-            int size = x.Length;
+            xMin3.Text = newX3.Min().ToString("F");
+            xMax3.Text = newX3.Max().ToString("F");
+            yMin3.Text = newY3.Min().ToString("F");
+            yMax3.Text = newY3.Max().ToString("F");
 
-            double xScale = (x.Max() - x.Min()) / size;
-            double yScale = (y.Max() - y.Min()) / size;
-
-            int[,] pic = new int[size + 1, size + 1];
-
-            for (int i = 0; i < pic.GetLength(0); i++)
-                for (int j = 0; j < pic.GetLength(0); j++)
-                    pic[i, j] = 0xFFFFFF;
-
-            for (int i = 0; i < pic.GetLength(0); i += 50)
-                for (int j = 0; j < pic.GetLength(0); j++)
-                    pic[i, j] = 0x888888;
-
-            for (int i = 0; i < pic.GetLength(0); i++)
-                for (int j = 0; j < pic.GetLength(0); j += 50)
-                    pic[i, j] = 0x888888;
-
-            for (int i = 0; i < x.Length; i++)
-                pic[(int)((x[i] - x.Min()) / xScale), (int)((y.Max() - y[i]) / yScale)] = 0;
-
-            return pic;
+            xMin4.Text = Math.Min(newX.Min(), newX3.Min()).ToString("F");
+            xMax4.Text = Math.Max(newX.Max(), newX3.Max()).ToString("F");
+            yMin4.Text = Math.Min(newY.Min(), newY3.Min()).ToString("F");
+            yMax4.Text = Math.Max(newY.Max(), newY3.Max()).ToString("F");
         }
     }
 }

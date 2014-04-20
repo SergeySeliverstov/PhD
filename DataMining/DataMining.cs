@@ -333,125 +333,125 @@ namespace DataMining
             updateProgress(0);
 
             var pollutedMaskStatistics = new bool[pollutedMask.GetLength(0), pollutedMask.GetLength(1)];
-            if (saltPepper)
-            {
-                for (int i = 0; i < myImage.ImageWidth; i++)
-                    for (int j = 0; j < myImage.ImageHeight; j++)
+            //if (saltPepper)
+            //{
+            //    for (int i = 0; i < myImage.ImageWidth; i++)
+            //        for (int j = 0; j < myImage.ImageHeight; j++)
+            //        {
+            //            var color = new MyColor(MyImage.ImageBytes[i, j]);
+            //            var brokenArray = new byte[] { 0, 1, 2, 253, 254, 255 };
+            //            if (brokenArray.Contains(color.R) && brokenArray.Contains(color.G) && brokenArray.Contains(color.B))
+            //            {
+            //                pollutedMask[i, j] = true;
+            //                pollutedMaskStatistics[i, j] = true;
+            //            }
+            //        }
+            //}
+            //else
+            //{
+            for (int i = 0; i < myImage.ImageWidth; i++)
+                for (int j = 0; j < myImage.ImageHeight; j++)
+                {
+                    if (template == 0)
                     {
-                        var color = new MyColor(MyImage.ImageBytes[i, j]);
-                        var brokenArray = new byte[] { 0, 1, 2, 253, 254, 255 };
-                        if (brokenArray.Contains(color.R) && brokenArray.Contains(color.G) && brokenArray.Contains(color.B))
+                        var pixelsTemplate5 = Templates.GetPixelsByTempate(myImage.ImageBytes, i, j, maxDepth, false, cropPixels);
+                        var tt5 = pairs.FindItems(pixelsTemplate5);
+                        if (tt5 == null || tt5.Count == 0)
                         {
-                            pollutedMask[i, j] = true;
-                            pollutedMaskStatistics[i, j] = true;
+                            continue;
+                        }
+
+                        var pixelsTemplate4 = Templates.GetPixelsByTempate(myImage.ImageBytes, i, j, maxDepth, true, cropPixels);
+                        var tt4 = pairs.FindItems(pixelsTemplate4);
+
+                        decimal acc = tt5.Sum(t => t.count);
+                        decimal totalAcc = tt4.Sum(t => t.count);
+
+                        if (totalAcc != 0)
+                        {
+                            if (acc / totalAcc < (decimal)maxAccuracy / 100)
+                            {
+                                pollutedMask[i, j] = true;
+                                pollutedMaskStatistics[i, j] = true;
+                            }
                         }
                     }
-            }
-            else
-            {
-                for (int i = 0; i < myImage.ImageWidth; i++)
-                    for (int j = 0; j < myImage.ImageHeight; j++)
+                    if (template == 1)
                     {
-                        if (template == 0)
+                        var pixelsTemplate5 = Templates.GetPixelsByTempateRectangle(myImage.ImageBytes, i, j, false, cropPixels);
+                        var tt5 = pairs.FindItems(pixelsTemplate5);
+                        if (tt5 == null || tt5.Count == 0)
                         {
-                            var pixelsTemplate5 = Templates.GetPixelsByTempate(myImage.ImageBytes, i, j, maxDepth, false, cropPixels);
-                            var tt5 = pairs.FindItems(pixelsTemplate5);
-                            if (tt5 == null || tt5.Count == 0)
-                            {
-                                continue;
-                            }
-
-                            var pixelsTemplate4 = Templates.GetPixelsByTempate(myImage.ImageBytes, i, j, maxDepth, true, cropPixels);
-                            var tt4 = pairs.FindItems(pixelsTemplate4);
-
-                            decimal acc = tt5.Sum(t => t.count);
-                            decimal totalAcc = tt4.Sum(t => t.count);
-
-                            if (totalAcc != 0)
-                            {
-                                if (acc / totalAcc < (decimal)maxAccuracy / 100)
-                                {
-                                    pollutedMask[i, j] = true;
-                                    pollutedMaskStatistics[i, j] = true;
-                                }
-                            }
-                        }
-                        if (template == 1)
-                        {
-                            var pixelsTemplate5 = Templates.GetPixelsByTempateRectangle(myImage.ImageBytes, i, j, false, cropPixels);
-                            var tt5 = pairs.FindItems(pixelsTemplate5);
-                            if (tt5 == null || tt5.Count == 0)
-                            {
-                                continue;
-                            }
-
-                            var pixelsTemplate4 = Templates.GetPixelsByTempateRectangle(myImage.ImageBytes, i, j, true, cropPixels);
-                            var tt4 = pairs.FindItems(pixelsTemplate4);
-
-                            decimal acc = tt5.Sum(t => t.count);
-                            decimal totalAcc = tt4.Sum(t => t.count);
-
-                            if (totalAcc != 0)
-                            {
-                                if (acc / totalAcc < (decimal)maxAccuracy / 100)
-                                {
-                                    pollutedMask[i, j] = true;
-                                    pollutedMaskStatistics[i, j] = true;
-                                }
-                            }
-                        }
-                        if (template == 2)
-                        {
-                            var pixelsTemplate5 = Templates.GetPixelsByTempateCross(myImage.ImageBytes, i, j, false, cropPixels);
-                            var tt5 = pairs.FindItems(pixelsTemplate5);
-                            if (tt5 == null || tt5.Count == 0)
-                            {
-                                continue;
-                            }
-
-                            var pixelsTemplate4 = Templates.GetPixelsByTempateCross(myImage.ImageBytes, i, j, true, cropPixels);
-                            var tt4 = pairs.FindItems(pixelsTemplate4);
-
-                            decimal acc = tt5.Sum(t => t.count);
-                            decimal totalAcc = tt4.Sum(t => t.count);
-
-                            if (totalAcc != 0)
-                            {
-                                if (acc / totalAcc < (decimal)maxAccuracy / 100)
-                                {
-                                    pollutedMask[i, j] = true;
-                                    pollutedMaskStatistics[i, j] = true;
-                                }
-                            }
-                        }
-                        if (template == 3)
-                        {
-                            var pixelsTemplate5 = Templates.GetPixelsByTempateDiCross(myImage.ImageBytes, i, j, false, cropPixels);
-                            var tt5 = pairs.FindItems(pixelsTemplate5);
-                            if (tt5 == null || tt5.Count == 0)
-                            {
-                                continue;
-                            }
-
-                            var pixelsTemplate4 = Templates.GetPixelsByTempateDiCross(myImage.ImageBytes, i, j, true, cropPixels);
-                            var tt4 = pairs.FindItems(pixelsTemplate4);
-
-                            decimal acc = tt5.Sum(t => t.count);
-                            decimal totalAcc = tt4.Sum(t => t.count);
-
-                            if (totalAcc != 0)
-                            {
-                                if (acc / totalAcc < (decimal)maxAccuracy / 100)
-                                {
-                                    pollutedMask[i, j] = true;
-                                    pollutedMaskStatistics[i, j] = true;
-                                }
-                            }
+                            continue;
                         }
 
-                        updateProgress((int)(100 * (myImage.ImageHeight * i + j) / (myImage.ImageWidth * myImage.ImageHeight)));
+                        var pixelsTemplate4 = Templates.GetPixelsByTempateRectangle(myImage.ImageBytes, i, j, true, cropPixels);
+                        var tt4 = pairs.FindItems(pixelsTemplate4);
+
+                        decimal acc = tt5.Sum(t => t.count);
+                        decimal totalAcc = tt4.Sum(t => t.count);
+
+                        if (totalAcc != 0)
+                        {
+                            if (acc / totalAcc < (decimal)maxAccuracy / 100)
+                            {
+                                pollutedMask[i, j] = true;
+                                pollutedMaskStatistics[i, j] = true;
+                            }
+                        }
                     }
-            }
+                    if (template == 2)
+                    {
+                        var pixelsTemplate5 = Templates.GetPixelsByTempateCross(myImage.ImageBytes, i, j, false, cropPixels);
+                        var tt5 = pairs.FindItems(pixelsTemplate5);
+                        if (tt5 == null || tt5.Count == 0)
+                        {
+                            continue;
+                        }
+
+                        var pixelsTemplate4 = Templates.GetPixelsByTempateCross(myImage.ImageBytes, i, j, true, cropPixels);
+                        var tt4 = pairs.FindItems(pixelsTemplate4);
+
+                        decimal acc = tt5.Sum(t => t.count);
+                        decimal totalAcc = tt4.Sum(t => t.count);
+
+                        if (totalAcc != 0)
+                        {
+                            if (acc / totalAcc < (decimal)maxAccuracy / 100)
+                            {
+                                pollutedMask[i, j] = true;
+                                pollutedMaskStatistics[i, j] = true;
+                            }
+                        }
+                    }
+                    if (template == 3)
+                    {
+                        var pixelsTemplate5 = Templates.GetPixelsByTempateDiCross(myImage.ImageBytes, i, j, false, cropPixels);
+                        var tt5 = pairs.FindItems(pixelsTemplate5);
+                        if (tt5 == null || tt5.Count == 0)
+                        {
+                            continue;
+                        }
+
+                        var pixelsTemplate4 = Templates.GetPixelsByTempateDiCross(myImage.ImageBytes, i, j, true, cropPixels);
+                        var tt4 = pairs.FindItems(pixelsTemplate4);
+
+                        decimal acc = tt5.Sum(t => t.count);
+                        decimal totalAcc = tt4.Sum(t => t.count);
+
+                        if (totalAcc != 0)
+                        {
+                            if (acc / totalAcc < (decimal)maxAccuracy / 100)
+                            {
+                                pollutedMask[i, j] = true;
+                                pollutedMaskStatistics[i, j] = true;
+                            }
+                        }
+                    }
+
+                    updateProgress((int)(100 * (myImage.ImageHeight * i + j) / (myImage.ImageWidth * myImage.ImageHeight)));
+                }
+            //}
 
             updateProgress(100);
             updateLog("FindPixels Done!\n");

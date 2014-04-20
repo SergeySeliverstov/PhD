@@ -20,10 +20,10 @@ namespace CurveTracer
 
         private static double[] a(double[] Ugs, double[] k0, double x)
         {
-            double[] Kodd = new double[6];
-            double[] Keven = new double[6];
+            var Kodd = new double[6];
+            var Keven = new double[6];
 
-            for (int i = 0; i < 6; i++)
+            for (var i = 0; i < 6; i++)
             {
                 Kodd[i] = k0[5 + i] - k0[5 - i];
                 Keven[i] = k0[5 + i] + k0[5 - i];
@@ -32,15 +32,15 @@ namespace CurveTracer
             }
 
             double D0 = 0;
-            for (int i = 0; i < 11; i++)
+            for (var i = 0; i < 11; i++)
             {
                 D0 += k0[i];
             }
             D0 /= 11;
 
-            double[] D = new double[8];
+            var D = new double[8];
 
-            for (int i = 0; i < 8; i++)
+            for (var i = 0; i < 8; i++)
             {
                 if (i == 0)
                 {
@@ -49,15 +49,15 @@ namespace CurveTracer
                 else
                 {
                     if (i % 2 != 0)
-                        for (int j = 0; j < 6; j++)
+                        for (var j = 0; j < 6; j++)
                             D[i] += Kodd[j] * coefficients[j, i - 1];
                     else
-                        for (int j = 0; j < 6; j++)
+                        for (var j = 0; j < 6; j++)
                             D[i] += Keven[j] * coefficients[j, i - 1];
                 }
             }
 
-            double[] A = new double[8];
+            var A = new double[8];
             A[0] = D[0] - 0.4 * D[2] + 0.1152 * D[4] - 0.0279273 * D[6];
             A[1] = D[1] - 0.712 * D[3] + 0.3050667 * D[5] - 0.0932073 * D[7];
             A[2] = D[2] - D[4] + 0.5474909 * D[6];
@@ -72,10 +72,10 @@ namespace CurveTracer
 
         public static double B(double[] Ugs, double[] k0, double x)
         {
-            double[] A = a(Ugs, k0, x);
+            var A = a(Ugs, k0, x);
 
             double result = 0;
-            for (int i = 0; i < 8; i++)
+            for (var i = 0; i < 8; i++)
             {
                 if (X[5] == Ugs[5])
                     result += A[i] * Math.Pow(2 * x / (10 * (Ugs[6] - Ugs[5])), i);
@@ -91,10 +91,10 @@ namespace CurveTracer
 
         public static double B2(double[] Ugs, double[] k0, double x)
         {
-            double[] A = a(Ugs, k0, x);
+            var A = a(Ugs, k0, x);
 
             double result = 0;
-            for (int i = 2; i < 8; i++)
+            for (var i = 2; i < 8; i++)
             {
                 if (X[5] == Ugs[5])
                     result += i * (i - 1) * A[i] * Math.Pow(2 * x / (10 * (Ugs[6] - Ugs[5])), i - 2);
