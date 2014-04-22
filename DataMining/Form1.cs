@@ -116,7 +116,8 @@ namespace DataMining
         private void button7_Click(object sender, EventArgs e)
         {
             fillParameters();
-            dataMining.FindPixels(cbSaltPepper.Checked);
+            dataMining.FindPixels();
+            dataMining.GetPollutionStatistics();
             ShowMask(dataMining.PollutedMask);
         }
 

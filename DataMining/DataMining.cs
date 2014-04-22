@@ -24,6 +24,7 @@ namespace DataMining
         private int[,] pollutedImage;
         private bool[,] pollutedMask;
         private bool[,] pollutedMaskOriginal;
+        private bool[,] pollutedMaskStatistics;
 
         public event EventHandler<ObjectEventArgs<int>> UpdateProgress;
         public event EventHandler<ObjectEventArgs<string>> UpdateLog;
@@ -208,18 +209,11 @@ namespace DataMining
 
         public void Pollute(bool saltPepper = false)
         {
-            pollutedMask = saltPepper ? Tools.ImageTransform.SaltAndPepper(myImage.ImageBytes, pollutePercent, useMask) : Tools.ImageTransform.Pollute(myImage.ImageBytes, pollutePercent, useMask);
-            pollutedMaskOriginal = Tools.Tools.CopyArray<bool>(pollutedMask);
+            var tmpMask = Tools.ImageTransform.Pollute(myImage.ImageBytes, pollutePercent, saltPepper);
+            if (useMask)
+                pollutedMask = tmpMask;
+            pollutedMaskOriginal = Tools.Tools.CopyArray<bool>(tmpMask);
             pollutedImage = Tools.Tools.CopyArray<int>(myImage.ImageBytes);
-
-            int count0 = 0;
-            for (int i = 0; i < myImage.ImageWidth; i++)
-                for (int j = 0; j < myImage.ImageHeight; j++)
-                    if (pollutedMask[i, j])
-                        count0++;
-
-            updateLog(" --- Загрязнение --- \n");
-            updateLog("Pollute: " + count0 + "\n");
         }
 
         private int getDepthByTemplate()
@@ -325,30 +319,15 @@ namespace DataMining
             }
         }
 
-        public void FindPixels(bool saltPepper = false)
+        public void FindPixels()
         {
             if (pairs == null)
                 return;
 
             updateProgress(0);
 
-            var pollutedMaskStatistics = new bool[pollutedMask.GetLength(0), pollutedMask.GetLength(1)];
-            //if (saltPepper)
-            //{
-            //    for (int i = 0; i < myImage.ImageWidth; i++)
-            //        for (int j = 0; j < myImage.ImageHeight; j++)
-            //        {
-            //            var color = new MyColor(MyImage.ImageBytes[i, j]);
-            //            var brokenArray = new byte[] { 0, 1, 2, 253, 254, 255 };
-            //            if (brokenArray.Contains(color.R) && brokenArray.Contains(color.G) && brokenArray.Contains(color.B))
-            //            {
-            //                pollutedMask[i, j] = true;
-            //                pollutedMaskStatistics[i, j] = true;
-            //            }
-            //        }
-            //}
-            //else
-            //{
+            pollutedMaskStatistics = new bool[pollutedMask.GetLength(0), pollutedMask.GetLength(1)];
+
             for (int i = 0; i < myImage.ImageWidth; i++)
                 for (int j = 0; j < myImage.ImageHeight; j++)
                 {
@@ -371,7 +350,8 @@ namespace DataMining
                         {
                             if (acc / totalAcc < (decimal)maxAccuracy / 100)
                             {
-                                pollutedMask[i, j] = true;
+                                if (!useMask)
+                                    pollutedMask[i, j] = true;
                                 pollutedMaskStatistics[i, j] = true;
                             }
                         }
@@ -395,7 +375,8 @@ namespace DataMining
                         {
                             if (acc / totalAcc < (decimal)maxAccuracy / 100)
                             {
-                                pollutedMask[i, j] = true;
+                                if (!useMask)
+                                    pollutedMask[i, j] = true;
                                 pollutedMaskStatistics[i, j] = true;
                             }
                         }
@@ -419,7 +400,8 @@ namespace DataMining
                         {
                             if (acc / totalAcc < (decimal)maxAccuracy / 100)
                             {
-                                pollutedMask[i, j] = true;
+                                if (!useMask)
+                                    pollutedMask[i, j] = true;
                                 pollutedMaskStatistics[i, j] = true;
                             }
                         }
@@ -443,7 +425,8 @@ namespace DataMining
                         {
                             if (acc / totalAcc < (decimal)maxAccuracy / 100)
                             {
-                                pollutedMask[i, j] = true;
+                                if (!useMask)
+                                    pollutedMask[i, j] = true;
                                 pollutedMaskStatistics[i, j] = true;
                             }
                         }
@@ -451,32 +434,9 @@ namespace DataMining
 
                     updateProgress((int)(100 * (myImage.ImageHeight * i + j) / (myImage.ImageWidth * myImage.ImageHeight)));
                 }
-            //}
 
             updateProgress(100);
             updateLog("FindPixels Done!\n");
-
-            if (pollutedMask != null)
-            {
-                int count0 = 0;
-                int count1 = 0;
-                int count2 = 0;
-                for (int i = 0; i < myImage.ImageWidth; i++)
-                    for (int j = 0; j < myImage.ImageHeight; j++)
-                    {
-                        if (pollutedMaskStatistics[i, j])
-                            count0++;
-                        if (pollutedMaskOriginal[i, j] && !pollutedMaskStatistics[i, j])
-                            count1++;
-                        if (pollutedMaskStatistics[i, j] && !pollutedMaskOriginal[i, j])
-                            count2++;
-                    }
-
-                updateLog(" --- Поиск точек --- \n");
-                updateLog("Find: " + count0 + "\n");
-                updateLog("Miss: " + count1 + "\n");
-                updateLog("False: " + count2 + "\n");
-            }
         }
 
         public void GetMetrics()
@@ -487,6 +447,37 @@ namespace DataMining
         public string GetMetricsText(MetricsMode mode)
         {
             return Tools.Metrics.GetUnifiedMetrics(myImage, mode);
+        }
+
+        public string GetPollutionStatistics()
+        {
+            if (pollutedMask != null && pollutedMaskStatistics != null)
+            {
+                int count0 = 0;
+                int count1 = 0;
+                int count2 = 0;
+                int count3 = 0;
+                for (int i = 0; i < myImage.ImageWidth; i++)
+                    for (int j = 0; j < myImage.ImageHeight; j++)
+                    {
+                        if (pollutedMaskOriginal[i, j])
+                            count0++;
+                        if (pollutedMaskStatistics[i, j])
+                            count1++;
+                        if (pollutedMaskOriginal[i, j] && !pollutedMaskStatistics[i, j])
+                            count2++;
+                        if (pollutedMaskStatistics[i, j] && !pollutedMaskOriginal[i, j])
+                            count3++;
+                    }
+
+                updateLog(" --- Статистика загрязнения --- \n");
+                updateLog("Pollute: " + count0 + "\n");
+                updateLog("Find: " + count1 + "\n");
+                updateLog("Miss: " + count2 + "\n");
+                updateLog("False: " + count3 + "\n");
+                return string.Join(Consts.CSVDivider, count0, count1, count2, count3);
+            }
+            return string.Empty;
         }
     }
 }

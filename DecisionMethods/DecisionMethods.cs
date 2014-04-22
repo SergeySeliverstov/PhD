@@ -54,14 +54,11 @@ namespace DecisionMethods
         //    }
         //}
 
-        public void Pollute(decimal percent)
+        public void Pollute(decimal percent, bool saltPepper)
         {
-            pollutedMask = Tools.ImageTransform.Pollute(myImage.ImageBytes, percent, SaveInMask);
-        }
-
-        public void SaltAndPepper(decimal percent)
-        {
-            pollutedMask = Tools.ImageTransform.SaltAndPepper(myImage.ImageBytes, percent, SaveInMask);
+            var tmpMask = Tools.ImageTransform.Pollute(myImage.ImageBytes, percent, saltPepper);
+            if (SaveInMask)
+                pollutedMask = tmpMask;
         }
 
         //public void FindPixels()
@@ -140,92 +137,7 @@ namespace DecisionMethods
 
         //    return newImage;
         //}
-
-        //private int restorePixel(int x, int y, int method)
-        //{
-        //    colors = new List<KeyValuePair<Tools.ColorChannel, int>>();
-
-        //    // 1 уровень
-        //    checkColor(x - 1, y - 1);
-        //    checkColor(x - 1, y);
-        //    checkColor(x - 1, y + 1);
-        //    checkColor(x, y - 1);
-        //    checkColor(x, y + 1);
-        //    checkColor(x + 1, y - 1);
-        //    checkColor(x + 1, y);
-        //    checkColor(x + 1, y + 1);
-
-        //    // 2 уровень
-        //    checkColor(x - 2, y - 2);
-        //    checkColor(x - 2, y - 1);
-        //    checkColor(x - 2, y);
-        //    checkColor(x - 2, y + 1);
-        //    checkColor(x - 2, y + 2);
-        //    checkColor(x - 1, y - 2);
-        //    checkColor(x - 1, y + 2);
-        //    checkColor(x, y - 2);
-        //    checkColor(x, y + 2);
-        //    checkColor(x + 1, y - 2);
-        //    checkColor(x + 1, y + 2);
-        //    checkColor(x + 2, y - 2);
-        //    checkColor(x + 2, y - 1);
-        //    checkColor(x + 2, y);
-        //    checkColor(x + 2, y + 1);
-        //    checkColor(x + 2, y + 2);
-
-        //    if (colors.Count() > 0)
-        //    {
-        //        var maxCount = colors.GroupBy(i => i.Key).Max(i => i.Count());
-        //        var maxColor = colors.GroupBy(i => i.Key).FirstOrDefault(i => i.Count() == maxCount).Key;
-        //        int newColor = 0;
-        //        var mask = maxColor == Tools.ColorChannel.R ? Tools.Consts.RedMask : maxColor == Tools.ColorChannel.G ? Tools.Consts.GreenMask : Tools.Consts.BlueMask;
-        //        switch (method)
-        //        {
-        //            case 0:
-        //                newColor = colors.Where(i => i.Key == maxColor).FirstOrDefault().Value;
-        //                break;
-        //            case 1:
-        //                newColor = colors.Where(i => i.Key == maxColor).OrderBy(i => i.Value & mask).FirstOrDefault().Value;
-        //                break;
-        //            case 2:
-        //                newColor = colors.Where(i => i.Key == maxColor).OrderByDescending(i => i.Value & mask).FirstOrDefault().Value;
-        //                break;
-        //            case 3:
-        //                var newColor1 = new MyColor(colors.Where(i => i.Key == maxColor).OrderBy(i => i.Value & mask).FirstOrDefault().Value);
-        //                var newColor2 = new MyColor(colors.Where(i => i.Key == maxColor).OrderByDescending(i => i.Value & mask).FirstOrDefault().Value);
-        //                byte r = (byte)((newColor1.R + newColor2.R) >> 1);
-        //                byte g = (byte)((newColor1.G + newColor2.G) >> 1);
-        //                byte b = (byte)((newColor1.B + newColor2.B) >> 1);
-        //                newColor = new MyColor(r, g, b).Color;
-        //                break;
-        //            case 4:
-        //                var list = colors.Where(i => i.Key == maxColor).OrderBy(i => i.Value & mask).ToList();
-        //                newColor = list[list.Count / 2 + (list.Count % 2 == 1 ? 0 : -1)].Value;
-        //                break;
-        //            case 5:
-        //                int r1 = 0;
-        //                int g1 = 0;
-        //                int b1 = 0;
-
-        //                var newColorsCollection = colors.Where(i => i.Key == maxColor).Select(i => i.Value).ToList();
-        //                int count = newColorsCollection.Count;
-        //                foreach (int color in newColorsCollection)
-        //                {
-        //                    var colorX = new MyColor(color);
-        //                    r1 += colorX.R * colorX.R;
-        //                    g1 += colorX.G * colorX.G;
-        //                    b1 += colorX.B * colorX.B;
-        //                }
-
-        //                newColor = new MyColor((byte)(Math.Sqrt(r1 / count)), (byte)(Math.Sqrt(g1 / count)), (byte)(Math.Sqrt(b1 / count))).Color;
-        //                break;
-        //        }
-
-        //        return newColor;
-        //    }
-        //    return myImage.ImageBytes[x, y];
-        //}
-
+        
         public string GetMetrics(MetricsMode mode)
         {
             return Tools.Metrics.GetUnifiedMetrics(myImage, mode);

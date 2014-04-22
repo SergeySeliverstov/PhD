@@ -43,6 +43,8 @@ namespace DataMining
                 else
                     dataMining.PollutePercent = -1;
                 dataMining.UseMask = int.Parse(args[7]) == 1;
+                dataMining.WSM = int.Parse(args[8]) == 1;
+                dataMining.UseLimit = int.Parse(args[9]) == 1;
 
                 dataMining.MyImage = myImage;
                 //dataMining.UpdateLog += (o, eo) =>
@@ -53,7 +55,7 @@ namespace DataMining
                 string metricsOrig = dataMining.GetMetricsText(MetricsMode.CSVSimple);
                 if (dataMining.PollutePercent != -1)
                 {
-                    dataMining.Pollute();
+                    dataMining.Pollute(int.Parse(args[10]) == 1);
                     dataMining.MyImage.Bitmap.Save(args[0] + "_polluted.png", ImageFormat.Png);
                 }
                 else
@@ -78,14 +80,18 @@ namespace DataMining
                 dataMining.MyImage.Bitmap.Save(args[0] + "_restored.png", ImageFormat.Png);
                 string metricsRestored = dataMining.GetMetricsText(MetricsMode.CSVSimple);
 
-                bool addHeader = !File.Exists("Statistics.csv");
-
                 string log = string.Empty;
-                StreamWriter fs = new StreamWriter("Statistics.csv", true);
-                if (addHeader)
-                    log = string.Join(Tools.Consts.CSVDivider, "File", "Method", "Template", "Crop pixels", "Accuracy", "Transaction length", "Pollution percent", "Use mask", "MM Orig", "MSE Orig", "DON Orig", "MM Pollute", "MSE Pollute", "DON Pollute", "MM Restored", "MSE Restored", "DON Restored") + "\n";
+
+                if (!File.Exists("Statistics.csv"))
+                {
+                    log += string.Join(Tools.Consts.CSVDivider, "File", "Method", "Template", "Crop pixels", "Accuracy", "Transaction length", "Pollution percent", "Use mask", "WSM", "Limit", "SP") + Tools.Consts.CSVDivider;
+                    log += string.Join(Tools.Consts.CSVDivider, "MM Orig", "MSE Orig", "DON Orig", "MM Pollute", "MSE Pollute", "DON Pollute", "MM Restored", "MSE Restored", "DON Restored", "Polluted count", "Find", "Miss", "False") + "\n";
+                }
                 log += string.Join(Tools.Consts.CSVDivider, args) + Tools.Consts.CSVDivider;
-                log += string.Join(Tools.Consts.CSVDivider, metricsOrig, metricsPolluted, metricsRestored);
+                log += string.Join(Tools.Consts.CSVDivider, metricsOrig, metricsPolluted, metricsRestored) + Tools.Consts.CSVDivider;
+                log += dataMining.GetPollutionStatistics();
+
+                StreamWriter fs = new StreamWriter("Statistics.csv", true);
                 fs.WriteLine(log);
                 fs.Close();
 

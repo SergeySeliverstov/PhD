@@ -51,7 +51,7 @@ namespace DecisionMethods
                         criterions = new Matrix(criteriesCount, criteriesCount);
 
                     dm.SaveInMask = true;
-                    dm.Pollute(decimal.Parse(args[2]));
+                    dm.Pollute(decimal.Parse(args[2]), false);
                     for (int method = 0; method < methodsCount; method++)
                     {
                         //var restoredImage = dm.RestoreImage(method);
@@ -90,7 +90,7 @@ namespace DecisionMethods
                     var metricsOrig = dm.GetMetrics(MetricsMode.CSVSimple);
 
                     dm.SaveInMask = int.Parse(args[3]) == 1;
-                    dm.Pollute(decimal.Parse(args[2]));
+                    dm.Pollute(decimal.Parse(args[2]), false);
                     dm.MyImage.Bitmap.Save(args[1] + "_polluted.png", ImageFormat.Png);
 
                     var metricsPolluted = dm.GetMetrics(MetricsMode.CSVSimple);
@@ -125,7 +125,7 @@ namespace DecisionMethods
                     var dm = new DecisionMethods(myImage);
 
                     dm.SaveInMask = true;
-                    dm.Pollute(decimal.Parse(args[2]));
+                    dm.Pollute(decimal.Parse(args[2]), false);
                     var savedMask = Tools.Tools.CopyArray<bool>(dm.PollutedMask);
 
                     dm.FindPixels(int.Parse(args[3]), double.Parse(args[4].Replace(".", ",")), double.Parse(args[5].Replace(".", ",")), int.Parse(args[6]) == 1);

@@ -51,10 +51,7 @@ namespace DecisionMethods
             tbLog.Text += "Original: " + Tools.Metrics.GetUnifiedMetrics(dm.MyImage);
 
             dm.SaveInMask = cbUseMask.Checked;
-            if (cbSaltAndPepper.Checked)
-                dm.SaltAndPepper(nudPercent.Value);
-            else
-                dm.Pollute(nudPercent.Value);
+            dm.Pollute(nudPercent.Value, cbSaltAndPepper.Checked);
             savedMask = Tools.Tools.CopyArray<bool>(dm.PollutedMask);
             ShowImage(pictureBox1, dm.MyImage.Bitmap);
         }
@@ -63,7 +60,7 @@ namespace DecisionMethods
         {
             tbLog.Text += "Broken: " + Tools.Metrics.GetUnifiedMetrics(dm.MyImage);
 
-            var image4 = dm.RestorePixels((int)m.Value, (double)n.Value);
+            var image4 = dm.RestorePixels((int)mRestore.Value, (double)nRestore.Value);
             ShowImage(pictureBox3, image4.Bitmap);
             tbLog.Text += "Middle: " + Tools.Metrics.GetUnifiedMetrics(image4);
 
