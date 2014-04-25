@@ -63,6 +63,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="H3Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="H3Form.Designer.cs">
+      <DependentUpon>H3Form.cs</DependentUpon>
+    </Compile>
     <Compile Include="CurveTracer.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -88,6 +94,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="H3Form.resx">
+      <DependentUpon>H3Form.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

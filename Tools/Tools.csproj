@@ -73,7 +73,9 @@
   <ItemGroup>
     <Compile Include="ColorChannel.cs" />
     <Compile Include="Consts.cs" />
+    <Compile Include="Coord.cs" />
     <Compile Include="FourierTransform.cs" />
+    <Compile Include="FuncTools.cs" />
     <Compile Include="ImageTransform.cs" />
     <Compile Include="Matrix.cs" />
     <Compile Include="MyColor.cs" />

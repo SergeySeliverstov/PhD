@@ -15,84 +15,17 @@ namespace CurveTracer
     {
         public double[] Ugs;
         public double[] k0;
-        int multiplier;
-        double shift;
 
         public Form1()
         {
             InitializeComponent();
         }
 
-        private int[,] funcSum(double[] x, double[] y, double[] x3, double[] y3)
-        {
-            var size = x.Length;
-
-            var xMax = Math.Max(x.Max(), x3.Max());
-            var xMin = Math.Min(x.Min(), x3.Min());
-
-            var yMax = Math.Max(y.Max(), y3.Max());
-            var yMin = Math.Min(y.Min(), y3.Min());
-
-            var xScale = (xMax - xMin) / size;
-            var yScale = (yMax - yMin) / size;
-
-            var pic = new int[size + 1, size + 1];
-
-            for (var i = 0; i < pic.GetLength(0); i++)
-                for (var j = 0; j < pic.GetLength(1); j++)
-                    pic[i, j] = 0xFFFFFF;
-
-            for (var i = 0; i < pic.GetLength(0); i += size / 20)
-                for (var j = 0; j < pic.GetLength(1); j++)
-                    pic[i, j] = 0x888888;
-
-            for (var i = 0; i < pic.GetLength(0); i++)
-                for (var j = 0; j < pic.GetLength(1); j += size / 20)
-                    pic[i, j] = 0x888888;
-
-            for (var i = 0; i < x.Length; i++)
-            {
-                pic[(int)Math.Floor((x[i] - xMin) / xScale), (int)Math.Floor((yMax - y[i]) / yScale)] = 0;
-                pic[(int)Math.Floor((x[i] - xMin) / xScale), (int)Math.Floor((yMax - y3[i]) / yScale)] = 0;
-            }
-
-            return pic;
-        }
-
-        private int[,] func(double[] x, double[] y)
-        {
-            var size = x.Length;
-
-            var xScale = (x.Max() - x.Min()) / size;
-            var yScale = (y.Max() - y.Min()) / size;
-
-            var pic = new int[size + 1, size + 1];
-
-            for (var i = 0; i < pic.GetLength(0); i++)
-                for (var j = 0; j < pic.GetLength(1); j++)
-                    pic[i, j] = 0xFFFFFF;
-
-            for (var i = 0; i < pic.GetLength(0); i += size / 20)
-                for (var j = 0; j < pic.GetLength(1); j++)
-                    pic[i, j] = 0x888888;
-
-            for (var i = 0; i < pic.GetLength(0); i++)
-                for (var j = 0; j < pic.GetLength(1); j += size / 20)
-                    pic[i, j] = 0x888888;
-
-            var xMin = x.Min();
-            var yMax = y.Max();
-
-            for (var i = 0; i < x.Length; i++)
-                pic[(int)Math.Floor((x[i] - xMin) / xScale), (int)Math.Floor((yMax - y[i]) / yScale)] = 0;
-
-            return pic;
-        }
-
         private void Form1_Load(object sender, EventArgs e)
         {
-            multiplier = 100;
-            shift = (Ugs[6] - Ugs[5]) / multiplier;
+            var multiplier = 100;
+            var delta = Ugs[6] - Ugs[5];            
+            var shift = delta / multiplier;
 
             var size = (int)Math.Round((Math.Abs(Ugs[10] - Ugs[0])) / shift) + 1;
             var x = new double[size];
@@ -142,12 +75,10 @@ namespace CurveTracer
                 }
             }
 
-            pictureBox1.Image = (new MyImage(func(newX.ToArray(), newY.ToArray()))).Bitmap;
-            pictureBox2.Image = (new MyImage(func(newX2.ToArray(), newY2.ToArray()))).Bitmap;
-            pictureBox3.Image = (new MyImage(func(newX3.ToArray(), newY3.ToArray()))).Bitmap;
-            pictureBox4.Image = (new MyImage(funcSum(newX.ToArray(), newY.ToArray(), newX3.ToArray(), newY3.ToArray()))).Bitmap;
-
-            //pictureBox2.Image = (new MyImage(Tools.Tools.SumArrays(func(x, y), func(x, y2)))).Bitmap;
+            pictureBox1.Image = (new MyImage(FuncTools.FuncToBytes(newX.ToArray(), newY.ToArray(), delta))).Bitmap;
+            pictureBox2.Image = (new MyImage(FuncTools.FuncToBytes(newX2.ToArray(), newY2.ToArray(), delta))).Bitmap;
+            pictureBox3.Image = (new MyImage(FuncTools.FuncToBytes(newX3.ToArray(), newY3.ToArray(), delta))).Bitmap;
+            pictureBox4.Image = (new MyImage(FuncTools.FuncToBytesSum(newX.ToArray(), newY.ToArray(), newX3.ToArray(), newY3.ToArray(), delta))).Bitmap;
 
             xMin1.Text = newX.Min().ToString("F");
             xMax1.Text = newX.Max().ToString("F");

@@ -17,7 +17,8 @@ namespace CurveTracer
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new InputForm());
+            //Application.Run(new InputForm());
+            Application.Run(new H3Form());
         }
     }
 }
