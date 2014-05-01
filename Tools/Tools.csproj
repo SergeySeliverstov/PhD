@@ -75,6 +75,7 @@
     <Compile Include="Consts.cs" />
     <Compile Include="Coord.cs" />
     <Compile Include="FourierTransform.cs" />
+    <Compile Include="Func.cs" />
     <Compile Include="FuncTools.cs" />
     <Compile Include="ImageTransform.cs" />
     <Compile Include="Matrix.cs" />

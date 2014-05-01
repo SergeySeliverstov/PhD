@@ -70,43 +70,50 @@ namespace CurveTracer
             return A;
         }
 
-        public static double B(double[] Ugs, double[] k0, double x)
+        private static int f(int i, int j)
+        {
+            int t = 1;
+            for (int k = i - j + 1; k <= i; k++)
+                t *= k;
+            return t;
+        }
+
+        public static double B(double[] Ugs, double[] k0, double x, int j)
         {
             var A = a(Ugs, k0, x);
 
             double result = 0;
-            for (var i = 0; i < 8; i++)
+            for (var i = j; i < 8; i++)
             {
                 if (X[5] == Ugs[5])
-                    result += A[i] * Math.Pow(2 * x / (10 * (Ugs[6] - Ugs[5])), i);
+                    result += f(i, j) * A[i] * Math.Pow(2 * x / (10 * (Ugs[6] - Ugs[5])), i - j);
                 else
                     if (Ugs[0] == 0)
-                        result += A[i] * Math.Pow(2 * (x - Math.Abs(Ugs.Max(qi => qi)) / 2) / (10 * (Ugs[6] - Ugs[5])), i);
+                        result += f(i, j) * A[i] * Math.Pow(2 * (x - Math.Abs(Ugs.Max()) / 2) / (10 * (Ugs[6] - Ugs[5])), i - j);
                     else
-                        result += A[i] * Math.Pow(2 * (x - Ugs.Average(qi => qi)) / (10 * (Ugs[6] - Ugs[5])), i);
+                        result += f(i, j) * A[i] * Math.Pow(2 * (x - Ugs.Average()) / (10 * (Ugs[6] - Ugs[5])), i - j);
             }
 
             return result;
         }
 
-        public static double B2(double[] Ugs, double[] k0, double x)
+        public static double[] Norm(double[] Ugs)
         {
-            var A = a(Ugs, k0, x);
-
-            double result = 0;
-            for (var i = 2; i < 8; i++)
-            {
+            double[] result = new double[Ugs.Length];
+            for (int i = 0; i < Ugs.Length; i++)
                 if (X[5] == Ugs[5])
-                    result += i * (i - 1) * A[i] * Math.Pow(2 * x / (10 * (Ugs[6] - Ugs[5])), i - 2);
+                {
+                    result[i] = (2 * Ugs[i]) / (10 * (Ugs[6] - Ugs[5]));
+                }
                 else
+                {
                     if (Ugs[0] == 0)
-                        result += i * (i - 1) * A[i] * Math.Pow(2 * (x - Math.Abs(Ugs.Max(qi => qi)) / 2) / (10 * (Ugs[6] - Ugs[5])), i - 2);
+                        result[i] = 2 * (Ugs[i] - Math.Abs(Ugs.Max()) / 2) / (10 * (Ugs[6] - Ugs[5]));
                     else
-                        result += i * (i - 1) * A[i] * Math.Pow(2 * (x - Ugs.Average(qi => qi)) / (10 * (Ugs[6] - Ugs[5])), i - 2);
-            }
-
+                        result[i] = 2 * (Ugs[i] - Ugs.Average()) / (10 * (Ugs[6] - Ugs[5]));
+                }
             return result;
-        }        
+        }
     }
 }
 

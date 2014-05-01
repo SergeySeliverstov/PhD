@@ -54,11 +54,13 @@ namespace DecisionMethods
             dm.Pollute(nudPercent.Value, cbSaltAndPepper.Checked);
             savedMask = Tools.Tools.CopyArray<bool>(dm.PollutedMask);
             ShowImage(pictureBox1, dm.MyImage.Bitmap);
+
+            tbLog.Text += "Polluted: " + Tools.Metrics.GetUnifiedMetrics(dm.MyImage) + "\n";
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            tbLog.Text += "Broken: " + Tools.Metrics.GetUnifiedMetrics(dm.MyImage);
+            tbLog.Text += "Broken: " + Tools.Metrics.GetUnifiedMetrics(dm.MyImage) + "\n";
 
             var image4 = dm.RestorePixels((int)mRestore.Value, (double)nRestore.Value);
             ShowImage(pictureBox3, image4.Bitmap);
@@ -103,12 +105,7 @@ namespace DecisionMethods
         {
             dm.SaveInMask = cbUseMask.Checked;
             dm.FindPixels((int)m.Value, (double)n.Value, (double)k.Value, color.Checked);
-            int[,] mask = new int[dm.PollutedMask.GetLength(0), dm.PollutedMask.GetLength(1)];
-            for (int i = 0; i < dm.PollutedMask.GetLength(0); i++)
-                for (int j = 0; j < dm.PollutedMask.GetLength(1); j++)
-                    mask[i, j] = dm.PollutedMask[i, j] ? 0 : 0xFFFFFF;
-            MyImage maskImage = new MyImage(mask);
-            pictureBox2.Image = maskImage.Bitmap;
+            pictureBox2.Image = ImageTransform.BoolToBitmap(dm.PollutedMask);
 
             savedMask2 = Tools.Tools.CopyArray<bool>(dm.PollutedMask);
 

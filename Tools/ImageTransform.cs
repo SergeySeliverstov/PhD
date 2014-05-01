@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Numerics;
+using System.Drawing;
 
 namespace Tools
 {
@@ -175,6 +176,17 @@ namespace Tools
                     B[i, j] = b * A[i, j] / A[0, 0];
 
             return B;
+        }
+
+        public static Bitmap BoolToBitmap(bool[,] inputMask)
+        {
+            int[,] mask = new int[inputMask.GetLength(0), inputMask.GetLength(1)];
+            for (int i = 0; i < mask.GetLength(0); i++)
+                for (int j = 0; j < mask.GetLength(1); j++)
+                    mask[i, j] = inputMask[i, j] ? 0 : 0xFFFFFF;
+
+            MyImage maskImage = new MyImage(mask);
+            return maskImage.Bitmap;
         }
     }
 }

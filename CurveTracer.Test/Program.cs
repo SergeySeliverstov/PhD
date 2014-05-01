@@ -17,15 +17,15 @@ namespace CurveTracer.Test
             double shift = (Ugs[6] - Ugs[5]);
             int size = (int)Math.Round((Math.Abs(Ugs[10] - Ugs[0])) / shift) + 1;
 
-            double[] result = new double[size];
-            double[] result2 = new double[size];
-            double[] result3 = new double[size];
+            double[] y = new double[size];
+            double[] y2 = new double[size];
+            double[] h3 = new double[size];
             for (double u = Ugs[0]; u < Ugs[10]; u += shift)
             {
                 int element = (int)Math.Round(Math.Abs(Ugs[0] - u) / shift);
-                result[element] = CurveTracer.B(Ugs, k0, u);
-                result2[element] = CurveTracer.B2(Ugs, k0, u);
-                result3[element] = result[element] / (2 * result2[element]);
+                y[element] = CurveTracer.B(Ugs, k0, u, 0);
+                y2[element] = CurveTracer.B(Ugs, k0, u, 2);
+                h3[element] = y[element] / (2 * y2[element]);
             }
         }
     }

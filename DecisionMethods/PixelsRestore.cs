@@ -26,14 +26,42 @@ namespace DecisionMethods
                             maskResult[i, j] += findColor(channelBytes, i, j, m, n);
             }
 
-            for (int i = 2; i < bytes.GetLength(0) - 2; i++)
-                for (int j = 2; j < bytes.GetLength(1) - 2; j++)
-                    if (mask[i, j])
+            for (int i = 0; i < bytes.GetLength(0); i++)
+                for (int j = 0; j < bytes.GetLength(1); j++)
+                    if (i > 1 && j > 1 && i < bytes.GetLength(0) - 2 && j < bytes.GetLength(1) - 2)
                     {
-                        if (maskResult[i, j] > 1)
-                            result[i, j] = restorePixel(bytes, mask, i, j, 4);
+                        if (mask[i, j])
+                        {
+                            if (maskResult[i, j] > 1)
+                                result[i, j] = restorePixel(bytes, mask, i, j, 4);
+                            else
+                                result[i, j] = averagePixel(bytes, i, j);
+                        }
                         else
-                            result[i, j] = averagePixel(bytes, i, j);
+                        {
+                            result[i, j] = bytes[i, j];
+                        }
+                    }
+                    else
+                    {
+                        result[i, j] = bytes[i, j];
+                    }
+
+            return result;
+        }
+
+        public static int[,] FindPixelsOld(int[,] bytes, bool[,] mask, int method)
+        {
+            int[,] result = new int[bytes.GetLength(0), bytes.GetLength(1)];
+
+            for (int i = 0; i < bytes.GetLength(0); i++)
+                for (int j = 0; j < bytes.GetLength(1); j++)
+                    if (i > 1 && j > 1 && i < bytes.GetLength(0) - 2 && j < bytes.GetLength(1) - 2)
+                    {
+                        if (mask[i, j])
+                            result[i, j] = restorePixel(bytes, mask, i, j, method);
+                        else
+                            result[i, j] = bytes[i, j];
                     }
                     else
                     {

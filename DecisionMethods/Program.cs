@@ -26,99 +26,7 @@ namespace DecisionMethods
             }
             else
             {
-                var methodsCount = 6;
-                var criteriesCount = 5;
-                var statisticsFileName = "Statistics.xml";
-                var optimizedStatisticsFileName = "OptimizedStatistics.xml";
-                var criterionsFileName = "Criterions.xml";
-                var optimizedCriterionsFileName = "OptimizedCriterions.xml";
-
-                if (args[0] == "/m")
-                {
-                    var myImage = new MyImage();
-                    myImage.Bitmap = new Bitmap(args[1]);
-                    var dm = new DecisionMethods(myImage);
-
-                    List<Matrix> statistics = XmlTools.Load<List<Matrix>>(statisticsFileName);
-                    if (statistics == null)
-                    {
-                        statistics = new List<Matrix>();
-                        for (int i = 0; i < criteriesCount; i++)
-                            statistics.Add(new Matrix(methodsCount, methodsCount));
-                    }
-                    Matrix criterions = XmlTools.Load<Matrix>(criterionsFileName);
-                    if (criterions == null)
-                        criterions = new Matrix(criteriesCount, criteriesCount);
-
-                    dm.SaveInMask = true;
-                    dm.Pollute(decimal.Parse(args[2]), false);
-                    for (int method = 0; method < methodsCount; method++)
-                    {
-                        //var restoredImage = dm.RestoreImage(method);
-                        //for (int i = 1; i < dm.MyImage.ImageWidth - 1; i++)
-                        //    for (int j = 1; j < dm.MyImage.ImageHeight - 1; j++)
-                        //        if (dm.PollutedMask[i, j])
-                        //        {
-                        //            //var criterion = dm.CheckForCriterion(dm.MyImage.ImageBytes, i, j);
-                        //            var criterion = 5;
-                        //            var color = new MyColor(restoredImage.ImageBytes[i, j]);
-                        //            var origColor = new MyColor(restoredImage.OriginalImageBytes[i, j]);
-                        //            statistics[(int)criterion][method, method] += Math.Abs((decimal)(origColor.R + origColor.G + origColor.B) / (decimal)3 - (decimal)(color.R + color.G + color.B) / (decimal)3);
-                        //            criterions[(int)criterion, (int)criterion] += 1;
-                        //        }
-                    }
-
-                    XmlTools.Save<List<Matrix>>(statisticsFileName, statistics);
-                    var optimizedStatistics = MatrixTools.PrepareMatrix(statistics);
-                    XmlTools.Save<List<Matrix>>(optimizedStatisticsFileName, optimizedStatistics);
-
-                    XmlTools.Save<Matrix>(criterionsFileName, criterions);
-                    var optimizedCriterions = MatrixTools.PrepareMatrix(criterions);
-                    XmlTools.Save<Matrix>(optimizedCriterionsFileName, optimizedCriterions);
-                }
-                else if (args[0] == "/r")
-                {
-                    var myImage = new MyImage();
-                    myImage.Bitmap = new Bitmap(args[1]);
-                    var dm = new DecisionMethods(myImage);
-
-                    var optimizedStatistics = XmlTools.Load<List<Matrix>>(optimizedStatisticsFileName);
-                    var statistics = XmlTools.Load<List<Matrix>>(statisticsFileName);
-                    var optimizedCriterions = XmlTools.Load<Matrix>(optimizedCriterionsFileName);
-                    var criterions = XmlTools.Load<Matrix>(criterionsFileName);
-
-                    var metricsOrig = dm.GetMetrics(MetricsMode.CSVSimple);
-
-                    dm.SaveInMask = int.Parse(args[3]) == 1;
-                    dm.Pollute(decimal.Parse(args[2]), false);
-                    dm.MyImage.Bitmap.Save(args[1] + "_polluted.png", ImageFormat.Png);
-
-                    var metricsPolluted = dm.GetMetrics(MetricsMode.CSVSimple);
-
-                    if (int.Parse(args[3]) == 0)
-                    {
-                        dm.SaveInMask = true;
-                        dm.FindPixels(8, 2, 1, true);
-                    }
-
-                    //var restoredImage = dm.RestoreImage(criterions, optimizedStatistics);
-                    //var restoredImage = dm.RestoreImageByStatistics(criterions, statistics);
-                    //restoredImage.Bitmap.Save(args[1] + "_restored.png", ImageFormat.Png);
-
-                    //var metricsRestored = Tools.Metrics.GetUnifiedMetrics(restoredImage, MetricsMode.CSVSimple);
-
-                    //bool addHeader = !File.Exists("Statistics.csv");
-
-                    //string log = string.Empty;
-                    //StreamWriter fs = new StreamWriter("Statistics.csv", true);
-                    //if (addHeader)
-                    //    log = string.Join(Tools.Consts.CSVDivider, "File", "Pollution percent", "Use mask", "MM Orig", "MSE Orig", "DON Orig", "MM Pollute", "MSE Pollute", "DON Pollute", "MM Restored", "MSE Restored", "DON Restored") + "\n";
-                    //log += string.Join(Tools.Consts.CSVDivider, args[1], args[2], args[3]) + Tools.Consts.CSVDivider;
-                    //log += string.Join(Tools.Consts.CSVDivider, metricsOrig, metricsPolluted, metricsRestored);
-                    //fs.WriteLine(log);
-                    //fs.Close();
-                }
-                else if (args[0] == "/s")
+                if (args[0] == "/s")
                 {
                     var myImage = new MyImage();
                     myImage.Bitmap = new Bitmap(args[1]);
@@ -136,9 +44,56 @@ namespace DecisionMethods
                     string log = string.Empty;
                     StreamWriter fs = new StreamWriter("Statistics_Mask.csv", true);
                     if (addHeader)
-                        log = string.Join(Tools.Consts.CSVDivider, "File", "Pollution percent", "M", "N", "K", "Use color", "Broken", "Found", "Match", "Not found", "Wrong found") + "\n";
-                    log += string.Join(Tools.Consts.CSVDivider, args[1], args[2], args[3], args[4], args[5], args[6]) + Tools.Consts.CSVDivider;
+                        log += string.Join(Tools.Consts.CSVDivider, "File", "Pollution percent", "M", "N", "K", "Use color", "Use mask", "MR", "NR", "Broken", "Found", "Match", "Not found", "Wrong found", "MM Orig", "MSE Orig", "DON Orig", "MM Pollute", "MSE Pollute", "DON Pollute", "MM Restored", "MSE Restored", "DON Restored") + "\n";
+                    log += string.Join(Tools.Consts.CSVDivider, args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9]) + Tools.Consts.CSVDivider;
                     log += string.Join(Tools.Consts.CSVDivider, Tools.Metrics.MatrixDifference(savedMask, savedMask2, MetricsMode.CSVSimple));
+                    fs.WriteLine(log);
+                    fs.Close();
+                }
+                else if (args[0] == "/r")
+                {
+                    // Initialize
+                    var myImage = new MyImage();
+                    myImage.Bitmap = new Bitmap(args[1]);
+                    var dm = new DecisionMethods(myImage);
+
+                    var metricsOrig = dm.GetMetrics(MetricsMode.CSVSimple);
+
+                    // Pollute
+                    dm.SaveInMask = true;
+                    dm.Pollute(decimal.Parse(args[2]), false);
+                    var savedMask = Tools.Tools.CopyArray<bool>(dm.PollutedMask);
+                    dm.MyImage.Bitmap.Save(args[1] + "_polluted.png", ImageFormat.Png);
+
+                    var metricsPolluted = dm.GetMetrics(MetricsMode.CSVSimple);
+
+                    // Find Pixels
+                    dm.SaveInMask = int.Parse(args[7]) == 1;
+                    dm.FindPixels(int.Parse(args[3]), double.Parse(args[4].Replace(".", ",")), double.Parse(args[5].Replace(".", ",")), int.Parse(args[6]) == 1);
+                    var savedMask2 = Tools.Tools.CopyArray<bool>(dm.PollutedMask);
+                    ImageTransform.BoolToBitmap(dm.PollutedMask).Save(args[1] + "_mask.png", ImageFormat.Png);
+
+                    // Restore
+                    var restoredImage = dm.RestorePixels(int.Parse(args[8]), int.Parse(args[9]));
+                    var metricsRestored = Tools.Metrics.GetUnifiedMetrics(restoredImage, MetricsMode.CSVSimple);
+                    restoredImage.Bitmap.Save(args[1] + "_restore.png", ImageFormat.Png);
+
+                    var restoredImageOld = dm.RestorePixelsOld(4);
+                    var metricsRestoredOld = Tools.Metrics.GetUnifiedMetrics(restoredImage, MetricsMode.CSVSimple);
+                    restoredImageOld.Bitmap.Save(args[1] + "_restoreOld.png", ImageFormat.Png);
+
+                    bool addHeader = !File.Exists("Statistics_Restore.csv");
+
+                    string log = string.Empty;
+                    StreamWriter fs = new StreamWriter("Statistics_Restore.csv", true);
+                    if (addHeader)
+                        log += string.Join(Tools.Consts.CSVDivider, "File", "Pollution percent", "M", "N", "K", "Use color", "Use mask", "MR", "NR", "Broken", "Found", "Match", "Not found", "Wrong found", "MM Orig", "MSE Orig", "DON Orig", "MM Pollute", "MSE Pollute", "DON Pollute", "MM Restored", "MSE Restored", "DON Restored", "MM Restored Old", "MSE Restored Old", "DON Restored Old") + "\n";
+                    log += string.Join(Tools.Consts.CSVDivider, args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9]) + Tools.Consts.CSVDivider;
+                    log += string.Join(Tools.Consts.CSVDivider, Tools.Metrics.MatrixDifference(savedMask, savedMask2, MetricsMode.CSVSimple)) + Tools.Consts.CSVDivider;
+                    log += metricsOrig + Tools.Consts.CSVDivider;
+                    log += metricsPolluted + Tools.Consts.CSVDivider;
+                    log += metricsRestored + Tools.Consts.CSVDivider;
+                    log += metricsRestoredOld;
                     fs.WriteLine(log);
                     fs.Close();
                 }
