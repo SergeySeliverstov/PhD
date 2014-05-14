@@ -59,17 +59,17 @@
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-            this.x8 = new System.Windows.Forms.Label();
-            this.x7 = new System.Windows.Forms.Label();
-            this.x9 = new System.Windows.Forms.Label();
-            this.x11 = new System.Windows.Forms.Label();
-            this.x10 = new System.Windows.Forms.Label();
-            this.x6 = new System.Windows.Forms.Label();
-            this.x2 = new System.Windows.Forms.Label();
             this.x1 = new System.Windows.Forms.Label();
+            this.x2 = new System.Windows.Forms.Label();
             this.x3 = new System.Windows.Forms.Label();
-            this.x5 = new System.Windows.Forms.Label();
             this.x4 = new System.Windows.Forms.Label();
+            this.x5 = new System.Windows.Forms.Label();
+            this.x6 = new System.Windows.Forms.Label();
+            this.x7 = new System.Windows.Forms.Label();
+            this.x8 = new System.Windows.Forms.Label();
+            this.x9 = new System.Windows.Forms.Label();
+            this.x10 = new System.Windows.Forms.Label();
+            this.x11 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -395,104 +395,34 @@
             this.tableLayoutPanel4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel4.ColumnCount = 11;
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 9.700913F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 9.700913F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 9.700913F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 9.700913F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 9.700913F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 9.700913F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 9.700913F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 9.700913F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 9.700913F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 9.700913F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 2.990862F));
-            this.tableLayoutPanel4.Controls.Add(this.x8, 0, 0);
-            this.tableLayoutPanel4.Controls.Add(this.x7, 0, 0);
-            this.tableLayoutPanel4.Controls.Add(this.x9, 0, 0);
-            this.tableLayoutPanel4.Controls.Add(this.x11, 0, 0);
-            this.tableLayoutPanel4.Controls.Add(this.x10, 0, 0);
-            this.tableLayoutPanel4.Controls.Add(this.x6, 0, 0);
-            this.tableLayoutPanel4.Controls.Add(this.x2, 0, 0);
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5F));
             this.tableLayoutPanel4.Controls.Add(this.x1, 0, 0);
+            this.tableLayoutPanel4.Controls.Add(this.x2, 0, 0);
             this.tableLayoutPanel4.Controls.Add(this.x3, 0, 0);
-            this.tableLayoutPanel4.Controls.Add(this.x5, 0, 0);
             this.tableLayoutPanel4.Controls.Add(this.x4, 0, 0);
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(82, 581);
+            this.tableLayoutPanel4.Controls.Add(this.x5, 0, 0);
+            this.tableLayoutPanel4.Controls.Add(this.x6, 0, 0);
+            this.tableLayoutPanel4.Controls.Add(this.x7, 0, 0);
+            this.tableLayoutPanel4.Controls.Add(this.x8, 0, 0);
+            this.tableLayoutPanel4.Controls.Add(this.x9, 0, 0);
+            this.tableLayoutPanel4.Controls.Add(this.x10, 0, 0);
+            this.tableLayoutPanel4.Controls.Add(this.x11, 0, 0);
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(91, 581);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 1;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(787, 28);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(778, 28);
             this.tableLayoutPanel4.TabIndex = 12;
-            // 
-            // x8
-            // 
-            this.x8.AutoSize = true;
-            this.x8.Dock = System.Windows.Forms.DockStyle.Left;
-            this.x8.Location = new System.Drawing.Point(549, 0);
-            this.x8.Name = "x8";
-            this.x8.Size = new System.Drawing.Size(12, 28);
-            this.x8.TabIndex = 10;
-            this.x8.Text = "x";
-            // 
-            // x7
-            // 
-            this.x7.AutoSize = true;
-            this.x7.Dock = System.Windows.Forms.DockStyle.Left;
-            this.x7.Location = new System.Drawing.Point(471, 0);
-            this.x7.Name = "x7";
-            this.x7.Size = new System.Drawing.Size(12, 28);
-            this.x7.TabIndex = 9;
-            this.x7.Text = "x";
-            // 
-            // x9
-            // 
-            this.x9.AutoSize = true;
-            this.x9.Dock = System.Windows.Forms.DockStyle.Left;
-            this.x9.Location = new System.Drawing.Point(627, 0);
-            this.x9.Name = "x9";
-            this.x9.Size = new System.Drawing.Size(12, 28);
-            this.x9.TabIndex = 8;
-            this.x9.Text = "x";
-            // 
-            // x11
-            // 
-            this.x11.AutoSize = true;
-            this.x11.Dock = System.Windows.Forms.DockStyle.Right;
-            this.x11.Location = new System.Drawing.Point(787, 0);
-            this.x11.Name = "x11";
-            this.x11.Size = new System.Drawing.Size(12, 28);
-            this.x11.TabIndex = 7;
-            this.x11.Text = "x";
-            // 
-            // x10
-            // 
-            this.x10.AutoSize = true;
-            this.x10.Dock = System.Windows.Forms.DockStyle.Left;
-            this.x10.Location = new System.Drawing.Point(705, 0);
-            this.x10.Name = "x10";
-            this.x10.Size = new System.Drawing.Size(12, 28);
-            this.x10.TabIndex = 6;
-            this.x10.Text = "x";
-            // 
-            // x6
-            // 
-            this.x6.AutoSize = true;
-            this.x6.Dock = System.Windows.Forms.DockStyle.Left;
-            this.x6.Location = new System.Drawing.Point(393, 0);
-            this.x6.Name = "x6";
-            this.x6.Size = new System.Drawing.Size(12, 28);
-            this.x6.TabIndex = 5;
-            this.x6.Text = "x";
-            // 
-            // x2
-            // 
-            this.x2.AutoSize = true;
-            this.x2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.x2.Location = new System.Drawing.Point(81, 0);
-            this.x2.Name = "x2";
-            this.x2.Size = new System.Drawing.Size(12, 28);
-            this.x2.TabIndex = 4;
-            this.x2.Text = "x";
             // 
             // x1
             // 
@@ -501,38 +431,108 @@
             this.x1.Location = new System.Drawing.Point(3, 0);
             this.x1.Name = "x1";
             this.x1.Size = new System.Drawing.Size(12, 28);
-            this.x1.TabIndex = 3;
+            this.x1.TabIndex = 10;
             this.x1.Text = "x";
+            // 
+            // x2
+            // 
+            this.x2.AutoSize = true;
+            this.x2.Dock = System.Windows.Forms.DockStyle.Left;
+            this.x2.Location = new System.Drawing.Point(80, 0);
+            this.x2.Name = "x2";
+            this.x2.Size = new System.Drawing.Size(12, 28);
+            this.x2.TabIndex = 9;
+            this.x2.Text = "x";
             // 
             // x3
             // 
             this.x3.AutoSize = true;
             this.x3.Dock = System.Windows.Forms.DockStyle.Left;
-            this.x3.Location = new System.Drawing.Point(159, 0);
+            this.x3.Location = new System.Drawing.Point(157, 0);
             this.x3.Name = "x3";
             this.x3.Size = new System.Drawing.Size(12, 28);
-            this.x3.TabIndex = 2;
+            this.x3.TabIndex = 8;
             this.x3.Text = "x";
-            // 
-            // x5
-            // 
-            this.x5.AutoSize = true;
-            this.x5.Dock = System.Windows.Forms.DockStyle.Left;
-            this.x5.Location = new System.Drawing.Point(315, 0);
-            this.x5.Name = "x5";
-            this.x5.Size = new System.Drawing.Size(12, 28);
-            this.x5.TabIndex = 1;
-            this.x5.Text = "x";
             // 
             // x4
             // 
             this.x4.AutoSize = true;
             this.x4.Dock = System.Windows.Forms.DockStyle.Left;
-            this.x4.Location = new System.Drawing.Point(237, 0);
+            this.x4.Location = new System.Drawing.Point(234, 0);
             this.x4.Name = "x4";
             this.x4.Size = new System.Drawing.Size(12, 28);
-            this.x4.TabIndex = 0;
+            this.x4.TabIndex = 7;
             this.x4.Text = "x";
+            // 
+            // x5
+            // 
+            this.x5.AutoSize = true;
+            this.x5.Dock = System.Windows.Forms.DockStyle.Left;
+            this.x5.Location = new System.Drawing.Point(311, 0);
+            this.x5.Name = "x5";
+            this.x5.Size = new System.Drawing.Size(12, 28);
+            this.x5.TabIndex = 6;
+            this.x5.Text = "x";
+            // 
+            // x6
+            // 
+            this.x6.AutoSize = true;
+            this.x6.Dock = System.Windows.Forms.DockStyle.Left;
+            this.x6.Location = new System.Drawing.Point(388, 0);
+            this.x6.Name = "x6";
+            this.x6.Size = new System.Drawing.Size(12, 28);
+            this.x6.TabIndex = 5;
+            this.x6.Text = "x";
+            // 
+            // x7
+            // 
+            this.x7.AutoSize = true;
+            this.x7.Dock = System.Windows.Forms.DockStyle.Left;
+            this.x7.Location = new System.Drawing.Point(465, 0);
+            this.x7.Name = "x7";
+            this.x7.Size = new System.Drawing.Size(12, 28);
+            this.x7.TabIndex = 4;
+            this.x7.Text = "x";
+            // 
+            // x8
+            // 
+            this.x8.AutoSize = true;
+            this.x8.Dock = System.Windows.Forms.DockStyle.Left;
+            this.x8.Location = new System.Drawing.Point(542, 0);
+            this.x8.Name = "x8";
+            this.x8.Size = new System.Drawing.Size(12, 28);
+            this.x8.TabIndex = 3;
+            this.x8.Text = "x";
+            // 
+            // x9
+            // 
+            this.x9.AutoSize = true;
+            this.x9.Dock = System.Windows.Forms.DockStyle.Left;
+            this.x9.Location = new System.Drawing.Point(619, 0);
+            this.x9.Name = "x9";
+            this.x9.Size = new System.Drawing.Size(12, 28);
+            this.x9.TabIndex = 2;
+            this.x9.Text = "x";
+            // 
+            // x10
+            // 
+            this.x10.AutoSize = true;
+            this.x10.Dock = System.Windows.Forms.DockStyle.Left;
+            this.x10.Location = new System.Drawing.Point(696, 0);
+            this.x10.Name = "x10";
+            this.x10.Size = new System.Drawing.Size(12, 28);
+            this.x10.TabIndex = 1;
+            this.x10.Text = "x";
+            // 
+            // x11
+            // 
+            this.x11.AutoSize = true;
+            this.x11.Dock = System.Windows.Forms.DockStyle.Right;
+            this.x11.Location = new System.Drawing.Point(763, 0);
+            this.x11.Name = "x11";
+            this.x11.Size = new System.Drawing.Size(12, 28);
+            this.x11.TabIndex = 0;
+            this.x11.Text = "x";
             // 
             // H3Form
             // 
@@ -597,17 +597,17 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
-        private System.Windows.Forms.Label x8;
-        private System.Windows.Forms.Label x7;
-        private System.Windows.Forms.Label x9;
-        private System.Windows.Forms.Label x11;
-        private System.Windows.Forms.Label x10;
-        private System.Windows.Forms.Label x6;
-        private System.Windows.Forms.Label x2;
         private System.Windows.Forms.Label x1;
+        private System.Windows.Forms.Label x2;
         private System.Windows.Forms.Label x3;
-        private System.Windows.Forms.Label x5;
         private System.Windows.Forms.Label x4;
+        private System.Windows.Forms.Label x5;
+        private System.Windows.Forms.Label x6;
+        private System.Windows.Forms.Label x7;
+        private System.Windows.Forms.Label x8;
+        private System.Windows.Forms.Label x9;
+        private System.Windows.Forms.Label x10;
+        private System.Windows.Forms.Label x11;
 
     }
 }
