@@ -52,7 +52,7 @@ namespace DecisionMethods
 
             dm.SaveInMask = cbUseMask.Checked;
             dm.Pollute(nudPercent.Value, cbSaltAndPepper.Checked);
-            savedMask = Tools.Tools.CopyArray<bool>(dm.PollutedMask);
+            savedMask = Tools.ArrayTools.CopyArray<bool>(dm.PollutedMask);
             ShowImage(pictureBox1, dm.MyImage.Bitmap);
 
             tbLog.Text += "Polluted: " + Tools.Metrics.GetUnifiedMetrics(dm.MyImage) + "\n";
@@ -107,7 +107,7 @@ namespace DecisionMethods
             dm.FindPixels((int)m.Value, (double)n.Value, (double)k.Value, color.Checked);
             pictureBox2.Image = ImageTransform.BoolToBitmap(dm.PollutedMask);
 
-            savedMask2 = Tools.Tools.CopyArray<bool>(dm.PollutedMask);
+            savedMask2 = Tools.ArrayTools.CopyArray<bool>(dm.PollutedMask);
 
             tbLog.Text += Tools.Metrics.MatrixDifference(savedMask, savedMask2, MetricsMode.Simple);
         }

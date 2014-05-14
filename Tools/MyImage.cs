@@ -21,12 +21,12 @@ namespace Tools
 
         public MyImage(int[,] bytes, int[,] originalBytes = null)
         {
-            imageBytes = Tools.CopyArray<int>(bytes);
+            imageBytes = ArrayTools.CopyArray<int>(bytes);
 
             if (originalBytes == null)
                 originalImageBytes = new int[bytes.GetLength(0), bytes.GetLength(1)];
             else
-                originalImageBytes = Tools.CopyArray<int>(originalBytes);
+                originalImageBytes = ArrayTools.CopyArray<int>(originalBytes);
         }
 
 
@@ -108,7 +108,7 @@ namespace Tools
                         }
                     }
 
-                    originalImageBytes = Tools.CopyArray<int>(imageBytes);
+                    originalImageBytes = ArrayTools.CopyArray<int>(imageBytes);
                 }
             }
             get

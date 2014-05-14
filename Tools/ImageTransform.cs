@@ -112,7 +112,7 @@ namespace Tools
 
         public static int[,] InvertRecreate(int[,] imageBytes)
         {
-            var array = Tools.CopyArray<int>(imageBytes);
+            var array = ArrayTools.CopyArray<int>(imageBytes);
             Invert(array);
             return array;
         }
@@ -135,7 +135,7 @@ namespace Tools
 
         public static int[,] TransposeRecreate(int[,] imageBytes)
         {
-            var array = Tools.CopyArray<int>(imageBytes);
+            var array = ArrayTools.CopyArray<int>(imageBytes);
             Transpose(imageBytes);
             return imageBytes;
         }
@@ -161,7 +161,7 @@ namespace Tools
 
         public static int[,] ConvertToGrayscaleRecreate(int[,] imageBytes)
         {
-            var array = Tools.CopyArray<int>(imageBytes);
+            var array = ArrayTools.CopyArray<int>(imageBytes);
             ConvertToGrayscale(imageBytes);
             return imageBytes;
         }

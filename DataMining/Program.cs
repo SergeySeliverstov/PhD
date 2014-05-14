@@ -65,7 +65,7 @@ namespace DataMining
                     for (int i = 0; i < pollutedImage.ImageWidth; i++)
                         for (int j = 0; j < pollutedImage.ImageHeight; j++)
                             dataMining.MyImage.ImageBytes[i, j] = pollutedImage.ImageBytes[i, j];
-                    dataMining.PollutedImage = Tools.Tools.CopyArray<int>(pollutedImage.ImageBytes);
+                    dataMining.PollutedImage = Tools.ArrayTools.CopyArray<int>(pollutedImage.ImageBytes);
                     dataMining.PollutedMask = new bool[pollutedImage.ImageWidth, pollutedImage.ImageHeight];
                     dataMining.PollutedMaskOriginal = new bool[pollutedImage.ImageWidth, pollutedImage.ImageHeight];
                 }
@@ -75,6 +75,24 @@ namespace DataMining
 
                 if (!dataMining.UseMask)
                     dataMining.FindPixels();
+
+                bool[,] maskOriginal;
+                bool[,] maskStatistics;
+                dataMining.GetMasks(out maskOriginal, out maskStatistics);
+
+                bool[,] maskMiss = new bool[maskOriginal.GetLength(0), maskOriginal.GetLength(1)];
+                bool[,] maskFalse = new bool[maskOriginal.GetLength(0), maskOriginal.GetLength(1)];
+                for (int i = 0; i < maskOriginal.GetLength(0); i++)
+                    for (int j = 0; j < maskOriginal.GetLength(1); j++)
+                    {
+                        maskMiss[i, j] = maskOriginal[i, j] && !maskStatistics[i, j];
+                        maskFalse[i, j] = !maskOriginal[i, j] && maskStatistics[i, j];
+                    }
+
+                ImageTransform.BoolToBitmap(maskOriginal).Save(args[0] + "_maskStatistics.png", ImageFormat.Png);
+                ImageTransform.BoolToBitmap(maskStatistics).Save(args[0] + "_maskOriginal.png", ImageFormat.Png);
+                ImageTransform.BoolToBitmap(maskMiss).Save(args[0] + "_maskMiss.png", ImageFormat.Png);
+                ImageTransform.BoolToBitmap(maskFalse).Save(args[0] + "_maskFalse.png", ImageFormat.Png);
 
                 dataMining.RestoreImage();
                 dataMining.MyImage.Bitmap.Save(args[0] + "_restored.png", ImageFormat.Png);

@@ -246,7 +246,7 @@ namespace FourierTransform
 
         private void button13_Click(object sender, EventArgs e)
         {
-            var img = Tools.Tools.CopyArray<int>(myImage.ImageBytes);
+            var img = Tools.ArrayTools.CopyArray<int>(myImage.ImageBytes);
 
             for (int i = 0; i < img.GetLength(0); i++)
                 for (int j = 0; j < img.GetLength(1); j++)
@@ -260,7 +260,7 @@ namespace FourierTransform
 
         private void button14_Click(object sender, EventArgs e)
         {
-            var img = Tools.Tools.CopyArray<int>(myImage.ImageBytes);
+            var img = Tools.ArrayTools.CopyArray<int>(myImage.ImageBytes);
 
             for (int i = 0; i < img.GetLength(0); i++)
                 for (int j = 0; j < img.GetLength(1); j++)
@@ -284,7 +284,7 @@ namespace FourierTransform
 
         private void button15_Click(object sender, EventArgs e)
         {
-            var img = Tools.Tools.CopyArray<int>(myImage.ImageBytes);
+            var img = Tools.ArrayTools.CopyArray<int>(myImage.ImageBytes);
 
             for (int i = 0; i < img.GetLength(0); i++)
                 for (int j = 0; j < img.GetLength(1); j++)

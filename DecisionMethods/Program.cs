@@ -34,10 +34,10 @@ namespace DecisionMethods
 
                     dm.SaveInMask = true;
                     dm.Pollute(decimal.Parse(args[2]), false);
-                    var savedMask = Tools.Tools.CopyArray<bool>(dm.PollutedMask);
+                    var savedMask = Tools.ArrayTools.CopyArray<bool>(dm.PollutedMask);
 
                     dm.FindPixels(int.Parse(args[3]), double.Parse(args[4].Replace(".", ",")), double.Parse(args[5].Replace(".", ",")), int.Parse(args[6]) == 1);
-                    var savedMask2 = Tools.Tools.CopyArray<bool>(dm.PollutedMask);
+                    var savedMask2 = Tools.ArrayTools.CopyArray<bool>(dm.PollutedMask);
 
                     bool addHeader = !File.Exists("Statistics_Mask.csv");
 
@@ -62,7 +62,7 @@ namespace DecisionMethods
                     // Pollute
                     dm.SaveInMask = true;
                     dm.Pollute(decimal.Parse(args[2]), false);
-                    var savedMask = Tools.Tools.CopyArray<bool>(dm.PollutedMask);
+                    var savedMask = Tools.ArrayTools.CopyArray<bool>(dm.PollutedMask);
                     dm.MyImage.Bitmap.Save(args[1] + "_polluted.png", ImageFormat.Png);
 
                     var metricsPolluted = dm.GetMetrics(MetricsMode.CSVSimple);
@@ -70,7 +70,7 @@ namespace DecisionMethods
                     // Find Pixels
                     dm.SaveInMask = int.Parse(args[7]) == 1;
                     dm.FindPixels(int.Parse(args[3]), double.Parse(args[4].Replace(".", ",")), double.Parse(args[5].Replace(".", ",")), int.Parse(args[6]) == 1);
-                    var savedMask2 = Tools.Tools.CopyArray<bool>(dm.PollutedMask);
+                    var savedMask2 = Tools.ArrayTools.CopyArray<bool>(dm.PollutedMask);
                     ImageTransform.BoolToBitmap(dm.PollutedMask).Save(args[1] + "_mask.png", ImageFormat.Png);
 
                     // Restore

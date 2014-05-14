@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Tools
 {
-    public static class Tools
+    public static class ArrayTools
     {
         public static T[,] CopyArray<T>(T[,] input)
         {

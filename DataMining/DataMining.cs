@@ -212,8 +212,8 @@ namespace DataMining
             var tmpMask = Tools.ImageTransform.Pollute(myImage.ImageBytes, pollutePercent, saltPepper);
             if (useMask)
                 pollutedMask = tmpMask;
-            pollutedMaskOriginal = Tools.Tools.CopyArray<bool>(tmpMask);
-            pollutedImage = Tools.Tools.CopyArray<int>(myImage.ImageBytes);
+            pollutedMaskOriginal = Tools.ArrayTools.CopyArray<bool>(tmpMask);
+            pollutedImage = Tools.ArrayTools.CopyArray<int>(myImage.ImageBytes);
         }
 
         private int getDepthByTemplate()
@@ -447,6 +447,12 @@ namespace DataMining
         public string GetMetricsText(MetricsMode mode)
         {
             return Tools.Metrics.GetUnifiedMetrics(myImage, mode);
+        }
+
+        public void GetMasks(out bool[,] pollutedMaskOriginal, out bool[,] pollutedMaskStatistics)
+        {
+            pollutedMaskOriginal = Tools.ArrayTools.CopyArray<bool>(this.pollutedMaskOriginal);
+            pollutedMaskStatistics = Tools.ArrayTools.CopyArray<bool>(this.pollutedMaskStatistics);
         }
 
         public string GetPollutionStatistics()
