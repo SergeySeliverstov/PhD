@@ -150,46 +150,47 @@ namespace Tools
 
             using (Graphics g = Graphics.FromImage(bitmap))
             {
-                double xi = 0;
-                double yi = 0;
+                float xi = 0;
+                float yi = 0;
                 Font font = new Font("Tahoma", 13);
                 RectangleF rectf;
+                string format = "F2";
 
                 // Вертикальные линии                
                 while (xi <= xMax)
                 {
-                    xi += delta;
-                    rectf = new RectangleF(coords.GetX(xi <= xMax ? xi : xi - delta / 3), coords.GetY(yMin) - 30, 100, 30);
-                    g.DrawString(xi.ToString("F1"), font, Brushes.Black, rectf);
+                    xi += (float)delta;
+                    rectf = new RectangleF(coords.GetX(xi <= xMax ? xi : xi - delta / 3), coords.GetY(yMin) - 30, 120, 30);
+                    g.DrawString(xi.ToString(format), font, Brushes.Black, rectf);
                 }
 
                 xi = 0;
                 while (xi >= xMin)
                 {
-                    rectf = new RectangleF(coords.GetX(xi), coords.GetY(yMin) - 30, 100, 30);
-                    g.DrawString(xi != xMin ? xi.ToString("F1") : yMin.ToString("F1") + "/" + xi.ToString("F1"), font, Brushes.Black, rectf);
-                    xi -= delta;
+                    rectf = new RectangleF(coords.GetX(xi), coords.GetY(yMin) - 30, 120, 30);
+                    g.DrawString(xi > xMin ? xi.ToString(format) : yMin.ToString(format) + "/" + xi.ToString(format), font, Brushes.Black, rectf);
+                    xi -= (float)delta;
                 }
 
                 // Горизонтальные линии
                 yi = 0;
                 while (yi <= yMax)
                 {
-                    rectf = new RectangleF(coords.GetX(xMin) + 5, coords.GetY(yi) + 5, 100, 30);
-                    g.DrawString(yi.ToString("F1"), font, Brushes.Black, rectf);
-                    yi += (yMax - yMin) / 5;
+                    rectf = new RectangleF(coords.GetX(xMin) + 5, coords.GetY(yi) + 5, 120, 30);
+                    g.DrawString(yi.ToString(format), font, Brushes.Black, rectf);
+                    yi += (float)(yMax - yMin) / 5;
                 }
 
                 yi = 0;
                 while (yi > yMin)
                 {
-                    rectf = new RectangleF(coords.GetX(xMin) + 5, coords.GetY(yi) + 5, 100, 30);
-                    g.DrawString(yi.ToString("F1"), font, Brushes.Black, rectf);
-                    yi -= (yMax - yMin) / 5;
+                    rectf = new RectangleF(coords.GetX(xMin) + 5, coords.GetY(yi) + 5, 120, 30);
+                    g.DrawString(yi.ToString(format), font, Brushes.Black, rectf);
+                    yi -= (float)(yMax - yMin) / 5;
                 }
 
-                rectf = new RectangleF(coords.GetX(xMin) + 5, coords.GetY(yMax) + 5, 100, 30);
-                g.DrawString(yMax.ToString("F1"), font, Brushes.Black, rectf);
+                rectf = new RectangleF(coords.GetX(xMin) + 5, coords.GetY(yMax) + 5, 120, 30);
+                g.DrawString(yMax.ToString(format), font, Brushes.Black, rectf);
 
                 g.Flush();
             }

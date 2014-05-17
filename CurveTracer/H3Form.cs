@@ -21,8 +21,8 @@ namespace CurveTracer
         {
             InitializeComponent();
 
-            Ugs = new double[] { -3.5, -2.8, -2.1, -1.4, -0.7, 0, 0.7, 1.4, 2.1, 2.8, 3.5 };
-            //Ugs = new double[] { -12, -11.3, -10.6, -9.9, -9.2, -8.5, -7.8, -7.1, -6.4, -5.7, -5 };
+            //Ugs = new double[] { -3.5, -2.8, -2.1, -1.4, -0.7, 0, 0.7, 1.4, 2.1, 2.8, 3.5 };
+            Ugs = new double[] { -12, -11.3, -10.6, -9.9, -9.2, -8.5, -7.8, -7.1, -6.4, -5.7, -5 };
             //Ugs = new double[] { 0.5, 0.52, 0.54, 0.56, 0.58, 0.6, 0.62, 0.64, 0.66, 0.68, 0.7 };
             k0 = new double[] { 0, 4.12, 16.1, 19, 19.8, 19.78, 19.52, 19.08, 18.5, 17.9, 17.32 };
 
@@ -76,7 +76,7 @@ namespace CurveTracer
 
         private void showGraph()
         {
-            //Ugs = CurveTracer.Norm(Ugs);
+            Ugs = CurveTracer.Norm(Ugs);
 
             var multiplier = 100;
             var delta = Ugs[6] - Ugs[5];
