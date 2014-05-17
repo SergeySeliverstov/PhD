@@ -33,9 +33,9 @@ namespace DecisionMethods
                         if (mask[i, j])
                         {
                             if (maskResult[i, j] > 1)
-                                result[i, j] = restorePixel(bytes, mask, i, j, 4);
+                                result[i, j] = restorePixel(bytes, mask, i, j, 5);
                             else
-                                result[i, j] = averagePixel(bytes, i, j);
+                                result[i, j] = averagePixelOld(bytes, i, j);
                         }
                         else
                         {
@@ -216,7 +216,7 @@ namespace DecisionMethods
             }
         }
 
-        private static int averagePixel(int[,] bytes, int i, int j)
+        private static int averagePixelOld(int[,] bytes, int i, int j)
         {
             var colors = new List<MyColor>();
 
@@ -228,6 +228,44 @@ namespace DecisionMethods
             colors.Add(new MyColor(bytes[i + 1, j - 1]));
             colors.Add(new MyColor(bytes[i + 1, j]));
             colors.Add(new MyColor(bytes[i + 1, j + 1]));
+
+            return new MyColor((byte)colors.Average(c => c.R), (byte)colors.Average(c => c.G), (byte)colors.Average(c => c.B)).Color;
+        }
+
+        private static int averagePixel(int[,] bytes, int i, int j, int m)
+        {
+            double byteMask = 0xFF / m;
+
+            Dictionary<byte, byte> K1 = new Dictionary<byte, byte>();
+            addToDictionary(K1, bytes[i - 1, j - 1] / byteMask);
+            addToDictionary(K1, bytes[i - 1, j] / byteMask);
+            addToDictionary(K1, bytes[i - 1, j + 1] / byteMask);
+            addToDictionary(K1, bytes[i, j - 1] / byteMask);
+            addToDictionary(K1, bytes[i, j + 1] / byteMask);
+            addToDictionary(K1, bytes[i + 1, j - 1] / byteMask);
+            addToDictionary(K1, bytes[i + 1, j] / byteMask);
+            addToDictionary(K1, bytes[i + 1, j + 1] / byteMask);
+
+            byte maxColor = K1.OrderByDescending(d => d.Value).Select(d => d.Key).FirstOrDefault();
+
+            var colors = new List<MyColor>();
+
+            if (bytes[i - 1, j - 1] / byteMask == maxColor)
+                colors.Add(new MyColor(bytes[i - 1, j - 1]));
+            if (bytes[i - 1, j] / byteMask == maxColor)
+                colors.Add(new MyColor(bytes[i - 1, j]));
+            if (bytes[i - 1, j + 1] / byteMask == maxColor)
+                colors.Add(new MyColor(bytes[i - 1, j + 1]));
+            if (bytes[i, j - 1] / byteMask == maxColor)
+                colors.Add(new MyColor(bytes[i, j - 1]));
+            if (bytes[i - 1, j + 1] / byteMask == maxColor)
+                colors.Add(new MyColor(bytes[i, j + 1]));
+            if (bytes[i + 1, j - 1] / byteMask == maxColor)
+                colors.Add(new MyColor(bytes[i + 1, j - 1]));
+            if (bytes[i + 1, j - 1] / byteMask == maxColor)
+                colors.Add(new MyColor(bytes[i + 1, j]));
+            if (bytes[i + 1, j + 1] / byteMask == maxColor)
+                colors.Add(new MyColor(bytes[i + 1, j + 1]));
 
             return new MyColor((byte)colors.Average(c => c.R), (byte)colors.Average(c => c.G), (byte)colors.Average(c => c.B)).Color;
         }

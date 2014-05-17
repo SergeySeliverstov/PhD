@@ -76,7 +76,7 @@ namespace CurveTracer
 
         private void showGraph()
         {
-            Ugs = CurveTracer.Norm(Ugs);
+            //Ugs = CurveTracer.Norm(Ugs);
 
             var multiplier = 100;
             var delta = Ugs[6] - Ugs[5];
@@ -129,26 +129,15 @@ namespace CurveTracer
                 vertMinY[i] = -k0.Max() + i * 2 * k0.Max() / size;
             }
 
-            pictureBox1.Image = (new MyImage(FuncTools.FuncsToBytes(delta, new Func(x, y), new Func(x, newH3.ToArray()), new Func(vertMinX, vertMinY)))).Bitmap;
-            pictureBox2.Image = (new MyImage(FuncTools.FuncsToBytes(delta, new Func(x, y), new Func(x, newH3.ToArray()), new Func(x, newH2.ToArray())))).Bitmap;
+            var funcs1 = new Func[] { new Func(x, y), new Func(x, newH3.ToArray()), new Func(vertMinX, vertMinY) };
+            var bitmap1 = new MyImage(FuncTools.FuncsToBytes(delta, funcs1)).Bitmap;
+            FuncTools.AddLabels(bitmap1, delta, funcs1);
+            pictureBox1.Image = bitmap1;
 
-            x1.Text = Ugs[0].ToString("F1");
-            x2.Text = Ugs[1].ToString("F1");
-            x3.Text = Ugs[2].ToString("F1");
-            x4.Text = Ugs[3].ToString("F1");
-            x5.Text = Ugs[4].ToString("F1");
-            x6.Text = Ugs[5].ToString("F1");
-            x7.Text = Ugs[6].ToString("F1");
-            x8.Text = Ugs[7].ToString("F1");
-            x9.Text = Ugs[8].ToString("F1");
-            x10.Text = Ugs[9].ToString("F1");
-            x11.Text = Ugs[10].ToString("F1");
-
-            yMin1.Text = Math.Min(y.Min(), newH3.Min()).ToString("F");
-            yMax1.Text = Math.Max(y.Max(), newH3.Max()).ToString("F");
-
-            yMin2.Text = Math.Min(y.Min(), y1.Min()).ToString("F");
-            yMax2.Text = Math.Max(y.Max(), y1.Max()).ToString("F");
+            var funcs2 = new Func[] { new Func(x, y), new Func(x, newH3.ToArray()), new Func(x, newH2.ToArray()) };
+            var bitmap2 = new MyImage(FuncTools.FuncsToBytes(delta, funcs2)).Bitmap;
+            FuncTools.AddLabels(bitmap2, delta, funcs2);
+            pictureBox2.Image = bitmap2;
 
             listBox1.Items.Clear();
             listBox1.Items.Add(new MyListBoxItem(Color.Green, "██ - K0"));
@@ -195,6 +184,12 @@ namespace CurveTracer
         {
             updateArrays();
             showGraph();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            var form = new HelpForm();
+            form.ShowDialog();
         }
     }
 }
