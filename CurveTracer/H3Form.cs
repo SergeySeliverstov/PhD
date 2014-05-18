@@ -21,8 +21,8 @@ namespace CurveTracer
         {
             InitializeComponent();
 
-            Ugs = new double[] { -3.5, -2.8, -2.1, -1.4, -0.7, 0, 0.7, 1.4, 2.1, 2.8, 3.5 };
-            //Ugs = new double[] { -12, -11.3, -10.6, -9.9, -9.2, -8.5, -7.8, -7.1, -6.4, -5.7, -5 };
+            //Ugs = new double[] { -3.5, -2.8, -2.1, -1.4, -0.7, 0, 0.7, 1.4, 2.1, 2.8, 3.5 };
+            Ugs = new double[] { -12, -11.3, -10.6, -9.9, -9.2, -8.5, -7.8, -7.1, -6.4, -5.7, -5 };
             //Ugs = new double[] { 0.5, 0.52, 0.54, 0.56, 0.58, 0.6, 0.62, 0.64, 0.66, 0.68, 0.7 };
             k0 = new double[] { 0, 4.12, 16.1, 19, 19.8, 19.78, 19.52, 19.08, 18.5, 17.9, 17.32 };
 
@@ -129,26 +129,15 @@ namespace CurveTracer
                 vertMinY[i] = -k0.Max() + i * 2 * k0.Max() / size;
             }
 
-            pictureBox1.Image = (new MyImage(FuncTools.FuncsToBytes(delta, new Func(x, y), new Func(x, newH3.ToArray()), new Func(vertMinX, vertMinY)))).Bitmap;
-            pictureBox2.Image = (new MyImage(FuncTools.FuncsToBytes(delta, new Func(x, y), new Func(x, newH3.ToArray()), new Func(x, newH2.ToArray())))).Bitmap;
+            var funcs1 = new Func[] { new Func(x, y), new Func(x, newH3.ToArray()), new Func(vertMinX, vertMinY) };
+            var bitmap1 = new MyImage(FuncTools.FuncsToBytes(delta, funcs1)).Bitmap;
+            FuncTools.AddLabels(bitmap1, delta, funcs1);
+            pictureBox1.Image = bitmap1;
 
-            x1.Text = Ugs[0].ToString("F1");
-            x2.Text = Ugs[1].ToString("F1");
-            x3.Text = Ugs[2].ToString("F1");
-            x4.Text = Ugs[3].ToString("F1");
-            x5.Text = Ugs[4].ToString("F1");
-            x6.Text = Ugs[5].ToString("F1");
-            x7.Text = Ugs[6].ToString("F1");
-            x8.Text = Ugs[7].ToString("F1");
-            x9.Text = Ugs[8].ToString("F1");
-            x10.Text = Ugs[9].ToString("F1");
-            x11.Text = Ugs[10].ToString("F1");
-
-            yMin1.Text = Math.Min(y.Min(), newH3.Min()).ToString("F");
-            yMax1.Text = Math.Max(y.Max(), newH3.Max()).ToString("F");
-
-            yMin2.Text = Math.Min(y.Min(), y1.Min()).ToString("F");
-            yMax2.Text = Math.Max(y.Max(), y1.Max()).ToString("F");
+            var funcs2 = new Func[] { new Func(x, y), new Func(x, newH3.ToArray()), new Func(x, newH2.ToArray()) };
+            var bitmap2 = new MyImage(FuncTools.FuncsToBytes(delta, funcs2)).Bitmap;
+            FuncTools.AddLabels(bitmap2, delta, funcs2);
+            pictureBox2.Image = bitmap2;
 
             listBox1.Items.Clear();
             listBox1.Items.Add(new MyListBoxItem(Color.Green, "██ - K0"));
@@ -195,6 +184,12 @@ namespace CurveTracer
         {
             updateArrays();
             showGraph();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            var form = new HelpForm();
+            form.ShowDialog();
         }
     }
 }

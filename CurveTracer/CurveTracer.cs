@@ -103,15 +103,26 @@ namespace CurveTracer
             for (int i = 0; i < Ugs.Length; i++)
                 if (X[5] == Ugs[5])
                 {
-                    result[i] = (2 * Ugs[i]) / (10 * (Ugs[6] - Ugs[5]));
+                    result[i] = Ugs[i];
                 }
                 else
                 {
                     if (Ugs[0] == 0)
-                        result[i] = 2 * (Ugs[i] - Math.Abs(Ugs.Max()) / 2) / (10 * (Ugs[6] - Ugs[5]));
+                        result[i] = (Ugs[i] - Math.Abs(Ugs.Max()) / 2);
                     else
-                        result[i] = 2 * (Ugs[i] - Ugs.Average()) / (10 * (Ugs[6] - Ugs[5]));
+                        result[i] = (Ugs[i] - Ugs.Average());
                 }
+                //if (X[5] == Ugs[5])
+                //{
+                //    result[i] = (2 * Ugs[i]) / (10 * (Ugs[6] - Ugs[5]));
+                //}
+                //else
+                //{
+                //    if (Ugs[0] == 0)
+                //        result[i] = 2 * (Ugs[i] - Math.Abs(Ugs.Max()) / 2) / (10 * (Ugs[6] - Ugs[5]));
+                //    else
+                //        result[i] = 2 * (Ugs[i] - Ugs.Average()) / (10 * (Ugs[6] - Ugs[5]));
+                //}
             return result;
         }
     }
