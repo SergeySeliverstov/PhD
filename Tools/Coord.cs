@@ -45,6 +45,38 @@ namespace Tools
             }
         }
 
+        public double XMin
+        {
+            get
+            {
+                return xMin;
+            }
+        }
+
+        public double XMax
+        {
+            get
+            {
+                return xMax;
+            }
+        }
+
+        public double YMin
+        {
+            get
+            {
+                return yMin;
+            }
+        }
+
+        public double YMax
+        {
+            get
+            {
+                return yMax;
+            }
+        }
+
         public Coord(double xMin, double xMax, double yMin, double yMax, int sizeX, int sizeY)
         {
             this.xMin = xMin;
@@ -54,6 +86,28 @@ namespace Tools
 
             this.sizeX = sizeX;
             this.sizeY = sizeY;
+        }
+
+        public Coord(params Func[] funcs)
+        {
+            this.xMax = double.MinValue;
+            this.yMax = double.MinValue;
+            this.xMin = double.MaxValue;
+            this.yMin = double.MaxValue;
+            foreach (var func in funcs)
+            {
+                if (this.xMax < func.x.Max())
+                    this.xMax = func.x.Max();
+                if (this.yMax < func.y.Max())
+                    this.yMax = func.y.Max();
+                if (this.xMin > func.x.Min())
+                    this.xMin = func.x.Min();
+                if (this.yMin > func.y.Min())
+                    this.yMin = func.y.Min();
+            }
+
+            this.sizeX = funcs[0].x.Length;
+            this.sizeY = funcs[0].x.Length;
         }
 
         public int GetX(double x)

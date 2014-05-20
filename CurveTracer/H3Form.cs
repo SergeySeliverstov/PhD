@@ -109,15 +109,15 @@ namespace CurveTracer
             for (var i = 0; i < x.Length; i++)
                 newH2.Add(h2[i] > -k0.Max() && h2[i] < k0.Max() ? h2[i] : 0);
 
-            double minX = 0;
             double min = double.MinValue;
+            int minPos = 0;
             for (var i = 0; i < x.Length; i++)
             {
                 var value = y[i] - Math.Abs(h3[i]);
                 if (value > min)
                 {
                     min = value;
-                    minX = x[i];
+                    minPos = i;
                 }
             }
 
@@ -125,13 +125,14 @@ namespace CurveTracer
             var vertMinY = new double[size];
             for (var i = 0; i < x.Length; i++)
             {
-                vertMinX[i] = minX;
+                vertMinX[i] = x[minPos];
                 vertMinY[i] = -k0.Max() + i * 2 * k0.Max() / size;
             }
 
             var funcs1 = new Func[] { new Func(x, y), new Func(x, newH3.ToArray()), new Func(vertMinX, vertMinY) };
             var bitmap1 = new MyImage(FuncTools.FuncsToBytes(delta, funcs1)).Bitmap;
             FuncTools.AddLabels(bitmap1, delta, funcs1);
+            FuncTools.AddTextInPhisicalCoords(bitmap1, new Coord(funcs1), x[minPos], y[minPos], string.Format("{0:F2}/{1:F2}", x[minPos], y[minPos]));
             pictureBox1.Image = bitmap1;
 
             var funcs2 = new Func[] { new Func(x, y), new Func(x, newH3.ToArray()), new Func(x, newH2.ToArray()) };
