@@ -132,7 +132,11 @@ namespace CurveTracer
             var funcs1 = new Func[] { new Func(x, y), new Func(x, newH3.ToArray()), new Func(vertMinX, vertMinY) };
             var bitmap1 = new MyImage(FuncTools.FuncsToBytes(delta, funcs1)).Bitmap;
             FuncTools.AddLabels(bitmap1, delta, funcs1);
-            FuncTools.AddTextInPhisicalCoords(bitmap1, new Coord(funcs1), x[minPos], y[minPos], string.Format("{0:F2}/{1:F2}", x[minPos], y[minPos]));
+            FuncTools.AddTextInPhisicalCoords(bitmap1, new Coord(funcs1), x[minPos], y[minPos], string.Format("K0: {0:F2}", y[minPos]));
+            FuncTools.AddTextInPhisicalCoords(bitmap1, new Coord(funcs1), x[minPos], y[minPos - 140], string.Format("H3:  {0:F2}", newH3[minPos]));
+            FuncTools.AddTextInPhisicalCoords(bitmap1, new Coord(funcs1), x[minPos], y[minPos-165], string.Format("Uзи: {0:F2} ,В", x[minPos]));
+
+
             pictureBox1.Image = bitmap1;
 
             var funcs2 = new Func[] { new Func(x, y), new Func(x, newH3.ToArray()), new Func(x, newH2.ToArray()) };
@@ -191,6 +195,11 @@ namespace CurveTracer
         {
             var form = new HelpForm();
             form.ShowDialog();
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
