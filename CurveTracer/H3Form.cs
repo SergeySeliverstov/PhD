@@ -133,8 +133,8 @@ namespace CurveTracer
             var bitmap1 = new MyImage(FuncTools.FuncsToBytes(delta, funcs1)).Bitmap;
             FuncTools.AddLabels(bitmap1, delta, funcs1);
             FuncTools.AddTextInPhisicalCoords(bitmap1, new Coord(funcs1), x[minPos], y[minPos], string.Format("K0: {0:F2}", y[minPos]));
-            FuncTools.AddTextInPhisicalCoords(bitmap1, new Coord(funcs1), x[minPos], y[minPos - 140], string.Format("H3:  {0:F2}", newH3[minPos]));
-            FuncTools.AddTextInPhisicalCoords(bitmap1, new Coord(funcs1), x[minPos], y[minPos-165], string.Format("Uзи: {0:F2} ,В", x[minPos]));
+            FuncTools.AddTextInPhisicalCoords(bitmap1, new Coord(funcs1), x[minPos], newH3[minPos], string.Format("H3:  {0:F4}", newH3[minPos]));
+            FuncTools.AddTextInPhisicalCoords(bitmap1, new Coord(funcs1), x[minPos], y[minPos -300], string.Format("Uзи: {0:F2} ,В", x[minPos]));
 
 
             pictureBox1.Image = bitmap1;
