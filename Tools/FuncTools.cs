@@ -128,72 +128,73 @@ namespace Tools
 
         public static void AddLabels(Bitmap bitmap, double delta, params Func[] funcs)
         {
-            var size = funcs[0].x.Length;
-
-            var xMax = double.MinValue;
-            var yMax = double.MinValue;
-            var xMin = double.MaxValue;
-            var yMin = double.MaxValue;
-            foreach (var func in funcs)
-            {
-                if (xMax < func.x.Max())
-                    xMax = func.x.Max();
-                if (yMax < func.y.Max())
-                    yMax = func.y.Max();
-                if (xMin > func.x.Min())
-                    xMin = func.x.Min();
-                if (yMin > func.y.Min())
-                    yMin = func.y.Min();
-            }
-
-            var coords = new Coord(xMin, xMax, yMin, yMax, size, size);
+            var coords = new Coord(funcs);
 
             using (Graphics g = Graphics.FromImage(bitmap))
             {
                 float xi = 0;
                 float yi = 0;
-                Font font = new Font("Tahoma", 13);
-                RectangleF rectf;
                 string format = "F2";
 
                 // Вертикальные линии                
-                while (xi <= xMax)
+                xi = 0;
+                while (xi <= coords.XMax)
                 {
                     xi += (float)delta;
-                    rectf = new RectangleF(coords.GetX(xi <= xMax ? xi : xi - delta / 3), coords.GetY(yMin) - 30, 120, 30);
-                    g.DrawString(xi.ToString(format), font, Brushes.Black, rectf);
+                    addText(g, coords.GetX(xi <= coords.XMax ? xi : xi - delta / 3), coords.GetY(coords.YMin) - 30, xi.ToString(format));
                 }
 
                 xi = 0;
-                while (xi >= xMin)
+                while (xi >= coords.XMin)
                 {
-                    rectf = new RectangleF(coords.GetX(xi), coords.GetY(yMin) - 30, 120, 30);
-                    g.DrawString(xi > xMin ? xi.ToString(format) : yMin.ToString(format) + "/" + xi.ToString(format), font, Brushes.Black, rectf);
+                    addText(g, coords.GetX(xi), coords.GetY(coords.YMin) - 30, xi > coords.XMin ? xi.ToString(format) : coords.YMin.ToString(format) + "/" + xi.ToString(format));
                     xi -= (float)delta;
                 }
 
                 // Горизонтальные линии
                 yi = 0;
-                while (yi <= yMax)
+                while (yi <= coords.YMax)
                 {
-                    rectf = new RectangleF(coords.GetX(xMin) + 5, coords.GetY(yi) + 5, 120, 30);
-                    g.DrawString(yi.ToString(format), font, Brushes.Black, rectf);
-                    yi += (float)(yMax - yMin) / 5;
+                    addText(g, coords.GetX(coords.XMin) + 5, coords.GetY(yi) + 5, yi.ToString(format));
+                    yi += (float)(coords.YMax - coords.YMin) / 5;
                 }
 
                 yi = 0;
-                while (yi > yMin)
+                while (yi > coords.YMin)
                 {
-                    rectf = new RectangleF(coords.GetX(xMin) + 5, coords.GetY(yi) + 5, 120, 30);
-                    g.DrawString(yi.ToString(format), font, Brushes.Black, rectf);
-                    yi -= (float)(yMax - yMin) / 5;
+                    addText(g, coords.GetX(coords.XMin) + 5, coords.GetY(yi) + 5, yi.ToString(format));
+                    yi -= (float)(coords.YMax - coords.YMin) / 5;
                 }
 
-                rectf = new RectangleF(coords.GetX(xMin) + 5, coords.GetY(yMax) + 5, 120, 30);
-                g.DrawString(yMax.ToString(format), font, Brushes.Black, rectf);
+                addText(g, coords.GetX(coords.XMin) + 5, coords.GetY(coords.YMax) + 5, coords.YMax.ToString(format));
 
                 g.Flush();
             }
+        }
+
+        public static void AddText(Bitmap bitmap, int x, int y, string text)
+        {
+            using (Graphics g = Graphics.FromImage(bitmap))
+            {
+                addText(g, x, y, text);
+            }
+        }
+
+        public static void AddTextInPhisicalCoords(Bitmap bitmap, Coord coord, double x, double y, string text)
+        {
+            using (Graphics g = Graphics.FromImage(bitmap))
+            {
+                addText(g, coord.GetX(x), coord.GetY(y), text);
+            }
+        }
+
+        private static void addText(Graphics g, int x, int y, string text)
+        {
+            Font font = new Font("Tahoma", 13);
+            RectangleF rectf;
+
+            rectf = new RectangleF(x, y, 120, 30);
+            g.DrawString(text, font, Brushes.Black, rectf);
         }
     }
 }
