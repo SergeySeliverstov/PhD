@@ -173,6 +173,7 @@
             // nudMaxAcc
             // 
             this.nudMaxAcc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.nudMaxAcc.DecimalPlaces = 3;
             this.nudMaxAcc.Location = new System.Drawing.Point(562, 183);
             this.nudMaxAcc.Name = "nudMaxAcc";
             this.nudMaxAcc.Size = new System.Drawing.Size(91, 20);

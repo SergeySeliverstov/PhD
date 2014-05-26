@@ -17,7 +17,7 @@ namespace DataMining
         private int collectionMethod;
         private int template;
         private bool cropPixels;
-        private int maxAccuracy;
+        private Decimal maxAccuracy;
         private bool useLimit;
         private bool wsm;
 
@@ -153,7 +153,7 @@ namespace DataMining
             }
         }
 
-        public int MaxAccuracy
+        public Decimal MaxAccuracy
         {
             get
             {

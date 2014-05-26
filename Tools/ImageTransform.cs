@@ -180,6 +180,8 @@ namespace Tools
 
         public static Bitmap BoolToBitmap(bool[,] inputMask)
         {
+            if (inputMask == null)
+                return null;
             int[,] mask = new int[inputMask.GetLength(0), inputMask.GetLength(1)];
             for (int i = 0; i < mask.GetLength(0); i++)
                 for (int j = 0; j < mask.GetLength(1); j++)

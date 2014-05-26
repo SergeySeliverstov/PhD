@@ -31,7 +31,7 @@ namespace DataMining
                 dataMining.CollectionMethod = cbCollectionMethod.SelectedIndex;
                 dataMining.Template = cbTemplate.SelectedIndex;
                 dataMining.CropPixels = cbCropPixels.Checked;
-                dataMining.MaxAccuracy = (int)nudMaxAcc.Value;
+                dataMining.MaxAccuracy = (Decimal)nudMaxAcc.Value;
                 dataMining.MaxDepth = int.Parse(cbMaxDepth.SelectedItem.ToString());
                 dataMining.PollutePercent = (int)nudPollutePercent.Value;
                 dataMining.UseMask = cbUseMask.Checked;

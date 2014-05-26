@@ -9,6 +9,9 @@ namespace Tools
     {
         public static T[,] CopyArray<T>(T[,] input)
         {
+            if (input == null)
+                return null;
+
             T[,] output = new T[input.GetLength(0), input.GetLength(1)];
 
             for (int i = 0; i < input.GetLength(0); i++)
@@ -20,6 +23,9 @@ namespace Tools
 
         public static T[] CopyArray<T>(T[] input)
         {
+            if (input == null)
+                return null;
+
             T[] output = new T[input.GetLength(0)];
 
             for (int i = 0; i < input.GetLength(0); i++)
@@ -30,6 +36,9 @@ namespace Tools
 
         public static int[,] SumArrays(int[,] p1, int[,] p2)
         {
+            if (p1 == null || p2 == null)
+                return null;
+
             int[,] output = new int[p1.GetLength(0), p1.GetLength(1)];
 
             for (int i = 0; i < p1.GetLength(0); i++)

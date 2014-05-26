@@ -82,15 +82,16 @@ namespace DataMining
 
                 bool[,] maskMiss = new bool[maskOriginal.GetLength(0), maskOriginal.GetLength(1)];
                 bool[,] maskFalse = new bool[maskOriginal.GetLength(0), maskOriginal.GetLength(1)];
-                for (int i = 0; i < maskOriginal.GetLength(0); i++)
-                    for (int j = 0; j < maskOriginal.GetLength(1); j++)
-                    {
-                        maskMiss[i, j] = maskOriginal[i, j] && !maskStatistics[i, j];
-                        maskFalse[i, j] = !maskOriginal[i, j] && maskStatistics[i, j];
-                    }
-
-                ImageTransform.BoolToBitmap(maskOriginal).Save(args[0] + "_maskStatistics.png", ImageFormat.Png);
-                ImageTransform.BoolToBitmap(maskStatistics).Save(args[0] + "_maskOriginal.png", ImageFormat.Png);
+                if (maskStatistics != null)
+                    for (int i = 0; i < maskOriginal.GetLength(0); i++)
+                        for (int j = 0; j < maskOriginal.GetLength(1); j++)
+                        {
+                            maskMiss[i, j] = maskOriginal[i, j] && !maskStatistics[i, j];
+                            maskFalse[i, j] = !maskOriginal[i, j] && maskStatistics[i, j];
+                        }
+                if ( maskStatistics != null )
+                    ImageTransform.BoolToBitmap(maskStatistics).Save(args[0] + "_maskStatistics.png", ImageFormat.Png);
+                ImageTransform.BoolToBitmap(maskOriginal).Save(args[0] + "_maskOriginal.png", ImageFormat.Png);                
                 ImageTransform.BoolToBitmap(maskMiss).Save(args[0] + "_maskMiss.png", ImageFormat.Png);
                 ImageTransform.BoolToBitmap(maskFalse).Save(args[0] + "_maskFalse.png", ImageFormat.Png);
 
