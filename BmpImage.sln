@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataMining", "DataMining\DataMining.csproj", "{E39130EF-8B53-4914-B06A-742E08A5A235}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DecisionMethods", "DecisionMethods\DecisionMethods.csproj", "{F1072980-DFB6-49A9-A0D0-EA700F7CC147}"

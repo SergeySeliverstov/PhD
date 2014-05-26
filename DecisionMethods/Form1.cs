@@ -60,19 +60,19 @@ namespace DecisionMethods
 
         private void button1_Click(object sender, EventArgs e)
         {
-            tbLog.Text += "Broken: " + Tools.Metrics.GetUnifiedMetrics(dm.MyImage) + "\n";
+            //tbLog.Text += "Broken: " + Tools.Metrics.GetUnifiedMetrics(dm.MyImage) + "\n";
 
             var image4 = dm.RestorePixels((int)mRestore.Value, (double)nRestore.Value);
             ShowImage(pictureBox3, image4.Bitmap);
-            tbLog.Text += "Middle: " + Tools.Metrics.GetUnifiedMetrics(image4);
+            tbLog.Text += "New method: " + Tools.Metrics.GetUnifiedMetrics(image4);
 
-            //var image4 = dm.RestoreImage(4);
+            var image5 = dm.RestorePixelsOld(4);
             //ShowImage(pictureBox3, image4.Bitmap);
-            //tbLog.Text += "Middle: " + Tools.Metrics.GetUnifiedMetrics(image4);
+            tbLog.Text += "Middle: " + Tools.Metrics.GetUnifiedMetrics(image5);
 
-            //var image5 = dm.RestoreImage(5);
+            var image6 = dm.RestorePixelsOld(5);
             //ShowImage(pictureBox4, image5.Bitmap);
-            //tbLog.Text += "Sqrt: " + Tools.Metrics.GetUnifiedMetrics(image5);
+            tbLog.Text += "Sqrt: " + Tools.Metrics.GetUnifiedMetrics(image6);
 
             //var statisticsFileName = "Statistics.xml";
             //var optimizedStatisticsFileName = "OptimizedStatistics.xml";

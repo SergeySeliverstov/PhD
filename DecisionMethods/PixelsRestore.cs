@@ -33,8 +33,9 @@ namespace DecisionMethods
                         if (mask[i, j])
                         {
                             if (maskResult[i, j] > 1)
-                                result[i, j] = restorePixel(bytes, mask, i, j, 5);
+                                result[i, j] = restorePixel(bytes, mask, i, j, 4);
                             else
+                                //result[i, j] = restorePixel(bytes, mask, i, j, 5);
                                 result[i, j] = averagePixelOld(bytes, i, j);
                         }
                         else
