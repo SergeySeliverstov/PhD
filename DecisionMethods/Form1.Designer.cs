@@ -53,10 +53,11 @@
             this.cbSaltAndPepper = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.mRestore = new System.Windows.Forms.NumericUpDown();
+            this.nRestore = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.nRestore = new System.Windows.Forms.NumericUpDown();
-            this.mRestore = new System.Windows.Forms.NumericUpDown();
+            this.bClear = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -69,8 +70,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.k)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nRestore)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.mRestore)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nRestore)).BeginInit();
             this.SuspendLayout();
             // 
             // bOpen1
@@ -116,6 +117,7 @@
             this.tbLog.Location = new System.Drawing.Point(554, 332);
             this.tbLog.Multiline = true;
             this.tbLog.Name = "tbLog";
+            this.tbLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.tbLog.Size = new System.Drawing.Size(185, 133);
             this.tbLog.TabIndex = 12;
             // 
@@ -184,7 +186,7 @@
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button1.Location = new System.Drawing.Point(6, 68);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(173, 26);
+            this.button1.Size = new System.Drawing.Size(149, 26);
             this.button1.TabIndex = 8;
             this.button1.Text = "Recover";
             this.button1.UseVisualStyleBackColor = true;
@@ -371,6 +373,7 @@
             // groupBox2
             // 
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.bClear);
             this.groupBox2.Controls.Add(this.mRestore);
             this.groupBox2.Controls.Add(this.button1);
             this.groupBox2.Controls.Add(this.nRestore);
@@ -381,6 +384,43 @@
             this.groupBox2.Size = new System.Drawing.Size(185, 100);
             this.groupBox2.TabIndex = 19;
             this.groupBox2.TabStop = false;
+            // 
+            // mRestore
+            // 
+            this.mRestore.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.mRestore.Location = new System.Drawing.Point(38, 16);
+            this.mRestore.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.mRestore.Name = "mRestore";
+            this.mRestore.Size = new System.Drawing.Size(61, 20);
+            this.mRestore.TabIndex = 14;
+            this.mRestore.Value = new decimal(new int[] {
+            8,
+            0,
+            0,
+            0});
+            // 
+            // nRestore
+            // 
+            this.nRestore.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.nRestore.DecimalPlaces = 2;
+            this.nRestore.Location = new System.Drawing.Point(38, 42);
+            this.nRestore.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.nRestore.Name = "nRestore";
+            this.nRestore.Size = new System.Drawing.Size(61, 20);
+            this.nRestore.TabIndex = 14;
+            this.nRestore.Value = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
             // 
             // label4
             // 
@@ -402,42 +442,15 @@
             this.label5.TabIndex = 17;
             this.label5.Text = "n:";
             // 
-            // nRestore
+            // bClear
             // 
-            this.nRestore.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.nRestore.DecimalPlaces = 2;
-            this.nRestore.Location = new System.Drawing.Point(38, 42);
-            this.nRestore.Maximum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.nRestore.Name = "nRestore";
-            this.nRestore.Size = new System.Drawing.Size(61, 20);
-            this.nRestore.TabIndex = 14;
-            this.nRestore.Value = new decimal(new int[] {
-            2,
-            0,
-            0,
-            0});
-            // 
-            // mRestore
-            // 
-            this.mRestore.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.mRestore.Location = new System.Drawing.Point(38, 16);
-            this.mRestore.Maximum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.mRestore.Name = "mRestore";
-            this.mRestore.Size = new System.Drawing.Size(61, 20);
-            this.mRestore.TabIndex = 14;
-            this.mRestore.Value = new decimal(new int[] {
-            8,
-            0,
-            0,
-            0});
+            this.bClear.Location = new System.Drawing.Point(155, 68);
+            this.bClear.Name = "bClear";
+            this.bClear.Size = new System.Drawing.Size(24, 25);
+            this.bClear.TabIndex = 18;
+            this.bClear.Text = "C";
+            this.bClear.UseVisualStyleBackColor = true;
+            this.bClear.Click += new System.EventHandler(this.bClear_Click);
             // 
             // Form1
             // 
@@ -469,8 +482,8 @@
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nRestore)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.mRestore)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nRestore)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -506,6 +519,7 @@
         private System.Windows.Forms.NumericUpDown nRestore;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button bClear;
     }
 }
 

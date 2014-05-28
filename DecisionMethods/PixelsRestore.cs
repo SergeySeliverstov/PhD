@@ -10,20 +10,20 @@ namespace DecisionMethods
     {
         public static int[,] FindPixels(int[,] bytes, bool[,] mask, int m, double n)
         {
-            byte[,] channelBytes = new byte[bytes.GetLength(0), bytes.GetLength(1)];
+            byte[][,] channelBytes = new byte[3][,] { new byte[bytes.GetLength(0), bytes.GetLength(1)], new byte[bytes.GetLength(0), bytes.GetLength(1)], new byte[bytes.GetLength(0), bytes.GetLength(1)] };
             int[,] maskResult = new int[bytes.GetLength(0), bytes.GetLength(1)];
             int[,] result = new int[bytes.GetLength(0), bytes.GetLength(1)];
 
-            for (byte ch = 0; ch < 3; ch++)
+            for (byte ch = 0; ch < channelBytes.GetLength(0); ch++)
             {
-                for (int i = 0; i < channelBytes.GetLength(0); i++)
-                    for (int j = 0; j < channelBytes.GetLength(1); j++)
-                        channelBytes[i, j] = (byte)((bytes[i, j] & (0xFF << ch * 8)) >> (ch * 8));
+                for (int i = 0; i < channelBytes[ch].GetLength(0); i++)
+                    for (int j = 0; j < channelBytes[ch].GetLength(1); j++)
+                        channelBytes[ch][i, j] = (byte)((bytes[i, j] & (0xFF << ch * 8)) >> (ch * 8));
 
-                for (int i = 1; i < channelBytes.GetLength(0) - 1; i++)
-                    for (int j = 1; j < channelBytes.GetLength(1) - 1; j++)
+                for (int i = 1; i < channelBytes[ch].GetLength(0) - 1; i++)
+                    for (int j = 1; j < channelBytes[ch].GetLength(1) - 1; j++)
                         if (mask[i, j])
-                            maskResult[i, j] += findColor(channelBytes, i, j, m, n);
+                            maskResult[i, j] += findColor(channelBytes[ch], i, j, m, n);
             }
 
             for (int i = 0; i < bytes.GetLength(0); i++)
@@ -32,11 +32,18 @@ namespace DecisionMethods
                     {
                         if (mask[i, j])
                         {
-                            if (maskResult[i, j] > 1)
-                                result[i, j] = restorePixel(bytes, mask, i, j, 4);
+                            if (maskResult[i, j] == 0)
+                                result[i, j] = restorePixel(bytes, mask, i, j, 5);
                             else
-                                //result[i, j] = restorePixel(bytes, mask, i, j, 5);
-                                result[i, j] = averagePixelOld(bytes, i, j);
+                            {
+                                for (byte ch = 0; ch < 3; ch++)
+                                {
+                                    var b = averagePixel(channelBytes[ch], mask, i, j, m);
+                                    result[i, j] ^= b << ch * 8;
+                                }
+                            }
+                            //result[i, j] = restorePixel(bytes, mask, i, j, 5);
+                            //result[i, j] = averagePixelOld(bytes, i, j);
                         }
                         else
                         {
@@ -138,22 +145,22 @@ namespace DecisionMethods
             checkColor(imageBytes, colors, mask, x + 1, y + 1);
 
             // 2 уровень
-            checkColor(imageBytes, colors, mask, x - 2, y - 2);
-            checkColor(imageBytes, colors, mask, x - 2, y - 1);
-            checkColor(imageBytes, colors, mask, x - 2, y);
-            checkColor(imageBytes, colors, mask, x - 2, y + 1);
-            checkColor(imageBytes, colors, mask, x - 2, y + 2);
-            checkColor(imageBytes, colors, mask, x - 1, y - 2);
-            checkColor(imageBytes, colors, mask, x - 1, y + 2);
-            checkColor(imageBytes, colors, mask, x, y - 2);
-            checkColor(imageBytes, colors, mask, x, y + 2);
-            checkColor(imageBytes, colors, mask, x + 1, y - 2);
-            checkColor(imageBytes, colors, mask, x + 1, y + 2);
-            checkColor(imageBytes, colors, mask, x + 2, y - 2);
-            checkColor(imageBytes, colors, mask, x + 2, y - 1);
-            checkColor(imageBytes, colors, mask, x + 2, y);
-            checkColor(imageBytes, colors, mask, x + 2, y + 1);
-            checkColor(imageBytes, colors, mask, x + 2, y + 2);
+            //checkColor(imageBytes, colors, mask, x - 2, y - 2);
+            //checkColor(imageBytes, colors, mask, x - 2, y - 1);
+            //checkColor(imageBytes, colors, mask, x - 2, y);
+            //checkColor(imageBytes, colors, mask, x - 2, y + 1);
+            //checkColor(imageBytes, colors, mask, x - 2, y + 2);
+            //checkColor(imageBytes, colors, mask, x - 1, y - 2);
+            //checkColor(imageBytes, colors, mask, x - 1, y + 2);
+            //checkColor(imageBytes, colors, mask, x, y - 2);
+            //checkColor(imageBytes, colors, mask, x, y + 2);
+            //checkColor(imageBytes, colors, mask, x + 1, y - 2);
+            //checkColor(imageBytes, colors, mask, x + 1, y + 2);
+            //checkColor(imageBytes, colors, mask, x + 2, y - 2);
+            //checkColor(imageBytes, colors, mask, x + 2, y - 1);
+            //checkColor(imageBytes, colors, mask, x + 2, y);
+            //checkColor(imageBytes, colors, mask, x + 2, y + 1);
+            //checkColor(imageBytes, colors, mask, x + 2, y + 2);
 
             if (colors.Count() > 0)
             {
@@ -233,42 +240,53 @@ namespace DecisionMethods
             return new MyColor((byte)colors.Average(c => c.R), (byte)colors.Average(c => c.G), (byte)colors.Average(c => c.B)).Color;
         }
 
-        private static int averagePixel(int[,] bytes, int i, int j, int m)
+        private static int averagePixel(byte[,] bytes, bool[,] mask, int i, int j, int m)
         {
             double byteMask = 0xFF / m;
 
             Dictionary<byte, byte> K1 = new Dictionary<byte, byte>();
-            addToDictionary(K1, bytes[i - 1, j - 1] / byteMask);
-            addToDictionary(K1, bytes[i - 1, j] / byteMask);
-            addToDictionary(K1, bytes[i - 1, j + 1] / byteMask);
-            addToDictionary(K1, bytes[i, j - 1] / byteMask);
-            addToDictionary(K1, bytes[i, j + 1] / byteMask);
-            addToDictionary(K1, bytes[i + 1, j - 1] / byteMask);
-            addToDictionary(K1, bytes[i + 1, j] / byteMask);
-            addToDictionary(K1, bytes[i + 1, j + 1] / byteMask);
+            if (!mask[i - 1, j - 1])
+                addToDictionary(K1, bytes[i - 1, j - 1] / byteMask);
+            if (!mask[i - 1, j])
+                addToDictionary(K1, bytes[i - 1, j] / byteMask);
+            if (!mask[i - 1, j + 1])
+                addToDictionary(K1, bytes[i - 1, j + 1] / byteMask);
+            if (!mask[i, j - 1])
+                addToDictionary(K1, bytes[i, j - 1] / byteMask);
+            if (!mask[i, j + 1])
+                addToDictionary(K1, bytes[i, j + 1] / byteMask);
+            if (!mask[i + 1, j - 1])
+                addToDictionary(K1, bytes[i + 1, j - 1] / byteMask);
+            if (!mask[i + 1, j])
+                addToDictionary(K1, bytes[i + 1, j] / byteMask);
+            if (!mask[i + 1, j + 1])
+                addToDictionary(K1, bytes[i + 1, j + 1] / byteMask);
 
             byte maxColor = K1.OrderByDescending(d => d.Value).Select(d => d.Key).FirstOrDefault();
 
-            var colors = new List<MyColor>();
+            var colors = new List<int>();
 
-            if (bytes[i - 1, j - 1] / byteMask == maxColor)
-                colors.Add(new MyColor(bytes[i - 1, j - 1]));
-            if (bytes[i - 1, j] / byteMask == maxColor)
-                colors.Add(new MyColor(bytes[i - 1, j]));
-            if (bytes[i - 1, j + 1] / byteMask == maxColor)
-                colors.Add(new MyColor(bytes[i - 1, j + 1]));
-            if (bytes[i, j - 1] / byteMask == maxColor)
-                colors.Add(new MyColor(bytes[i, j - 1]));
-            if (bytes[i - 1, j + 1] / byteMask == maxColor)
-                colors.Add(new MyColor(bytes[i, j + 1]));
-            if (bytes[i + 1, j - 1] / byteMask == maxColor)
-                colors.Add(new MyColor(bytes[i + 1, j - 1]));
-            if (bytes[i + 1, j - 1] / byteMask == maxColor)
-                colors.Add(new MyColor(bytes[i + 1, j]));
-            if (bytes[i + 1, j + 1] / byteMask == maxColor)
-                colors.Add(new MyColor(bytes[i + 1, j + 1]));
+            if ((byte)(bytes[i - 1, j - 1] / byteMask) == maxColor)
+                colors.Add(bytes[i - 1, j - 1]);
+            if ((byte)(bytes[i - 1, j] / byteMask) == maxColor)
+                colors.Add(bytes[i - 1, j]);
+            if ((byte)(bytes[i - 1, j + 1] / byteMask) == maxColor)
+                colors.Add(bytes[i - 1, j + 1]);
+            if ((byte)(bytes[i, j - 1] / byteMask) == maxColor)
+                colors.Add(bytes[i, j - 1]);
+            if ((byte)(bytes[i, j + 1] / byteMask) == maxColor)
+                colors.Add(bytes[i, j + 1]);
+            if ((byte)(bytes[i + 1, j - 1] / byteMask) == maxColor)
+                colors.Add(bytes[i + 1, j - 1]);
+            if ((byte)(bytes[i + 1, j - 1] / byteMask) == maxColor)
+                colors.Add(bytes[i + 1, j]);
+            if ((byte)(bytes[i + 1, j + 1] / byteMask) == maxColor)
+                colors.Add(bytes[i + 1, j + 1]);
 
-            return new MyColor((byte)colors.Average(c => c.R), (byte)colors.Average(c => c.G), (byte)colors.Average(c => c.B)).Color;
+            if (colors.Count != 0)
+                return (int)colors.Average();
+            else
+                return bytes[i, j];
         }
     }
 }

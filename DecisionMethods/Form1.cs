@@ -66,12 +66,12 @@ namespace DecisionMethods
             ShowImage(pictureBox3, image4.Bitmap);
             tbLog.Text += "New method: " + Tools.Metrics.GetUnifiedMetrics(image4);
 
-            var image5 = dm.RestorePixelsOld(4);
+            var image5 = dm.RestorePixelsOld(3);
             //ShowImage(pictureBox3, image4.Bitmap);
-            tbLog.Text += "Middle: " + Tools.Metrics.GetUnifiedMetrics(image5);
+            tbLog.Text += "Avg: " + Tools.Metrics.GetUnifiedMetrics(image5);
 
             var image6 = dm.RestorePixelsOld(5);
-            //ShowImage(pictureBox4, image5.Bitmap);
+            ShowImage(pictureBox4, image6.Bitmap);
             tbLog.Text += "Sqrt: " + Tools.Metrics.GetUnifiedMetrics(image6);
 
             //var statisticsFileName = "Statistics.xml";
@@ -110,6 +110,11 @@ namespace DecisionMethods
             savedMask2 = Tools.ArrayTools.CopyArray<bool>(dm.PollutedMask);
 
             tbLog.Text += Tools.Metrics.MatrixDifference(savedMask, savedMask2, MetricsMode.Simple);
+        }
+
+        private void bClear_Click(object sender, EventArgs e)
+        {
+            tbLog.Clear();
         }
     }
 }
