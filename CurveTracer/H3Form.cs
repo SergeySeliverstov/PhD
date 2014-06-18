@@ -98,20 +98,30 @@ namespace CurveTracer
                 y2[i] = CurveTracer.B(Ugs, k0, u, 2);
                 h2[i] = y1[i] / (2 * y[i]);
                 h3[i] = y2[i] / (2 * y[i]);
-              
+
             }
 
             //var ko = new double[size];
             //for (var i=0 ; i < x.Length; i++ )
             //    ko[i] = y[i] + (1 / 4) * y2[i] + (1 / 16) * y2[i];
 
-            var newH3 = new List<double>();
+            var newH3x = new List<double>();
+            var newH3y = new List<double>();
             for (var i = 0; i < x.Length; i++)
-                newH3.Add(h3[i] > -k0.Max() && h3[i] < k0.Max() ? h3[i] : 0);
+                if (h3[i] > -k0.Max() && h3[i] < k0.Max())
+                {
+                    newH3y.Add(h3[i]);
+                    newH3x.Add(x[i]);
+                }
 
-            var newH2 = new List<double>();
+            var newH2x = new List<double>();
+            var newH2y = new List<double>();
             for (var i = 0; i < x.Length; i++)
-                newH2.Add(h2[i] > -k0.Max() && h2[i] < k0.Max() ? h2[i] : 0);
+                if (h2[i] > -k0.Max() && h2[i] < k0.Max())
+                {
+                    newH2y.Add(h2[i]);
+                    newH2x.Add(x[i]);
+                }
 
             double min = double.MinValue;
             int minPos = 0;
@@ -133,36 +143,39 @@ namespace CurveTracer
                 vertMinY[i] = -k0.Max() + i * 2 * k0.Max() / size;
             }
 
-            var funcs1 = new Func[] { new Func(x, y), new Func(x, newH3.ToArray()), new Func(vertMinX, vertMinY)};
-            //var funcs1 = new Func[] { new Func(x, y), new Func(x, newH3.ToArray()), new Func(vertMinX, vertMinY), new Func(x, ko.ToArray()) };
-            var bitmap1 = new MyImage(FuncTools.FuncsToBytes(delta, funcs1)).Bitmap;
+            var funcs1 = new Func[] { new Func(x, y), new Func(newH3x.ToArray(), newH3y.ToArray()), new Func(vertMinX, vertMinY) };
+            var bitmap1 = FuncTools.CreateBitmap(funcs1);
+            FuncTools.FuncsToLines(bitmap1, delta, funcs1);
+            FuncTools.AddAxis(bitmap1, delta, funcs1);
             FuncTools.AddLabels(bitmap1, delta, funcs1);
-            FuncTools.AddTextInPhisicalCoords(bitmap1, new Coord(funcs1), x[minPos], y[minPos], string.Format("K0,B0: {0:F2}", y[minPos]));
-            FuncTools.AddTextInPhisicalCoords(bitmap1, new Coord(funcs1), x[minPos], newH3[minPos], string.Format("H3:  {0:F4}", newH3[minPos]));
-            FuncTools.AddTextInPhisicalCoords(bitmap1, new Coord(funcs1), x[minPos], y[minPos]-3, string.Format("Uзи: {0:F2} ,В", x[minPos]));
+            FuncTools.AddTextInPhisicalCoords(bitmap1, new Coord(funcs1), x[minPos], y[minPos], string.Format("B0: {0:F2}", y[minPos]));
+            FuncTools.AddTextInPhisicalCoords(bitmap1, new Coord(funcs1), x[minPos], newH3y[minPos], string.Format("H3:  {0:F4}", newH3y[minPos]));
+            FuncTools.AddTextInPhisicalCoords(bitmap1, new Coord(funcs1), x[minPos], y[minPos] - 3, string.Format("Uзи: {0:F2} ,В", x[minPos]));
 
             pictureBox1.Image = bitmap1;
 
-            var funcs2 = new Func[] { new Func(x, y), new Func(x, newH3.ToArray()), new Func(x, newH2.ToArray()) };
-            var bitmap2 = new MyImage(FuncTools.FuncsToBytes(delta, funcs2)).Bitmap;
+            var funcs2 = new Func[] { new Func(x, y), new Func(newH3x.ToArray(), newH3y.ToArray()), new Func(newH2x.ToArray(), newH2y.ToArray()), new Func(vertMinX, vertMinY) };
+            var bitmap2 = FuncTools.CreateBitmap(funcs2);
+            FuncTools.FuncsToLines(bitmap2, delta, funcs2);
+            FuncTools.AddAxis(bitmap2, delta, funcs2);
             FuncTools.AddLabels(bitmap2, delta, funcs2);
+            FuncTools.AddTextInPhisicalCoords(bitmap2, new Coord(funcs2), x[minPos], y[minPos], string.Format("B0: {0:F2}", y[minPos]));
+            FuncTools.AddTextInPhisicalCoords(bitmap2, new Coord(funcs2), x[minPos], newH3y[minPos], string.Format("H3:  {0:F4}", newH3y[minPos]));
+            FuncTools.AddTextInPhisicalCoords(bitmap2, new Coord(funcs2), x[minPos], y[minPos] - 3, string.Format("Uзи: {0:F2} ,В", x[minPos]));
+            FuncTools.AddTextInPhisicalCoords(bitmap2, new Coord(funcs2), x[minPos], newH2y[minPos] + 2, string.Format("H2: {0:F3} ,В", newH2y[minPos]));
+
             pictureBox2.Image = bitmap2;
 
-            FuncTools.AddTextInPhisicalCoords(bitmap2, new Coord(funcs2), x[minPos], y[minPos], string.Format("K0,B0: {0:F2}", y[minPos]));
-            FuncTools.AddTextInPhisicalCoords(bitmap2, new Coord(funcs2), x[minPos], newH3[minPos], string.Format("H3:  {0:F4}", newH3[minPos]));
-            FuncTools.AddTextInPhisicalCoords(bitmap2, new Coord(funcs2), x[minPos], y[minPos] - 3, string.Format("Uзи: {0:F2} ,В", x[minPos]));
-            FuncTools.AddTextInPhisicalCoords(bitmap2, new Coord(funcs2), x[minPos], newH2[minPos]+2 , string.Format("H2: {0:F3} ,В", newH2[minPos]));
-
-
             listBox1.Items.Clear();
-            listBox1.Items.Add(new MyListBoxItem(Color.Green, "██ - K0,B0"));
+            listBox1.Items.Add(new MyListBoxItem(Color.Green, "██ - B0"));
             listBox1.Items.Add(new MyListBoxItem(Color.Red, "██ - H3"));
             listBox1.Items.Add(new MyListBoxItem(Color.Blue, "██ - Опт"));
 
             listBox2.Items.Clear();
-            listBox2.Items.Add(new MyListBoxItem(Color.Green, "██ - K0,B0"));
+            listBox2.Items.Add(new MyListBoxItem(Color.Green, "██ - B0"));
             listBox2.Items.Add(new MyListBoxItem(Color.Red, "██ - H3"));
             listBox2.Items.Add(new MyListBoxItem(Color.Blue, "██ - H2"));
+            listBox2.Items.Add(new MyListBoxItem(Color.Brown, "██ - Опт"));
         }
 
         private void listBox1_DrawItem(object sender, DrawItemEventArgs e)

@@ -58,7 +58,8 @@ namespace DecisionMethods
         {
             MyImage newImage = new MyImage(myImage.ImageBytes, myImage.OriginalImageBytes);
 
-            int[,] newImageBytes = PixelsRestore.FindPixels(myImage.ImageBytes, pollutedMask, m, n);
+            //int[,] newImageBytes = PixelsRestore.FindPixels(myImage.ImageBytes, pollutedMask, m, n);
+            int[,] newImageBytes = PixelsRestore2.FindPixels(myImage.ImageBytes, pollutedMask, m, n);
             for (int i = 0; i < myImage.ImageWidth; i++)
                 for (int j = 0; j < myImage.ImageHeight; j++)
                     newImage.ImageBytes[i, j] = newImageBytes[i, j];
@@ -77,10 +78,10 @@ namespace DecisionMethods
 
             return newImage;
         }
-        
+
         public string GetMetrics(MetricsMode mode)
         {
             return Tools.Metrics.GetUnifiedMetrics(myImage, mode);
-        }        
+        }
     }
 }

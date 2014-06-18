@@ -6,7 +6,7 @@ using Tools;
 
 namespace DecisionMethods
 {
-    public class PixelsRestore
+    public class PixelsRestore : PixelsRestoreBase
     {
         public static int[,] FindPixels(int[,] bytes, bool[,] mask, int m, double n)
         {
@@ -122,14 +122,6 @@ namespace DecisionMethods
             return pA > pB ? 1 : 0;
         }
 
-        private static void addToDictionary(Dictionary<byte, byte> dct, double color)
-        {
-            if (!dct.ContainsKey((byte)color))
-                dct.Add((byte)color, 1);
-            else
-                dct[(byte)color]++;
-        }
-
         private static int restorePixel(int[,] imageBytes, bool[,] mask, int x, int y, int method)
         {
             var colors = new List<KeyValuePair<Tools.ColorChannel, int>>();
@@ -222,71 +214,6 @@ namespace DecisionMethods
                 MyColor c = new MyColor(imageBytes[i, j]);
                 colors.Add(new KeyValuePair<Tools.ColorChannel, int>((c.R > c.G && c.R > c.B) ? Tools.ColorChannel.R : (c.G > c.B) ? Tools.ColorChannel.G : Tools.ColorChannel.B, imageBytes[i, j]));
             }
-        }
-
-        private static int averagePixelOld(int[,] bytes, int i, int j)
-        {
-            var colors = new List<MyColor>();
-
-            colors.Add(new MyColor(bytes[i - 1, j - 1]));
-            colors.Add(new MyColor(bytes[i - 1, j]));
-            colors.Add(new MyColor(bytes[i - 1, j + 1]));
-            colors.Add(new MyColor(bytes[i, j - 1]));
-            colors.Add(new MyColor(bytes[i, j + 1]));
-            colors.Add(new MyColor(bytes[i + 1, j - 1]));
-            colors.Add(new MyColor(bytes[i + 1, j]));
-            colors.Add(new MyColor(bytes[i + 1, j + 1]));
-
-            return new MyColor((byte)colors.Average(c => c.R), (byte)colors.Average(c => c.G), (byte)colors.Average(c => c.B)).Color;
-        }
-
-        private static int averagePixel(byte[,] bytes, bool[,] mask, int i, int j, int m)
-        {
-            double byteMask = 0xFF / m;
-
-            Dictionary<byte, byte> K1 = new Dictionary<byte, byte>();
-            if (!mask[i - 1, j - 1])
-                addToDictionary(K1, bytes[i - 1, j - 1] / byteMask);
-            if (!mask[i - 1, j])
-                addToDictionary(K1, bytes[i - 1, j] / byteMask);
-            if (!mask[i - 1, j + 1])
-                addToDictionary(K1, bytes[i - 1, j + 1] / byteMask);
-            if (!mask[i, j - 1])
-                addToDictionary(K1, bytes[i, j - 1] / byteMask);
-            if (!mask[i, j + 1])
-                addToDictionary(K1, bytes[i, j + 1] / byteMask);
-            if (!mask[i + 1, j - 1])
-                addToDictionary(K1, bytes[i + 1, j - 1] / byteMask);
-            if (!mask[i + 1, j])
-                addToDictionary(K1, bytes[i + 1, j] / byteMask);
-            if (!mask[i + 1, j + 1])
-                addToDictionary(K1, bytes[i + 1, j + 1] / byteMask);
-
-            byte maxColor = K1.OrderByDescending(d => d.Value).Select(d => d.Key).FirstOrDefault();
-
-            var colors = new List<int>();
-
-            if ((byte)(bytes[i - 1, j - 1] / byteMask) == maxColor)
-                colors.Add(bytes[i - 1, j - 1]);
-            if ((byte)(bytes[i - 1, j] / byteMask) == maxColor)
-                colors.Add(bytes[i - 1, j]);
-            if ((byte)(bytes[i - 1, j + 1] / byteMask) == maxColor)
-                colors.Add(bytes[i - 1, j + 1]);
-            if ((byte)(bytes[i, j - 1] / byteMask) == maxColor)
-                colors.Add(bytes[i, j - 1]);
-            if ((byte)(bytes[i, j + 1] / byteMask) == maxColor)
-                colors.Add(bytes[i, j + 1]);
-            if ((byte)(bytes[i + 1, j - 1] / byteMask) == maxColor)
-                colors.Add(bytes[i + 1, j - 1]);
-            if ((byte)(bytes[i + 1, j - 1] / byteMask) == maxColor)
-                colors.Add(bytes[i + 1, j]);
-            if ((byte)(bytes[i + 1, j + 1] / byteMask) == maxColor)
-                colors.Add(bytes[i + 1, j + 1]);
-
-            if (colors.Count != 0)
-                return (int)colors.Average();
-            else
-                return bytes[i, j];
         }
     }
 }

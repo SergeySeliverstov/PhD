@@ -65,6 +65,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PixelsRestoreBase.cs" />
+    <Compile Include="PixelsRestore2.cs" />
     <Compile Include="Criterion.cs" />
     <Compile Include="DecisionMethods.cs" />
     <Compile Include="Form1.cs">

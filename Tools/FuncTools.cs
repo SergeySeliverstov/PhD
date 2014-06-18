@@ -8,6 +8,88 @@ namespace Tools
 {
     public class FuncTools
     {
+        public static Bitmap CreateBitmap(params Func[] funcs)
+        {
+            if (funcs.Length == 0)
+                throw new ArgumentException("You need more functions!");
+
+            return new Bitmap(funcs[0].x.Length, funcs[0].y.Length);
+        }
+
+        public static void FuncsToLines(Bitmap bitmap, double delta, params Func[] funcs)
+        {
+            if (funcs.Length == 0)
+                throw new ArgumentException("You need more functions!");
+
+            var colors = new Color[] { Color.Green, Color.Red, Color.Blue, Color.Brown, Color.Purple, Color.Yellow, Color.LightBlue };
+
+            var coords = new Coord(funcs);
+
+            using (Graphics g = Graphics.FromImage(bitmap))
+            {
+                for (var i = 0; i < funcs.Length; i++)
+                {
+                    var prevX = coords.GetX(funcs[i].x[0]);
+                    var prevY = coords.GetY(funcs[i].y[0]);
+
+                    for (var j = 1; j < funcs[i].x.Length - 1; j++)
+                    {
+                        addLine(g, coords.GetX(funcs[i].x[j]), coords.GetY(funcs[i].y[j]), prevX, prevY, colors[i % colors.Length]);
+                        prevX = coords.GetX(funcs[i].x[j]);
+                        prevY = coords.GetY(funcs[i].y[j]);
+                    }
+                }
+            }
+        }
+
+        public static void AddAxis(Bitmap bitmap, double delta, params Func[] funcs)
+        {
+            var axisColor = Color.Black;
+            var subAxisColor = Color.Gray;
+
+            double xi;
+            double yi;
+
+            var coords = new Coord(funcs);
+
+            using (Graphics g = Graphics.FromImage(bitmap))
+            {
+                // Вертикальные линии
+                xi = 0;
+                while (xi <= coords.XMax)
+                {
+                    addLine(g, coords.GetX(xi), coords.GetY(coords.YMax), coords.GetX(xi), coords.GetY(coords.YMin), subAxisColor);
+                    xi += delta;
+                }
+
+                xi = 0;
+                while (xi > coords.XMin)
+                {
+                    addLine(g, coords.GetX(xi), coords.GetY(coords.YMax), coords.GetX(xi), coords.GetY(coords.YMin), subAxisColor);
+                    xi -= delta;
+                }
+
+                // Горизонтальные линии
+                yi = 0;
+                while (yi <= coords.YMax)
+                {
+                    addLine(g, coords.GetX(coords.XMax), coords.GetY(yi), coords.GetX(coords.XMin), coords.GetY(yi), subAxisColor);
+                    yi += (coords.YMax - coords.YMin) / 5;
+                }
+
+                yi = 0;
+                while (yi > coords.YMin)
+                {
+                    addLine(g, coords.GetX(coords.XMax), coords.GetY(yi), coords.GetX(coords.XMin), coords.GetY(yi), subAxisColor);
+                    yi -= (coords.YMax - coords.YMin) / 5;
+                }
+
+                // Оси координат
+                addLine(g, coords.GetX(coords.XMax), coords.Y0, coords.GetX(coords.XMin), coords.Y0, axisColor);
+                addLine(g, coords.X0, coords.GetY(coords.YMax), coords.X0, coords.GetY(coords.YMin), axisColor);
+            }
+        }
+
         public static int[,] FuncsToBytes(double delta, params Func[] funcs)
         {
             if (funcs.Length == 0)
@@ -124,6 +206,12 @@ namespace Tools
                 pic[(int)Math.Floor((x[i] - xMin) / xScale), (int)Math.Floor((yMax - y[i]) / yScale)] = 0;
 
             return pic;
+        }
+
+        private static void addLine(Graphics g, int x1, int y1, int x2, int y2, Color color)
+        {
+            Pen pen = new Pen(color, 2);
+            g.DrawLine(pen, x1, y1, x2, y2);
         }
 
         public static void AddLabels(Bitmap bitmap, double delta, params Func[] funcs)

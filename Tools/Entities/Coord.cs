@@ -106,8 +106,8 @@ namespace Tools
                     this.yMin = func.y.Min();
             }
 
-            this.sizeX = funcs[0].x.Length;
-            this.sizeY = funcs[0].x.Length;
+            this.sizeX = funcs.Max(t => t.x.Length);
+            this.sizeY = funcs.Max(t => t.y.Length);
         }
 
         public int GetX(double x)
