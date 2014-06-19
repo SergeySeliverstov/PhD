@@ -149,7 +149,7 @@ namespace CurveTracer
             FuncTools.AddAxis(bitmap1, delta, funcs1);
             FuncTools.AddLabels(bitmap1, delta, funcs1);
             FuncTools.AddTextInPhisicalCoords(bitmap1, new Coord(funcs1), x[minPos], y[minPos], string.Format("B0: {0:F2}", y[minPos]));
-            FuncTools.AddTextInPhisicalCoords(bitmap1, new Coord(funcs1), x[minPos], newH3y[minPos], string.Format("H3:  {0:F4}", newH3y[minPos]));
+            FuncTools.AddTextInPhisicalCoords(bitmap1, new Coord(funcs1), x[minPos], h3[minPos], string.Format("H3:  {0:F4}",h3[minPos]));
             FuncTools.AddTextInPhisicalCoords(bitmap1, new Coord(funcs1), x[minPos], y[minPos] - 3, string.Format("Uзи: {0:F2} ,В", x[minPos]));
 
             pictureBox1.Image = bitmap1;
@@ -160,9 +160,9 @@ namespace CurveTracer
             FuncTools.AddAxis(bitmap2, delta, funcs2);
             FuncTools.AddLabels(bitmap2, delta, funcs2);
             FuncTools.AddTextInPhisicalCoords(bitmap2, new Coord(funcs2), x[minPos], y[minPos], string.Format("B0: {0:F2}", y[minPos]));
-            FuncTools.AddTextInPhisicalCoords(bitmap2, new Coord(funcs2), x[minPos], newH3y[minPos], string.Format("H3:  {0:F4}", newH3y[minPos]));
+            FuncTools.AddTextInPhisicalCoords(bitmap2, new Coord(funcs2), x[minPos], h3[minPos], string.Format("H3:  {0:F4}", h3[minPos]));
             FuncTools.AddTextInPhisicalCoords(bitmap2, new Coord(funcs2), x[minPos], y[minPos] - 3, string.Format("Uзи: {0:F2} ,В", x[minPos]));
-            FuncTools.AddTextInPhisicalCoords(bitmap2, new Coord(funcs2), x[minPos], newH2y[minPos] + 2, string.Format("H2: {0:F3} ,В", newH2y[minPos]));
+            FuncTools.AddTextInPhisicalCoords(bitmap2, new Coord(funcs2), x[minPos], h2[minPos] + 2, string.Format("H2: {0:F3} ,В", h2[minPos]));
 
             pictureBox2.Image = bitmap2;
 
